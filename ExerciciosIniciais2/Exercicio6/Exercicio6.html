@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <title> Exercicio 6</title>
+
+</head>
+<body>
+    <h1>Encriptado y desencriptado tipo César</h1>
+
+    <form action="Exercicio6.php"  method="post">
+        <p>Escriba el texto a encriptar o desencriptar:</p>
+        <textarea name="texto" rows="10" cols="30"></textarea>
+        <br><br>
+        <fieldset>
+            <legend>Elija lo que desea</legend>
+                <input type="radio" id="encriptar" name="funcion" value="encriptar">
+                <label for="encriptar">Encriptar</label>
+                <input type="radio" id="desencriptar" name="funcion" value="desencriptar">
+                <label for="desencriptar">Desencriptar</label>
+        </fieldset>
+        <p>Escriba la clave: <input type="text" name="clave"></p>
+        <input type="submit">
+    </form>
+    
+</body>
+</html>
