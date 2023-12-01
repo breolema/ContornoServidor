@@ -20,4 +20,5 @@ CREATE TABLE mensajes(
 );
 
 
+alter table mensajes add nuevo BOOLEAN default true;
 
