@@ -16,11 +16,13 @@ $conexion=mysqli_connect("localhost","root","","mensajes");
             $sql = "INSERT INTO usuarios (usuario, pass) VALUES ('$usuario', '$contr')";
 
             if ($conexion->query($sql) === TRUE) {
-                header("Location:Exercicio3-buzon.html");
+                header("Location:Exercicio3-buzon.php");
             }
         } else {
             echo "A contraseña non é igual nos dous campos";
         }
+} else {
+    header("Location:Exercicio3-index.php");
 }
 
     ?>

@@ -1,3 +1,7 @@
+<?php
+session_start(); 
+?>
+
 <html>
 <head>
 <title>Exercicio3-index</title>
@@ -23,7 +27,7 @@
 <body>
 
     <div class="container">
-        <form action="Exercicio3-buzon.php" method="GET">
+        <form action="Exercicio3-login.php" method="GET">
             <h3>Entrar en la cuenta</h3><br>
             <input type="text" name="usuario" placeholder="usuario"><br>
             <input type="password" name="contr" placeholder="contrasena"><br>

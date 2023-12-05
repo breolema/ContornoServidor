@@ -9,7 +9,7 @@ if(isset($_POST["usuario"]) && isset($_POST["password"]))
     $password=substr($_POST["password"],0,30);
     if(preg_match("/(*UTF8)^[\p{L}\p{N}]{1,30}$/",$usuario)) {
         if(strlen($password)>=6) {
-            $mysqli = new mysqli("127.0.0.1", "root", "", "mensajes");
+            $mysqli = new mysqli("localhost", "root", "", "mensajes");
             if ($mysqli) {
                 $sql = "SELECT usuario,pass FROM usuarios ".
                         "WHERE usuario='$usuario'";  
