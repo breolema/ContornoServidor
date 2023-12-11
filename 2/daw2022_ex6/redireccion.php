@@ -26,7 +26,7 @@ else {
     }
     else echo "entrada correcta";
 }
-}
+
 
 ?>
 </body>

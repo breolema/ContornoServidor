@@ -125,7 +125,7 @@ if ($autorizado == false) {
 ?>
 
 <?php
-$autorizado{"nombre"] = "";
+$autorizado["nombre"] = "";
 
 if ($autorizado == true) {
     print "<p>Usted está autorizado.</p>\n";

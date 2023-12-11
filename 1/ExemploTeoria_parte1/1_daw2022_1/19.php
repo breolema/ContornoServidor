@@ -19,7 +19,7 @@ $x=$x>>2; //ahora $x vale 00011000 = 24;
 echo $x;
 echo "\n";
 $y=yy<<2; //ahor a$y vale 100110000=296
-echo $y
+echo $y;
 echo "\n";
 //CONCATENACION
 

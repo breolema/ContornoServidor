@@ -17,10 +17,10 @@ print "</pre>";
 print "<p>Su nombre es $_REQUEST[nombre]</p>\n";
 ?>
 <?php #codigo incorrecto, non podemos usar comillas dobres nin simpres para facer referencia
-print "<p>Su nombre es $_REQUEST["nombre"]</p>\n";
+print "<p>Su nombre es" . $_REQUEST["nombre"] . "</p>\n";
 ?>
 <?php #codigo incorrecto, non podemos usar comillas dobres nin simpres para facer referencia
-print "<p>Su nombre es $_REQUEST['nombre']</p>\n";
+print "<p>Su nombre es" . $_REQUEST["nombre"] . "</p>\n";
 ?>
 
 
@@ -35,10 +35,10 @@ print "<p>Su nombre es " . $_REQUEST['nombre'] . "</p>\n";
 print "<p>Su nombre es " . $_REQUEST[nombre] . "</p>\n";
 ?>
 <?php #codigo incorrecto, non se pode escapar nada dentro dunha matriz.
-print "<p>Su nombre es $_REQUEST[\"nombre\"]</p>\n";
+print "<p>Su nombre es $_REQUEST[\'nombre\']</p>\n";
 ?>
 <?php #codigo incorrecto, non se pode escapar nada dentro dunha matriz.
-print "<p>Su nombre es " . $_REQUEST[\'nombre\'] . "</p>\n";
+print "<p>Su nombre es  $_REQUEST[\'nombre\'] </p>\n";
 ?>
 
 
