@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <libros> 
+     <libro>
+         <titulo>La alianza del Grial </titulo>
+         <autor>Niall Wilson, David</autor>
+         <sinopsis>Obsesionado con la obtención del Santo Grial para el clan Lasombra, el vampiro Montrovant se embarca en una búsqueda que le llevara a la creación de los Caballeros Templarios, a la guarida de un gran mal egipcio y a los desiertos de Tierra Santa.</sinopsis> 
+         <isbn>978-84-8421-070-2 </isbn> 
+     </libro> 
+     <libro>
+         <titulo>La alquimia de la transformación</titulo>
+         <autor>Lozowick, Lee</autor>
+         <sinopsis>Esta obra es un tesoro poco común: un mapa y una guía vivos y actuales del camino espiritual comentados por alguien que lo conoce personalmente. Con un lenguaje directo, sencillo, ameno y lleno de humor,</sinopsis> 
+         <isbn>978-84-88242-37-2  </isbn> 
+     </libro> 
+     <libro>
+         <titulo>Los asesinos del grial</titulo>
+         <autor>Clynes, Michael </autor>
+         <sinopsis>Tras los episodios relatados en Los crímenes de la rosa blanca y El cáliz envenenado, Roger Shallot cuenta en esta nueva entrega de sus memorias el caso de Stafford, duque de Buckinham, quien, en su búsqueda del Santo Grial y Excalibur, tuvo la osadía de enfrentarse a los templarios.</sinopsis> 
+         <isbn>978-84-487-2157-2 </isbn> 
+     </libro> 
+ </libros>

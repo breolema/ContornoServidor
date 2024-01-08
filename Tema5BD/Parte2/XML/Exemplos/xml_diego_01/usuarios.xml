@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<usuarios>
+    <usuario>
+        <nombre>Monnie</nombre>
+        <apellido>Boddie</apellido>
+        <direccion>Calle Pedro Mar 12</direccion>
+        <ciudad>Mexicali</ciudad>
+        <pais>Mexico</pais>
+        <contacto>
+            <telefono>44221234</telefono>
+            <url>http://monnie.ejemplo.com</url>
+            <email>monnie@ejemplo.com</email>
+        </contacto>
+    </usuario>
+    <usuario>
+        <nombre>Ted</nombre>
+        <apellido>Gonzalez</apellido>
+        <direccion>Calle Luis Angel 22</direccion>
+        <ciudad>Buenos Aires</ciudad>
+        <pais>Argentina</pais>
+        <contacto>
+            <telefono>44224664</telefono>
+            <url>http://ted.ejemplo.com</url>
+            <email>ted@ejemplo.com</email>
+        </contacto>
+    </usuario>
+</usuarios>
