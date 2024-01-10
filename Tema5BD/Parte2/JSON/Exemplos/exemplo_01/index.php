@@ -43,10 +43,7 @@ $json_string = json_encode($clientes);
 echo $json_string;
 
 //Si queremos crear un archivo json, sería de esta forma:
-
 $file = 'clientes.json';
 file_put_contents($file, $json_string);
-
-    
 
 ?>
