@@ -1,5 +1,5 @@
 <?php
-    $item = $_GET['borrar'];
+    $item = $_GET['producto'];
     $archivo="lista.json";
 
     $jsonString = file_get_contents($archivo);
@@ -7,14 +7,12 @@
 
     foreach($listaCompra as $key=> $producto){
         if (array_key_exists('item', $producto) && $producto['item'] === $item) {
-            unset($listaCompra[$key]);
+            $listaCompra[$key]['cantidad']=0;
             break;
         }
     }
 
     $jsonActualizado = json_encode($listaCompra);
     file_put_contents($archivo, $jsonActualizado);
-     
-
     header('Location: index.php');
 ?>

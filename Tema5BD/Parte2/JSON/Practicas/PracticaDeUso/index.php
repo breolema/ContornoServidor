@@ -10,6 +10,9 @@ ss">
 </head>
 
 <body>
+    <center>
+        <h1>Compras do Departamento</h1>
+    </center>
     <div class='container'>
         <h1 class='text-center'></h1>
         <div class="row">
@@ -31,15 +34,17 @@ ss">
                             $listaCompra = array();
                         }
 
-                        foreach($listaCompra as $producto){
-                            echo "<tr>";
-                                echo "<td>" . $producto['item'] . "</td>";
-                                echo "<td>" . $producto['cantidad'] . "</td>";
-                                echo "<td><a href='añadir.php?cantidad=1' class='glyphicon glyphicon-plus'></a></td>";
-                                echo "<td><a href='añadir.php?cantidad=-1' class='glyphicon glyphicon-minus'></a></td>";
-                                echo "<td><a href='añadir.php?cantidad=0' class='glyphicon glyphicon-remove-circle'></a></td>";
-                                echo "<td><a href='borrar.php' class='glyphicon glyphicon-trash'></a></td>";
-                            echo "</tr>";
+                        if (!empty($listaCompra)) {
+                            foreach($listaCompra as $producto){
+                                echo "<tr>";
+                                    echo "<td>" . $producto['item'] . "</td>";
+                                    echo "<td>" . $producto['cantidad'] . "</td>";
+                                    echo "<td><a href='sumar.php?producto=" . $producto['item'] . "' class='glyphicon glyphicon-plus'></a></td>";
+                                    echo "<td><a href='restar.php?producto=" . $producto['item'] . "' class='glyphicon glyphicon-minus'></a></td>";
+                                    echo "<td><a href='resetCantidad.php?producto=" . $producto['item'] . "' class='glyphicon glyphicon-remove-circle'></a></td>";
+                                    echo "<td><a href='borrar.php?borrar=" . $producto['item'] . "' class='glyphicon glyphicon-trash'></a></td>";
+                                echo "</tr>";
+                            }
                         }
                     ?>
                 <tr>
