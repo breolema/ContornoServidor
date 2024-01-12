@@ -10,9 +10,6 @@ ss">
 </head>
 
 <body>
-    <center>
-        <h1>Compras do Departamento</h1>
-    </center>
     <div class='container'>
         <h1 class='text-center'></h1>
         <div class="row">
@@ -25,7 +22,7 @@ ss">
                     <th colspan='2' class='text-center'>
                     </th>
                 </tr>
-                    <?php
+                <?php
                         $archivo="lista.json";
                         if(file_exists($archivo)){
                             $jsonString = file_get_contents($archivo);
@@ -39,9 +36,9 @@ ss">
                                 echo "<tr>";
                                     echo "<td>" . $producto['item'] . "</td>";
                                     echo "<td>" . $producto['cantidad'] . "</td>";
-                                    echo "<td><a href='sumar.php?producto=" . $producto['item'] . "' class='glyphicon glyphicon-plus'></a></td>";
-                                    echo "<td><a href='restar.php?producto=" . $producto['item'] . "' class='glyphicon glyphicon-minus'></a></td>";
-                                    echo "<td><a href='resetCantidad.php?producto=" . $producto['item'] . "' class='glyphicon glyphicon-remove-circle'></a></td>";
+                                    echo "<td><a href='asignar.php?producto=" . $producto['item'] . "&cantidad=1' class='glyphicon glyphicon-plus'></a></td>";
+                                    echo "<td><a href='asignar.php?producto=" . $producto['item'] . "&cantidad=-1' class='glyphicon glyphicon-minus'></a></td>";
+                                    echo "<td><a href='asignar.php?producto=" . $producto['item'] . "&cantidad=0' class='glyphicon glyphicon-remove-circle'></a></td>";
                                     echo "<td><a href='borrar.php?borrar=" . $producto['item'] . "' class='glyphicon glyphicon-trash'></a></td>";
                                 echo "</tr>";
                             }

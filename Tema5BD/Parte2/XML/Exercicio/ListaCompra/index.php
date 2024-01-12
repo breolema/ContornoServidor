@@ -26,23 +26,19 @@ ss">
                     </th>
                 </tr>
                     <?php
-                        $archivo="lista.json";
-                        if(file_exists($archivo)){
-                            $jsonString = file_get_contents($archivo);
-                            $listaCompra = json_decode($jsonString, true);
-                        } else {
-                            $listaCompra = array();
-                        }
+                        $archivo = new SimpleXMLElement('lista.xml', 0, true);
 
-                        if (!empty($listaCompra)) {
+                        if(!$archivo = simplexml_load_file("lista.xml")){
+                            echo "No se ha podido cargar el archivo";
+                        } else {
                             foreach($listaCompra as $producto){
                                 echo "<tr>";
-                                    echo "<td>" . $producto['item'] . "</td>";
-                                    echo "<td>" . $producto['cantidad'] . "</td>";
-                                    echo "<td><a href='sumar.php?producto=" . $producto['item'] . "' class='glyphicon glyphicon-plus'></a></td>";
-                                    echo "<td><a href='restar.php?producto=" . $producto['item'] . "' class='glyphicon glyphicon-minus'></a></td>";
-                                    echo "<td><a href='resetCantidad.php?producto=" . $producto['item'] . "' class='glyphicon glyphicon-remove-circle'></a></td>";
-                                    echo "<td><a href='borrar.php?borrar=" . $producto['item'] . "' class='glyphicon glyphicon-trash'></a></td>";
+                                    echo "<td>" . $producto->item . "</td>";
+                                    echo "<td>" . $producto->cantidad . "</td>";
+                                    echo "<td><a href='sumar.php?producto=" . $producto->item . "' class='glyphicon glyphicon-plus'></a></td>";
+                                    echo "<td><a href='restar.php?producto=" .$producto->item . "' class='glyphicon glyphicon-minus'></a></td>";
+                                    echo "<td><a href='resetCantidad.php?producto=" . $producto->item . "' class='glyphicon glyphicon-remove-circle'></a></td>";
+                                    echo "<td><a href='borrar.php?borrar=" . $producto->item . "' class='glyphicon glyphicon-trash'></a></td>";
                                 echo "</tr>";
                             }
                         }
