@@ -1,0 +1,14 @@
+<productos>
+    <producto>
+    <item>Patacas</item>
+    <cantidad>10</cantidad>
+    </producto>
+    <producto>
+    <item>Arros</item>
+    <cantidad>5</cantidad>
+    </producto>
+    <producto>
+    <item>Chicharos</item>
+    <cantidad>15</cantidad>
+    </producto>
+</productos>
