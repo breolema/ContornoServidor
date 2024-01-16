@@ -27,15 +27,19 @@ ss">
                         if(!$xml = simplexml_load_file($archivo)){
                             echo "No se ha podido cargar el archivo";
                         } else {
-                            foreach($xml as $producto){
+                            $datos=[];
+                            foreach($xml->item as $producto){
+                                $nombre=(string)$producto->item;
+                                $cantidad=(int)$producto->nombre;
                                 echo "<tr>";
-                                    echo "<td>" . $producto->item . "</td>";
-                                    echo "<td>" . $producto->cantidad . "</td>";
+                                    echo "<td>" . $nombre . "</td>";
+                                    echo "<td>" . $cantidad . "</td>";
                                     echo "<td><a href='asignar.php?producto=" . $producto->item . "&cantidad=1' class='glyphicon glyphicon-plus'></a></td>";
                                     echo "<td><a href='asignar.php?producto=" . $producto->item . "&cantidad=-1' class='glyphicon glyphicon-minus'></a></td>";
                                     echo "<td><a href='asignar.php?producto=" . $producto->item . "&cantidad=0' class='glyphicon glyphicon-remove-circle'></a></td>";
                                     echo "<td><a href='borrar.php?borrar=" . $producto->item . "' class='glyphicon glyphicon-trash'></a></td>";
                                 echo "</tr>";
+                                $datos[$nombre]=$cantidad;
                             }
                         }
                     ?>

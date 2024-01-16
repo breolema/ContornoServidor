@@ -1,0 +1,13 @@
+{
+    "name": "vendor/probapdf",
+    "description": "Proba PDF",
+    "type": "project",
+    "require": {
+        "dompdf/dompdf": "^2.0"
+    },
+    "authors": [
+        {
+            "name": "breo"
+        }
+    ]
+}
