@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS `categorias` (
   `CodCat` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(45) NOT NULL,
   `Descripcion` varchar(200) NOT NULL,
-  `Activa` BOOLEAN NOT NULL,
   PRIMARY KEY (`CodCat`),
   UNIQUE KEY `UN_NOM_CAT` (`Nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -72,6 +71,7 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `Peso` float NOT NULL,
   `Stock` int(11) NOT NULL,
   `CodCat` int(11) NOT NULL,
+  `Activo` BOOLEAN NOT NULL,
   PRIMARY KEY (`CodProd`),
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
@@ -88,14 +88,15 @@ INSERT INTO `productos` (`CodProd`, `Nombre`, `Descripcion`, `Peso`, `Stock`, `C
 
 -- Volcando estructura para tabla pedidos.restaurantes
 CREATE TABLE IF NOT EXISTS `usuarios` (
-  `CodUsu` int(11) NOT NULL AUTO_INCREMENT,
-  `Correo` varchar(90) NOT NULL,
+  `CodUsu` int(11) NOT NULL,
+  `Nombre` VARCHAR(30) NOT NULL,
   `Clave` varchar(45) NOT NULL,
-  `Rol` INT(2) NOT NULL,
   `Pais` varchar(45) NOT NULL,
   `CP` int(5) DEFAULT NULL,
   `Ciudad` varchar(45) NOT NULL,
   `Direccion` varchar(200) NOT NULL,
+  `Rol` INT(2) NOT NULL,
+  `Activo` BOOLEAN NOT NULL,
   PRIMARY KEY (`CodUsu`),
   UNIQUE KEY `UN_RES_COR` (`Correo`),
   CONSTRAINT `codrol_roles` FOREIGN KEY (`Rol`) REFERENCES `roles` (`CodRol`),
@@ -104,13 +105,13 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Volcando datos para la tabla pedidos.restaurantes: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `restaurantes` DISABLE KEYS */;
 INSERT INTO `usuarios` (`CodRes`, `Correo`, `Clave`, `CodRol`, `Pais`, `CP`, `Ciudad`, `Direccion`) VALUES
-	(1, 'breo', '1234', 'España', 28002, 'Madrid', 'C/ Padre  Claret, 8'),
-	(2, 'antonio', '1234', 'España', 11001, 'Cádiz', 'C/ Portales, 2 ');
+	(1, 'breo', '1234', '1', 'España', 28002, 'Madrid', 'C/ Padre  Claret, 8'),
+	(2, 'antonio', '1234', '2', 'España', 11001, 'Cádiz', 'C/ Portales, 2 ');
 /*!40000 ALTER TABLE `restaurantes` ENABLE KEYS */;
 
 CREATE TABLE if NOT EXISTS `roles`(
 	`CodRol` INT(2) NOT NULL,
-	`TipoRol` VARCHAR(20) NOT NULL,
+	`Descripcion` VARCHAR(20) NOT NULL,
 	PRIMARY KEY (`CodRol`),
 	UNIQUE KEY `UN_RES_COR` (`TipoRol`)
 )ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
@@ -119,3 +120,10 @@ CREATE TABLE if NOT EXISTS `roles`(
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+
+
+CREATE TABLE if NOT EXISTS `estadoProducto`(
+	`CodEstado` INT(2) NOT NULL,
+	`Descripcion` VARCHAR(20) NOT NULL,
+	PRIMARY KEY (`CodEstado`),
+)ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
