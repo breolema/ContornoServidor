@@ -1,14 +1,14 @@
 -- Volcando estructura de base de datos para pedidos
-CREATE DATABASE IF NOT EXISTS `pedidos` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-USE `pedidos`;
+CREATE DATABASE IF NOT EXISTS `supermercado` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+USE `supermercado`;
 
 -- Volcando estructura para tabla pedidos.categorias
 CREATE TABLE IF NOT EXISTS `categorias` (
   `CodCat` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(45) NOT NULL,
-  `Descripcion` varchar(200) NOT NULL,
+  `Activa` BOOLEAN,
   PRIMARY KEY (`CodCat`),
-  UNIQUE KEY `UN_NOM_CAT` (`Nombre`)
+  UNIQUE KEY `UN_NOM_CAT` (`Nombre`),
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla pedidos.categorias: ~3 rows (aproximadamente)
@@ -23,8 +23,9 @@ INSERT INTO `categorias` (`CodCat`, `Nombre`, `Descripcion`) VALUES
 CREATE TABLE IF NOT EXISTS `pedidos` (
   `CodPed` int(11) NOT NULL AUTO_INCREMENT,
   `Fecha` datetime NOT NULL,
-  `Enviado` int(11) NOT NULL,
+  `Estado` int(11) NOT NULL,
   `Usuario` int(11) NOT NULL,
+  `PrecioTotal` float NOT NULL,
   PRIMARY KEY (`CodPed`),
   KEY `Usuario` (`Usuario`),
   CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`Usuario`) REFERENCES `usuarios` (`CodUsu`)
@@ -40,10 +41,11 @@ INSERT INTO `pedidos` (`CodPed`, `Fecha`, `Enviado`, `Restaurante`) VALUES
 
 -- Volcando estructura para tabla pedidos.pedidosproductos
 CREATE TABLE IF NOT EXISTS `pedidosproductos` (
-  `CodPredProd` int(11) NOT NULL AUTO_INCREMENT,
+  `CodPedProd` int(11) NOT NULL AUTO_INCREMENT,
   `CodPed` int(11) NOT NULL,
   `CodProd` int(11) NOT NULL,
   `Unidades` int(11) NOT NULL,
+  `Precio` float NOT NULL,
   PRIMARY KEY (`CodPredProd`),
   KEY `CodPed` (`CodPed`),
   KEY `CodProd` (`CodProd`),
@@ -69,15 +71,17 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `Nombre` varchar(45) DEFAULT NULL,
   `Descripcion` varchar(90) NOT NULL,
   `Peso` float NOT NULL,
+  `Precio` float NOT NULL,
   `Stock` int(11) NOT NULL,
   `CodCat` int(11) NOT NULL,
-  `Activo` BOOLEAN NOT NULL,
+  `CodEstado` INT(2) NOT NULL,
   PRIMARY KEY (`CodProd`),
+  CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`CodCat`) REFERENCES `categorias` (`CodCat`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla pedidos.productos: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `productos` DISABLE KEYS */;
-INSERT INTO `productos` (`CodProd`, `Nombre`, `Descripcion`, `Peso`, `Stock`, `CodCat`) VALUES
+INSERT INTO `productos` (`CodProd`, `Nombre`, `Descripcion`, `Peso`, `Precio`, `Stock`, `CodCat`, `CodEstado`) VALUES
 	(1, 'Harina', '8 paquetes de 1kg de harina cada uno', 8, 100, 1),
 	(2, 'Azúcar', '20 paquetes de 1kg cada uno', 20, 3, 1),
 	(3, 'Agua 0.5', '100 botellas de 0.5 litros cada una', 51, 100, 2),
@@ -99,7 +103,6 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `Activo` BOOLEAN NOT NULL,
   PRIMARY KEY (`CodUsu`),
   UNIQUE KEY `UN_RES_COR` (`Correo`),
-  CONSTRAINT `codrol_roles` FOREIGN KEY (`Rol`) REFERENCES `roles` (`CodRol`),
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=LATIN1;
 
 -- Volcando datos para la tabla pedidos.restaurantes: ~2 rows (aproximadamente)
@@ -113,17 +116,35 @@ CREATE TABLE if NOT EXISTS `roles`(
 	`CodRol` INT(2) NOT NULL,
 	`Descripcion` VARCHAR(20) NOT NULL,
 	PRIMARY KEY (`CodRol`),
-	UNIQUE KEY `UN_RES_COR` (`TipoRol`)
+  CONSTRAINT `roles_ibfk_1` FOREIGN KEY (`CodRol`) REFERENCES `usuarios` (`Rol`),
 )ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
+
+
+CREATE TABLE if NOT EXISTS `estadoProducto`(
+	`CodEstadoProducto` INT(2) NOT NULL,
+	`Descripcion` VARCHAR(20) NOT NULL,
+	PRIMARY KEY (`CodEstadoProducto`),
+  CONSTRAINT `estadoProducto_ibfk_1` FOREIGN KEY (`CodEstadoProducto`) REFERENCES `productos` (`CodEstado`),
+)ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
+
+
+CREATE TABLE if NOT EXISTS `estadoPedido`(
+	`CodEstadoPedido` INT(2) NOT NULL,
+	`Descripcion` VARCHAR(20) NOT NULL,
+	PRIMARY KEY (`CodEstadoPedido`),
+);
+
+
+CREATE TABLE if NOT EXISTS `historialPedidos`(
+	`CodHistorial` int(11) NOT NULL,
+	`CodUsu` int(11) NOT NULL,
+	`Descripcion` VARCHAR(100) NOT NULL,
+	`Fecha` DATE NOT NULL,
+	PRIMARY KEY (`CodHistorial`),
+);
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
 
-
-CREATE TABLE if NOT EXISTS `estadoProducto`(
-	`CodEstado` INT(2) NOT NULL,
-	`Descripcion` VARCHAR(20) NOT NULL,
-	PRIMARY KEY (`CodEstado`),
-)ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
