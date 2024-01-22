@@ -13,30 +13,39 @@ CREATE TABLE IF NOT EXISTS `categorias` (
 
 -- Volcando datos para la tabla pedidos.categorias: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
-INSERT INTO `categorias` (`CodCat`, `Nombre`, `Descripcion`) VALUES
-	(1, 'Comida', 'Platos e ingredientes'),
-	(2, 'Bedidas sin', 'Bebidas sin alcohol'),
-	(3, 'Bebidas con', 'Bebidas con alcohol');
+INSERT INTO `categorias` (`CodCat`, `Nombre`, `Activa`) VALUES
+	(1, 'Carniceria', 'true'),
+	(2, 'Refrescos', 'true'),
+	(3, 'Bebidas con Alcohol', 'true'),
+  (4, 'Pescados', 'true'),
+  (5, 'Cereales', 'true'),
+  (6, 'Lacteos', 'true'),
+  (7, 'Frutas', 'true'),
+  (8, 'Verduras', 'true'),
+  (9, 'Charcutería', 'true'),
+  (10, 'Cuidado personal', 'true'),
+  ;
 /*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
 
 -- Volcando estructura para tabla pedidos.pedidos
 CREATE TABLE IF NOT EXISTS `pedidos` (
   `CodPed` int(11) NOT NULL AUTO_INCREMENT,
   `Fecha` datetime NOT NULL,
-  `Estado` int(11) NOT NULL,
-  `Usuario` int(11) NOT NULL,
+  `CodUsuario` int(11) NOT NULL,
   `PrecioTotal` float NOT NULL,
+  `CodEstado` int(3) NOT NULL,
   PRIMARY KEY (`CodPed`),
-  KEY `Usuario` (`Usuario`),
-  CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`Usuario`) REFERENCES `usuarios` (`CodUsu`)
+  KEY `CodUsuario` (`CodUsuario`),
+  CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`CodUsuario`) REFERENCES `usuarios` (`CodUsu`),
+   CONSTRAINT `pedidos_ibfk_2` FOREIGN KEY (`CodEstado`) REFERENCES `estadoPedido` (`CodEstadoPedido`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla pedidos.pedidos: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
-INSERT INTO `pedidos` (`CodPed`, `Fecha`, `Enviado`, `Restaurante`) VALUES
-	(3, '2022-11-27 19:23:14', 0, 2),
-	(4, '2022-11-27 19:24:17', 0, 2),
-	(5, '2022-11-27 19:25:39', 0, 2);
+INSERT INTO `pedidos` (`Fecha`, `CodUsuario`, `PrecioTotal`, `CodEstado`) VALUES
+	('2022-11-27 19:23:14', 0, 2),
+	('2022-11-27 19:24:17', 0, 2),
+	('2022-11-27 19:25:39', 0, 2);
 /*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla pedidos.pedidosproductos
@@ -70,11 +79,10 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `CodProd` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(45) DEFAULT NULL,
   `Descripcion` varchar(90) NOT NULL,
-  `Peso` float NOT NULL,
   `Precio` float NOT NULL,
   `Stock` int(11) NOT NULL,
   `CodCat` int(11) NOT NULL,
-  `CodEstado` INT(2) NOT NULL,
+  `CodEstado` INT(11) NOT NULL,
   PRIMARY KEY (`CodProd`),
   CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`CodCat`) REFERENCES `categorias` (`CodCat`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
@@ -82,18 +90,14 @@ CREATE TABLE IF NOT EXISTS `productos` (
 -- Volcando datos para la tabla pedidos.productos: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `productos` DISABLE KEYS */;
 INSERT INTO `productos` (`CodProd`, `Nombre`, `Descripcion`, `Peso`, `Precio`, `Stock`, `CodCat`, `CodEstado`) VALUES
-	(1, 'Harina', '8 paquetes de 1kg de harina cada uno', 8, 100, 1),
-	(2, 'Azúcar', '20 paquetes de 1kg cada uno', 20, 3, 1),
-	(3, 'Agua 0.5', '100 botellas de 0.5 litros cada una', 51, 100, 2),
-	(4, 'Agua 1.5', '20 botellas de 1.5 litros cada una', 31, 50, 2),
-	(5, 'Cerveza Alhambra tercio', '24 botellas de 33cl', 10, 0, 3),
-	(6, 'Vino tinto Rioja 0.75', '6 botellas de 0.75 ', 5.5, 10, 3);
+	
 /*!40000 ALTER TABLE `productos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla pedidos.restaurantes
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `CodUsu` int(11) NOT NULL,
   `Nombre` VARCHAR(30) NOT NULL,
+  `Correo` varchar(90) NOT NULL,
   `Clave` varchar(45) NOT NULL,
   `Pais` varchar(45) NOT NULL,
   `CP` int(5) DEFAULT NULL,
@@ -129,10 +133,10 @@ CREATE TABLE if NOT EXISTS `estadoProducto`(
 
 
 CREATE TABLE if NOT EXISTS `estadoPedido`(
-	`CodEstadoPedido` INT(2) NOT NULL,
+	`CodEstadoPedido` INT(3) NOT NULL,
 	`Descripcion` VARCHAR(20) NOT NULL,
 	PRIMARY KEY (`CodEstadoPedido`),
-);
+)ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
 
 
 CREATE TABLE if NOT EXISTS `historialPedidos`(
@@ -141,7 +145,8 @@ CREATE TABLE if NOT EXISTS `historialPedidos`(
 	`Descripcion` VARCHAR(100) NOT NULL,
 	`Fecha` DATE NOT NULL,
 	PRIMARY KEY (`CodHistorial`),
-);
+  CONSTRAINT `historialPedidos_ibfk_1` FOREIGN KEY (`CodHistorial`) REFERENCES `usuarios` (`CodUsu`),
+)ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
