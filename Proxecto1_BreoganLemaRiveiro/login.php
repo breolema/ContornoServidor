@@ -2,24 +2,26 @@
     session_start();
     $conexion=mysqli_connect("localhost","root","","supermercado");
 
-    if(isset($_GET["usuario"]) && isset($_GET["clave"])){
-        $usuario=$_GET["usuario"];
-        $clave=$_GET["clave"];
-        $sql="SELECT nombre,clave FROM usuarios WHERE usuario='$usuario'";
+    if(isset($_POST["usuario"]) && isset($_POST["clave"])){
+        $usuario=$_POST["usuario"];
+        $clave=$_POST["clave"];
+        $claveEncriptada = md5($clave);
+        $sql="SELECT nombre,clave FROM usuarios WHERE nombre='$usuario' && clave='$claveEncriptada' && activo=true";
         $res=$conexion->query($sql);
         if($res==false){
-            header("Location:entrada.php");
+            header("Location:inicioSesion.php");
         } else {
             $fila=$res->fetch_assoc();
             if($fila){
-                $_SESSION["usuario"]=$fila["usuario"];
-                $_SESSION["clave"]=$fila["clave"]; 
+                $claveSesion=$_SESSION["clave"];
+                $_SESSION["usuario"]=$fila["nombre"];
+                $claveSesion=$fila["clave"]; 
                 $res->close();
-                header("Location:Exercicio3-buzon.php");
+                header("Location:paginaCategorias.php");
             }
         }
     } else {
-        header("Location:Exercicio3-index.php");
+        header("Location:inicioSesion.php");
     }
 
 
