@@ -8,7 +8,7 @@
         $claveEncriptada = md5($clave);
         $sql="SELECT nombre,clave FROM usuarios WHERE nombre='$usuario' && clave='$claveEncriptada' && activo=true";
         $res=$conexion->query($sql);
-        if($res==false){
+        if($res->num_rows == 0){
             header("Location:inicioSesion.php");
         } else {
             $fila=$res->fetch_assoc();
