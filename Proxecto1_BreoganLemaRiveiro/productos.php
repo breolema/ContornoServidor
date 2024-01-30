@@ -51,27 +51,47 @@
             height: 50px;
         }
 
-        .container {
+        .productos {
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            margin-top: 20px;
         }
 
-        table {
-            border-collapse: collapse;
-            width: auto;
+        .producto {
+            width: calc(20% - 25px);
+            margin: 0 15px 30px;
+            text-align: center;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+        
+        .producto img {
+            width: 50%;
+            border-radius: 5px;
+        }
+        
+        .comprar {
+            margin-top: 10px;
+            font-size: 17px;
+            background-color: #4CAF50;
+            color: white; 
+            padding: 10px 20px; 
+            border: none;
+            border-radius: 5px; 
+            cursor: pointer;
+            text-decoration: none;
         }
 
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
+        a{
+            text-decoration: none;
         }
 
-        th {
-            background-color: #f2f2f2;
+        .comprar:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
@@ -94,27 +114,31 @@
                 exit;
             } else {
                 while ($fila = $result -> fetch_assoc()) {
-                    echo "<h1>Usted se encuentra en la seccion de ". $fila["nombre"] ."</h1>";
+                    echo "<h1>Usted se encuentra en la sección de ". $fila["nombre"] ."</h1>";
                 }
             }
 
-            $sql_Productos="SELECT codprod,nombre,descripcion,precio,stock,codcat FROM productos WHERE codcat=$codcat && codestado=1";
+            $sql_Productos="SELECT codprod,nombre,descripcion,precio,stock,codcat,rutaimagen FROM productos WHERE codcat=$codcat && codestado=1";
             $result = $conexion->query($sql_Productos);
-
+            
+            echo "<div class='productos'>";
             if ($result->num_rows > 0) {
-                echo "<table border=1 class='container'>";
-                echo "<tr><th>Producto</th><th>Descripción</th><th>Precio</th><th>Stock</th><th>Comprar</th></tr>";
                 while ($fila = $result -> fetch_assoc()) {
-                    echo "<tr>";
-                        echo "<td>". $fila["nombre"] ."</td>";
-                        echo "<td>". $fila["descripcion"] ."</td>";
-                        echo "<td>". $fila["precio"] ."</td>";
-                        echo "<td>". $fila["stock"] ."</td>";
-                        echo "<td></td>";
-                    echo "</tr>";
+                    echo '<div class="producto">';
+                    echo '<img src="' . $fila["rutaimagen"] . '">';
+                    echo '<div><u>' . $fila["nombre"] . '</u></div>';
+                    echo '<div>' . $fila["descripcion"] . '</div>';
+                    echo '<div>' . $fila["precio"] . '€</div>';
+                    echo '<div>' . $fila["stock"] . '</div>';
+                    echo "<form action='carrito.php' method='POST'>";
+                    echo '<input type="cantidad" name="cantidad">';
+                    echo '';
+                    echo '<input type="submit" value="Comprar" class="boton">';
+                    echo '</form>';
+                    echo '</div>';
                 }
-                echo "</table>";
-            }
+                echo '</div>';
+                }
         ?>
         </center>
 

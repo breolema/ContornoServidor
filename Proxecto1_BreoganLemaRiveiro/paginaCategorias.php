@@ -117,7 +117,6 @@
                     echo '<a href="productos.php?codCat=' . $fila["codcat"] . '"><div class="nombre">' . $fila["nombre"] . '</div></a>';
                     echo '</div>';
                 }
-            
                 echo '</div>';
             }
         ?>
