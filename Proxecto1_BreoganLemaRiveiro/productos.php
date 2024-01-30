@@ -131,9 +131,9 @@
                     echo '<div>' . $fila["precio"] . '€</div>';
                     echo '<div>' . $fila["stock"] . '</div>';
                     echo "<form action='carrito.php' method='POST'>";
-                    echo '<input type="cantidad" name="cantidad">';
-                    echo '';
-                    echo '<input type="submit" value="Comprar" class="boton">';
+                    echo '<input type="number" name="cantidad">';
+                    echo '<input id="codprod" name="codprod" type="hidden" value="' . $fila["codprod"] . '" />';
+                    echo '<br><input type="submit" value="Comprar" class="comprar">';
                     echo '</form>';
                     echo '</div>';
                 }
