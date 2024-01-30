@@ -17,7 +17,7 @@
                 $_SESSION["usuario"]=$fila["nombre"];
                 $claveSesion=$fila["clave"]; 
                 $res->close();
-                header("Location:paginaCategorias.php");
+                header("Location:inicio.php");
             }
         }
     } else {

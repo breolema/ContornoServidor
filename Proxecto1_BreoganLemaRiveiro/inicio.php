@@ -1,8 +1,9 @@
 <?php
      session_start();
 
-    if(isset($_SESSION["usuario"])==false){
-        header("Location:inicioSesion.php");
+     if (!isset($_SESSION["usuario"])) {
+        header("Location: inicioSesion.php");
+        exit;
     }
 ?>
 
@@ -49,16 +50,56 @@
             padding: 10px;
             height: 50px;
         }
-    </style>
-</head>
-    <body>
-        <nav>
+        .tarjeta-registro {
+        background-color: #333;
+        padding: 20px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .tarjeta-registro h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: red;
+    }
+
+    .tarjeta-registro ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .tarjeta-registro li {
+        font-size: 16px;
+        margin: 0 10px 10px 0;
+        padding: 5px;
+        border-radius: 5px;
+        background-color: red;
+    }
+</style>
+
+<body>
+    
+<nav>
             <img src="imagenes/icono.png" alt="logo">
             <a href="">Inicio</a>
-            <a href="">Categorias</a>
+            <a href="paginaCategorias.php">Categorias</a>
             <a href="">Ofertas</a>
             <a href="">Información</a>
         </nav>
+    <section class="tarjeta-registro">
+        <h2>¡Consigue tu tarjeta y tendrás más ventajas!</h2>
+        <ul>
+            <li>Promociones exclusivas</li>
+            <li>Vales ahorro personalizados</li>
+            <li>La app con todas las ventajas en tu bolsillo</li>
+            <li>Te escuchamos: Tu opinión cuenta</li>
+            <li>Y además, viajes y regalos ...</li>
+        </ul>
+    </section>
+</body>
 
-    </body>
 </html>
