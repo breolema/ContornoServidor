@@ -13,7 +13,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Páxina Principal</title>
+    <title>Categorias</title>
     <style>
 
         body{
@@ -107,14 +107,14 @@
 
         <?php
             echo "<div class='categorias'>";
-            $sql="SELECT nombre,rutaimagen FROM categorias WHERE Activa=TRUE";
+            $sql="SELECT codcat,nombre,rutaimagen FROM categorias WHERE Activa=TRUE";
             $contador=0;
             $result = $conexion->query($sql);
             if ($result->num_rows > 0) {
                 while ($fila = $result -> fetch_assoc()) {
                     echo '<div class="categoria">';
                     echo '<img src="' . $fila["rutaimagen"] . '">';
-                    echo '<a href="subcategorias.php"><div class="nombre">' . $fila["nombre"] . '</div></a>';
+                    echo '<a href="productos.php?codCat=' . $fila["codcat"] . '"><div class="nombre">' . $fila["nombre"] . '</div></a>';
                     echo '</div>';
                 }
             

@@ -12,7 +12,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Páxina Principal</title>
+    <title>Inicio</title>
     <style>
 
         body{
@@ -58,9 +58,9 @@
     }
 
     .tarjeta-registro h2 {
-        font-size: 24px;
+        font-size: 26px;
         margin-bottom: 10px;
-        color: red;
+        color: #4CAF50;
     }
 
     .tarjeta-registro ul {
@@ -73,11 +73,11 @@
     }
 
     .tarjeta-registro li {
-        font-size: 16px;
+        font-size: 17px;
         margin: 0 10px 10px 0;
         padding: 5px;
         border-radius: 5px;
-        background-color: red;
+        background-color: #4CAF50;
     }
 </style>
 
@@ -85,7 +85,7 @@
     
 <nav>
             <img src="imagenes/icono.png" alt="logo">
-            <a href="">Inicio</a>
+            <a href="inicio.php">Inicio</a>
             <a href="paginaCategorias.php">Categorias</a>
             <a href="">Ofertas</a>
             <a href="">Información</a>
