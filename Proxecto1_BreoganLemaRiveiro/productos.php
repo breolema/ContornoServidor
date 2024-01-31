@@ -107,23 +107,23 @@
         <?php
             $codcat=$_GET["codCat"];
             $sql_Categorias = "SELECT nombre FROM categorias WHERE codcat = $codcat && activa=TRUE";
-            $result = $conexion->query($sql_Categorias);
+            $result_Categorias = $conexion->query($sql_Categorias);
 
-            if ($result->num_rows == 0) {
+            if ($result_Categorias->num_rows == 0) {
                 header("Location: paginaCategorias.php");
                 exit;
             } else {
-                while ($fila = $result -> fetch_assoc()) {
+                while ($fila = $result_Categorias -> fetch_assoc()) {
                     echo "<h1>Usted se encuentra en la sección de ". $fila["nombre"] ."</h1>";
                 }
             }
 
             $sql_Productos="SELECT codprod,nombre,descripcion,precio,stock,codcat,rutaimagen FROM productos WHERE codcat=$codcat && codestado=1";
-            $result = $conexion->query($sql_Productos);
+            $result_Productos = $conexion->query($sql_Productos);
             
             echo "<div class='productos'>";
-            if ($result->num_rows > 0) {
-                while ($fila = $result -> fetch_assoc()) {
+            if ($result_Productos->num_rows > 0) {
+                while ($fila = $result_Productos -> fetch_assoc()) {
                     echo '<div class="producto">';
                     echo '<img src="' . $fila["rutaimagen"] . '">';
                     echo '<div><u>' . $fila["nombre"] . '</u></div>';

@@ -19,8 +19,9 @@ INSERT INTO `categorias` (`Nombre`, `Activa`,`RutaImagen`) VALUES
 ('Verduleria', TRUE, 'imagenes/categorias/verduleria.jpg'),
 ('Refrescos', TRUE, 'imagenes/categorias/refrescos.jpg'),
 ('Licoreria/Cerveceria', TRUE, 'imagenes/categorias/licoreria.jpg'),
-('Lacteos', TRUE, 'imagenes/categorias/lacteos.jpg'),
-('Cuidado personal', TRUE, 'imagenes/categorias/cuidadopersonal.jpg');
+('Lacteos', False, 'imagenes/categorias/lacteos.jpg');
+
+SELECT codcat,nombre,rutaimagen FROM categorias WHERE Activa=TRUE;
 
 
 CREATE TABLE IF NOT EXISTS `pedidos` (
@@ -33,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   KEY `CodUsuario` (`CodUsuario`),
   CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`CodUsuario`) REFERENCES `usuarios` (`CodUsu`),
   CONSTRAINT `pedidos_ibfk_2` FOREIGN KEY (`CodEstado`) REFERENCES `estadoPedido` (`CodEstadoPedido`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=LATIN1;
+) ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
 
 CREATE TABLE IF NOT EXISTS `pedidosproductos` (
   `CodPedProd` int(11) NOT NULL AUTO_INCREMENT,
@@ -46,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `pedidosproductos` (
   KEY `CodProd` (`CodProd`),
   CONSTRAINT `pedidosproductos_ibfk_1` FOREIGN KEY (`CodPed`) REFERENCES `pedidos` (`CodPed`),
   CONSTRAINT `pedidosproductos_ibfk_2` FOREIGN KEY (`CodProd`) REFERENCES `productos` (`CodProd`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=LATIN1;
+) ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
 
 CREATE TABLE IF NOT EXISTS `productos` (
   `CodProd` int(11) NOT NULL AUTO_INCREMENT,
@@ -56,14 +57,21 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `Stock` int(11) NOT NULL,
   `CodCat` int(11) NOT NULL,
   `CodEstado` INT(11) NOT NULL,
+  `RutaImagen` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`CodProd`),
   CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`CodCat`) REFERENCES `categorias` (`CodCat`),
   CONSTRAINT `productos_ibfk_2` FOREIGN KEY (`CodEstado`) REFERENCES `estadoProducto` (`CodEstadoProducto`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=LATIN1;
+) ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
 
 
-INSERT INTO `productos` (`Nombre`,`Descripcion`,`Precio`,`Stock`,`CodCat`,`CodEstado`) VALUES
-('Solomillo', 'Solomillo de cerdo 1kg', 4.00, 50, 1,1);
+
+INSERT INTO `productos` (`Nombre`,`Descripcion`,`Precio`,`Stock`,`CodCat`,`CodEstado`,`RutaImagen`) VALUES
+('Solomillo', 'Solomillo de cerdo 1kg', 4.00, 50, 1,1,'imagenes/productos/solomillo.jpg'),
+('Chorizo', '200g de chorizo', 2.50, 50, 2,1,'imagenes/productos/chorizo.jpg'),
+('Salmon', 'Lomo de salmon', 7.95, 50, 3,1,'imagenes/productos/salmon.jpg');
+
+SELECT * FROM productos WHERE codcat=1 && codestado=1;
+
 
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `CodUsu` int(11) NOT NULL AUTO_INCREMENT,
@@ -78,13 +86,17 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `Activo` BOOLEAN NOT NULL,
   PRIMARY KEY (`CodUsu`),
   UNIQUE KEY `UN_RES_COR` (`Correo`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=LATIN1;
+) ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
 
 INSERT INTO `usuarios` (`Nombre`, `Correo`, `Clave`,`Pais`, `CP`, `Ciudad`, `Direccion`, `Rol`, `Activo`) VALUES
-('Breo', 'breo@gmail.com', 'e8dc8ccd5e5f9e3a54f07350ce8a2d3d', 'España', '15270', 'Cee', 'Cee', 1, TRUE);
+('Breo', 'breo@gmail.com', 'e8dc8ccd5e5f9e3a54f07350ce8a2d3d', 'España', '15270', 'Cee', 'Cee', 1, TRUE),
+('Cliente','cliente@gmail.com', 'e8dc8ccd5e5f9e3a54f07350ce8a2d3d', 'España', '15270', 'Cee', 'Cee', 2, TRUE);
+
 
 SELECT nombre,clave FROM usuarios WHERE Nombre='Breo'&& activo=true;
 DELETE FROM usuarios WHERE Nombre='Breo';
+
+
 
 CREATE TABLE IF NOT EXISTS `roles` (
   `CodRol` INT(2) NOT NULL,
@@ -96,6 +108,8 @@ INSERT INTO `roles` (`CodRol`, `Descripcion`) VALUES
 (1,'Administrador'),
 (2, 'Cliente');
 
+
+
 CREATE TABLE IF NOT EXISTS `estadoProducto` (
   `CodEstadoProducto` INT(2) NOT NULL,
   `Descripcion` VARCHAR(20) NOT NULL,
@@ -105,11 +119,19 @@ CREATE TABLE IF NOT EXISTS `estadoProducto` (
 INSERT INTO `estadoProducto` (`CodEstadoProducto`,`Descripcion`) VALUES
 (1,'Activo'),(2,'Descactivado');
 
+
+
 CREATE TABLE IF NOT EXISTS `estadoPedido` (
   `CodEstadoPedido` INT(3) NOT NULL,
   `Descripcion` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`CodEstadoPedido`)
 ) ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
+
+INSERT INTO estadopedido (`CodEstadoPedido`,`Descripcion`) VALUES 
+(1,'Activo'),
+(2,'Desactivo');
+
+
 
 CREATE TABLE IF NOT EXISTS `historialPedidos` (
   `CodHistorial` int(11) NOT NULL,
