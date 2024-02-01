@@ -1,0 +1,41 @@
+.categorias {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.categoria {
+    width: calc(25% - 30px);
+    margin: 0 15px 30px;
+    text-align: center;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #333;
+}
+
+.categoria img {
+    width: 50%;
+    border-radius: 5px;
+}
+
+.nombre {
+    margin-top: 10px;
+    font-size: 17px;
+    background-color: #4CAF50;
+    color: white; 
+    padding: 10px 20px; 
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+.nombre:hover {
+    background-color: #45a049;
+}

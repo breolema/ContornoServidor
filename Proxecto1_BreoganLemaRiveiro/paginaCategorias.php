@@ -14,87 +14,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Categorias</title>
-    <style>
-
-        body{
-            margin: 0px;
-            text-align: center;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #fce4c6;
-        }
-
-        nav {
-            background-color: #333;
-            overflow: hidden;
-        }
-        
-
-        nav a {
-            float: left;
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 25px 16px;
-            text-decoration: none;
-        }
-
-        nav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        nav img {
-            float: left;
-            padding: 10px;
-            height: 50px;
-        }
-
-        .categorias {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        
-        .categoria {
-            width: calc(25% - 30px);
-            margin: 0 15px 30px;
-            text-align: center;
-            border: 2px solid #333;
-            border-radius: 10px;
-            padding: 10px;
-            background-color: #333;
-        }
-        
-        .categoria img {
-            width: 50%;
-            border-radius: 5px;
-        }
-        
-        .nombre {
-            margin-top: 10px;
-            font-size: 17px;
-            background-color: #4CAF50;
-            color: white; 
-            padding: 10px 20px; 
-            border: none;
-            border-radius: 5px; 
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        a{
-            text-decoration: none;
-        }
-
-        .nombre:hover {
-            background-color: #45a049;
-        }
-        
-    </style>
+    <link rel="stylesheet" href="css/estilos_Categorias.css">
+    <link rel="stylesheet" href="css/comunTodos.css">
 </head>
     <body>
         <nav>
@@ -105,6 +26,7 @@
             <a href="">Información</a>
         </nav>
 
+<!--Enseñas as categorias activas-->
         <?php
             echo "<div class='categorias'>";
             $sql="SELECT codcat,nombre,rutaimagen FROM categorias WHERE Activa=TRUE";

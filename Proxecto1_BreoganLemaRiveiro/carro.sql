@@ -89,12 +89,15 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
 
 INSERT INTO `usuarios` (`Nombre`, `Correo`, `Clave`,`Pais`, `CP`, `Ciudad`, `Direccion`, `Rol`, `Activo`) VALUES
-('Breo', 'breo@gmail.com', 'e8dc8ccd5e5f9e3a54f07350ce8a2d3d', 'España', '15270', 'Cee', 'Cee', 1, TRUE),
-('Cliente','cliente@gmail.com', 'e8dc8ccd5e5f9e3a54f07350ce8a2d3d', 'España', '15270', 'Cee', 'Cee', 2, TRUE);
+('Breo', 'breo@gmail.com', 'e8dc8ccd5e5f9e3a54f07350ce8a2d3d', 'España', 15270, 'Cee', 'Cee', 1, TRUE),
+('Cliente','cliente@gmail.com', 'e8dc8ccd5e5f9e3a54f07350ce8a2d3d', 'España', 15270, 'Cee', 'Cee', 2, TRUE);
 
 
-SELECT nombre,clave FROM usuarios WHERE Nombre='Breo'&& activo=true;
+SELECT nombre,clave FROM usuarios WHERE Nombre='Breo'&& activo=TRUE;
+SELECT * FROM usuarios;
 DELETE FROM usuarios WHERE Nombre='Breo';
+
+SELECT usuarios.*, roles.Descripcion AS RolDescripcion FROM usuarios INNER JOIN roles ON roles.CodRol = usuarios.Rol;
 
 
 
@@ -107,6 +110,10 @@ CREATE TABLE IF NOT EXISTS `roles` (
 INSERT INTO `roles` (`CodRol`, `Descripcion`) VALUES
 (1,'Administrador'),
 (2, 'Cliente');
+
+SELECT descripcion FROM roles;
+
+SELECT roles.Descripcion FROM usuarios,roles WHERE roles.CodRol=usuarios.Rol;
 
 
 
@@ -141,12 +148,3 @@ CREATE TABLE IF NOT EXISTS `historialPedidos` (
   PRIMARY KEY (`CodHistorial`),
   CONSTRAINT `historialPedidos_ibfk_1` FOREIGN KEY (`CodUsu`) REFERENCES `usuarios` (`CodUsu`)
 ) ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
-
-
-
-
-
-
-
-
-

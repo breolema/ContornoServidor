@@ -7,108 +7,17 @@
     }
 
     $conexion = mysqli_connect("localhost", "root", "", "supermercado");
-    $sql="SELECT descripcion FROM roles";
-    $result = $conexion->query($sql); 
+    
     ?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <title>Alta clientes</title>
-    <style>
-      body {
-        margin: 0px;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        margin: 0;
-        background-color: #fce4c6;
-      }
+    
+    <link rel="stylesheet" href="css/estilos_AltaUsers.css">
+    <link rel="stylesheet" href="css/comunTodos.css">
 
-      nav {
-        background-color: #333;
-        overflow: hidden;
-      }
-
-      nav a {
-        float: left;
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 25px 16px;
-        text-decoration: none;
-      }
-
-      nav a:hover {
-        background-color: #ddd;
-        color: black;
-      }
-
-      nav img {
-        float: left;
-        padding: 10px;
-        height: 50px;
-      }
-
-      form {
-        margin: 20px auto;
-        width: 80%;
-        max-width: 600px;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-
-      form label {
-        display: block;
-        text-align: left;
-        margin-bottom: 8px;
-      }
-
-      form input[type="text"],
-      form input[type="password"],
-      form input[type="number"],
-      form select {
-        width: calc(100% - 20px);
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-
-      form input[type="checkbox"] {
-        margin-right: 5px;
-        display: flex;
-      }
-
-      form input[type="submit"] {
-        background-color: #333;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        border-radius: 5px;
-      }
-
-      form input[type="submit"]:hover {
-        background-color: #555;
-      }
-
-      .checkbox-container {
-        display: flex;
-        align-items: center;
-      }
-
-      .checkbox-container label {
-        margin-top: 7px;
-      }
-
-      .checkbox-container input[type="checkbox"] {
-        margin-right: 5px;
-      }
-    </style>
   </head>
   <body>
     <nav>
@@ -118,12 +27,13 @@
       <a href="">Mdificar productos</a>
       <a href=""></a>
     </nav>
+    <!--Formulario creacion usuarios-->
     <form method="POST">
       <label for="nombre">Nombre:</label>
       <input type="text" id="nombre" name="nombre" placeholder="Nombre" />
       <label for="correo">Correo:</label>
       <input type="text" id="correo" name="correo" placeholder="Correo" />
-      <label for="clave">Contraseña:</label><br />
+      <label for="clave">Contraseña:</label>
       <input type="password" id="clave" name="clave" placeholder="Contraseña" />
       <label for="pais">Pais:</label>
       <input type="text" id="pais" name="pais" placeholder="Pais" />
@@ -134,22 +44,90 @@
       <label for="direccion">Dirección:</label>
       <input type="text" id="direccion" name="direccion" placeholder="Ciudad" />
       <?php
-             if ($result->num_rows > 0) { 
-                $contador=0; 
+      $sql_Roles="SELECT codrol,descripcion FROM roles";
+      $result_Roles = $conexion->query($sql_Roles); 
+             if ($result_Roles->num_rows > 0) { 
                 echo "<label for='rol'>Rol usuario:</label>"; 
                 echo "<select id='rol' name='rol'>"; 
-                while ($fila = $result -> fetch_assoc()) { 
-                    echo "<option value='$contador'>" . $fila["descripcion"] . "</option>"; 
-                    $contador++; 
+                while ($fila = $result_Roles -> fetch_assoc()) { 
+                    echo "<option value='" . $fila["codrol"] . "'>" . $fila["descripcion"] . "</option>"; 
                 } 
                 echo "</select>"; 
             } 
             ?>
       <div class="checkbox-container">
-        <input type="checkbox" id="activo" name="activo" value="Activo" />
-        <label for="activo">Activar usuario</label>
+        <input type="checkbox" id="activo" name="activo" checked="checked"/>
+        <label for="activo">Usuario activo</label>
       </div>
       <input type="submit" value="Dar de alta" />
     </form>
+
+    <!--Inserccion de usuarios-->
+      <?php
+        $nombre=$_POST["nombre"];
+        $correo=$_POST["correo"];
+        $clave=$_POST["clave"];
+        $claveCifrada=md5($clave);
+        $pais=$_POST["pais"];
+        $cp=$_POST["cp"];
+        $ciudad=$_POST["ciudad"];
+        $direccion=$_POST["direccion"];
+        $rol=$_POST["rol"];
+        if (isset($_POST['activo'])) {
+          $activo = 1;
+        } else {
+          $activo = 0;
+        }
+      
+        $insert="INSERT INTO `usuarios` (`Nombre`, `Correo`, `Clave`,`Pais`, `CP`, `Ciudad`, `Direccion`, `Rol`, `Activo`) VALUES
+        ('$nombre', '$correo', '$claveCifrada', '$pais', $cp, '$ciudad', '$direccion', $rol, $activo)";
+
+        $result_Insert = $conexion->query($insert);
+
+        if ($result_Insert) {
+          $mensaje = "Se añadió el usuario correctamente.";
+        } else {
+          $mensaje = "Error al añadir el usuario, compruebe si esta cubriendo los campos correctamente.";
+        }
+
+      ?>
+      <script>
+          var mensaje = "<?php echo $mensaje; ?>";
+          alert(mensaje);
+      </script>
+
+    <!--Tabla que enseña os usuarios-->
+      <?php
+        $sql_Usuarios="SELECT usuarios.*, roles.Descripcion AS tipoRol FROM usuarios INNER JOIN roles ON roles.CodRol = usuarios.Rol";
+        $result_Usuarios = $conexion->query($sql_Usuarios);
+        
+        if ($result_Usuarios->num_rows > 0) {
+          echo "<table border=1>";
+          echo "<tr>";
+          echo "<th>Codigo</th><th>Nombre</th><th>Correo</th><th>Pais</th><th>Direccion</th>
+          <th>Ciudad</th><th>Codigo Postal</th><th>Rol</th><th>Activo</th><th>Modificar</th>";
+          echo "</tr>";
+          while ($fila = $result_Usuarios -> fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $fila['CodUsu'] . "</td>";
+            echo "<td>" . $fila['Nombre'] . "</td>";
+            echo "<td>" . $fila['Correo'] . "</td>";
+            echo "<td>" . $fila['Pais'] . "</td>";
+            echo "<td>" . $fila['Direccion'] . "</td>";
+            echo "<td>" . $fila['Ciudad'] . "</td>";
+            echo "<td>" . $fila['CP'] . "</td>";
+            echo "<td>" . $fila['tipoRol'] . "</td>";
+            if($fila['Activo']==1){
+              echo "<td>Activo</td>";
+            }else {
+              echo "<td>Desactivo</td>";
+            }
+            echo "<td><a href='modificarUsuario.php'><button>Modificar</button></a></td>";
+            echo "</tr>";
+          }
+          echo "</table>";
+        }
+
+      ?>
   </body>
 </html>
