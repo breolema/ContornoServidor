@@ -22,6 +22,7 @@
   <body>
     <nav>
       <img src="imagenes/icono.png" alt="logo" />
+      <a href="paginaGeneralAdmin.php">General</a>
       <a href="">Alta usuarios</a>
       <a href="">Modificar categorias</a>
       <a href="">Mdificar productos</a>
@@ -42,7 +43,7 @@
       <label for="ciudad">Ciudad:</label>
       <input type="text" id="ciudad" name="ciudad" placeholder="Ciudad" />
       <label for="direccion">Dirección:</label>
-      <input type="text" id="direccion" name="direccion" placeholder="Ciudad" />
+      <input type="text" id="direccion" name="direccion" placeholder="Dirección" />
       <?php
       $sql_Roles="SELECT codrol,descripcion FROM roles";
       $result_Roles = $conexion->query($sql_Roles); 
@@ -64,6 +65,7 @@
 
     <!--Inserccion de usuarios-->
       <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nombre=$_POST["nombre"];
         $correo=$_POST["correo"];
         $clave=$_POST["clave"];
@@ -79,6 +81,7 @@
           $activo = 0;
         }
       
+      
         $insert="INSERT INTO `usuarios` (`Nombre`, `Correo`, `Clave`,`Pais`, `CP`, `Ciudad`, `Direccion`, `Rol`, `Activo`) VALUES
         ('$nombre', '$correo', '$claveCifrada', '$pais', $cp, '$ciudad', '$direccion', $rol, $activo)";
 
@@ -89,6 +92,7 @@
         } else {
           $mensaje = "Error al añadir el usuario, compruebe si esta cubriendo los campos correctamente.";
         }
+      }
 
       ?>
       <script>

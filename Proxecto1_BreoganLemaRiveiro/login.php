@@ -19,7 +19,7 @@ if (isset($_POST["usuario"]) && isset($_POST["clave"])) {
             $_SESSION["rol"] = $rol;
             $res->close();
             if ($rol == 1) {
-                header("Location: darAltaUsuarios.php");
+                header("Location: paginaGeneralAdmin.php");
             } else {
                 header("Location: inicio.php");
             }
