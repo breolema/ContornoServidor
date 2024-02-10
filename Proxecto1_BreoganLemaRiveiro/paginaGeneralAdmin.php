@@ -22,7 +22,7 @@
       <a href="paginaGeneralAdmin.php">General</a>
       <a href="darAltaUsuarios.php">Alta usuarios</a>
       <a href="categoriasAdmin.php">Modificar categorias</a>
-      <a href="productosAdmin.php">Mdificar productos</a>
+      <a href="productosAdmin.php">Modificar productos</a>
       <a href=""></a>
     </nav>
 

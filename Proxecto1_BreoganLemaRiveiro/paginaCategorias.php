@@ -30,7 +30,6 @@
         <?php
             echo "<div class='categorias'>";
             $sql="SELECT codcat,nombre,rutaimagen FROM categorias WHERE Activa=TRUE";
-            $contador=0;
             $result = $conexion->query($sql);
             if ($result->num_rows > 0) {
                 while ($fila = $result -> fetch_assoc()) {
