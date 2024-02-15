@@ -24,7 +24,7 @@
       <a href="paginaGeneralAdmin.php">General</a>
       <a href="darAltaUsuarios.php">Alta usuarios</a>
       <a href="categoriasAdmin.php">Modificar categorias</a>
-      <a href="productosAdmin.php">Mdificar productos</a>
+      <a href="productosAdmin.php">Modificar productos</a>
       <a href=""></a>
     </nav>
         <center>
@@ -43,7 +43,7 @@
                     echo '<div>' . $fila["stock"] . '</div>';
                     echo "<form action='modificarProductos.php' method='POST'>";
                     echo '<input id="codprod" name="codprod" type="hidden" value="' . $fila["codprod"] . '" />';
-                    echo '<br><input type="submit" value="Editar" class="comprar">';
+                    echo '<br><input type="submit" value="Editar" class="editar">';
                     echo '</form>';
                     echo '</div>';
                 }

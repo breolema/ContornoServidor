@@ -25,7 +25,7 @@
       <a href="paginaGeneralAdmin.php">General</a>
       <a href="darAltaUsuarios.php">Alta usuarios</a>
       <a href="categoriasAdmin.php">Modificar categorias</a>
-      <a href="productosAdmin.php">Mdificar productos</a>
+      <a href="productosAdmin.php">Modificar productos</a>
       <a href=""></a>
     </nav>
     <!--Formulario creacion usuarios-->
@@ -106,7 +106,7 @@
         $cp=$_GET["cp"];
         $ciudad=$_GET["ciudad"];
         $direccion=$_GET["direccion"];
-        $rol=$_GET["rol"];
+        $rol=$_GET["tipoRol"];
         if (isset($_GET['activo'])) {
           $activo = 1;
         } else {
@@ -185,7 +185,7 @@
             }else {
               echo "<td>Desactivo</td>";
             }
-            echo "<td><a href='modificarUsuario.php'><button>Modificar</button></a></td>";
+            echo "<td><a href='darAltaUsuarios.php?nombre=" . $fila['Nombre'] . "&correo=" . $fila['Correo'] . "&pais=" . $fila['Pais'] . "&direccion=" . $fila['Direccion'] . "&ciudad=" . $fila['Ciudad'] . "&cp=" . $fila['CP'] . "&=tipoRol" . $fila['tipoRol'] . "'><button>Modificar</button></a></td>";
             echo "</tr>";
           }
           echo "</table>";
