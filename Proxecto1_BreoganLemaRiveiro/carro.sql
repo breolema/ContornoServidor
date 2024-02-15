@@ -92,6 +92,9 @@ INSERT INTO `usuarios` (`Nombre`, `Correo`, `Clave`,`Pais`, `CP`, `Ciudad`, `Dir
 ('Breo', 'breo@gmail.com', 'e8dc8ccd5e5f9e3a54f07350ce8a2d3d', 'España', 15270, 'Cee', 'Cee', 1, TRUE),
 ('Cliente','cliente@gmail.com', 'e8dc8ccd5e5f9e3a54f07350ce8a2d3d', 'España', 15270, 'Cee', 'Cee', 2, TRUE);
 
+delete from usuarios;
+ALTER TABLE usuarios AUTO_INCREMENT = 1;
+
 
 SELECT nombre,clave FROM usuarios WHERE Nombre='Breo'&& activo=TRUE;
 SELECT * FROM usuarios;
