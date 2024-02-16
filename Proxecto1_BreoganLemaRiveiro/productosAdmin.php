@@ -13,7 +13,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Productos</title>
+    <title>Modificar Productos</title>
     <link rel="stylesheet" href="css/estilos_Productos.css">
     <link rel="stylesheet" href="css/comunTodos.css">
     

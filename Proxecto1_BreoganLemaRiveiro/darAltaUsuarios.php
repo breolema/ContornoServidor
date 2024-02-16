@@ -7,7 +7,7 @@
     }
 
     $conexion = mysqli_connect("localhost", "root", "", "supermercado");
-    
+    error_reporting(E_ALL ^ E_WARNING);
     ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -30,8 +30,82 @@
     </nav>
     <!--Formulario creacion usuarios-->
     <?php
-    //Si o formulario non ten datos facemos que este se pinte vacio
-      if(!isset($_GET["nombre"])||!isset($_GET["correo"])||!isset($_GET["clave"])||!isset($_GET["pais"])||!isset($_GET["cp"])||!isset($_GET["ciudad"])||!isset($_GET["direccion"])||!isset($_GET["rol"])||!isset($_GET["activo"])){
+    //Si o formulario recibe datos por get facemos que os pinte
+    if(isset($_GET["codUsu"]) && isset($_GET["nombre"]) && isset($_GET["correo"]) && isset($_GET["pais"]) && isset($_GET["cp"]) && isset($_GET["ciudad"]) && isset($_GET["direccion"]) && isset($_GET["tipoRol"]) && isset($_GET["activo"])) {
+      $codUsu=$_GET["codUsu"];
+      $nombre=$_GET["nombre"];
+      $correo=$_GET["correo"];
+      $pais=$_GET["pais"];
+      $cp=$_GET["cp"];
+      $ciudad=$_GET["ciudad"];
+      $direccion=$_GET["direccion"];
+      if (isset($_GET['tipoRol'])) {
+        if ($_GET['tipoRol']=="Administrador"){
+          $rol=1;
+        } else {
+          $rol=2;
+        }
+      }
+
+      $activo = $_GET["activo"];
+
+      //Aqui se pintaran os datos dos usuarios que queiramos modificar
+      echo '<form method="POST" action="modificarUsuarios.php">';
+      echo '<label for="nombre">Nombre:</label>';
+      echo '<input type="text" id="nombre" name="nombre" value="' . $nombre . '" />';
+      echo '<label for="correo">Correo:</label>';
+      echo '<input type="text" id="correo" name="correo" value="' . $correo . '" />';
+      echo '<label for="clave">Contraseña:</label>';
+      echo '<input type="password" id="clave" name="clave"/>';
+      echo '<label for="pais">Pais:</label>';
+      echo '<input type="text" id="pais" name="pais" value="' . $pais . '" />';
+      echo '<label for="cp">Codigo Postal:</label>';
+      echo '<input type="number" id="cp" name="cp" value="' . $cp . '" />';
+      echo '<label for="ciudad">Ciudad:</label>';
+      echo '<input type="text" id="ciudad" name="ciudad" value="' . $ciudad . '" />';
+      echo '<label for="direccion">Dirección:</label>';
+      echo '<input type="text" id="direccion" name="direccion" value="' . $direccion . '" />';
+      echo "<label for='rol'>Rol usuario:</label>"; 
+      echo "<select id='rol' name='rol'>";
+      
+      
+      $sql_Roles="SELECT codrol,descripcion FROM roles";
+      $result_Roles = $conexion->query($sql_Roles); 
+      while ($fila = $result_Roles -> fetch_assoc()) {
+        $codrol = $fila["codrol"];
+        $descripcion = $fila["descripcion"];
+        if ($codrol == $rol) {
+          echo "<option value='$codrol' selected>$descripcion</option>";
+        } else {
+          echo "<option value='$codrol'>$descripcion</option>";
+        }
+      } 
+      echo '</select>'; 
+      echo '<div class="checkbox-container">';
+      if ($activo == 1) {
+        echo '<input type="checkbox" id="activo" name="activo" checked />';
+    } else {
+        echo '<input type="hidden" name="activo" value="0" />';
+        echo '<input type="checkbox" id="activo" name="activo" />';
+    }
+      echo '<label for="activo">Usuario activo</label>';
+      echo '</div>';
+      echo '<input type="hidden" name="codUsu" value="' . $codUsu . '" />';
+      echo '<input type="submit" value="Actualizar" />';
+      echo '</form>';
+
+      if (isset($_GET['mensaje'])) {
+        echo '<script>';
+        echo 'var mensaje = "' . $_GET['mensaje'] . '";';
+        echo 'alert(mensaje);';
+        echo '</script>';
+    }
+
+    
+      } else { //No caso de que non reciba datos este vaise pintar
+
+
+        
         echo '<form method="POST">';
         echo '<label for="nombre">Nombre:</label>';
         echo '<input type="text" id="nombre" name="nombre" placeholder="Nombre" />';
@@ -96,65 +170,6 @@
         echo 'alert(mensaje)';
         echo  '</script>';
 
-      } else { //No caso de que queiramos modificar algún usuario mandamos os datos pola cabeceira no boton da tabla de abaixo
-
-        $nombre=$_GET["nombre"];
-        $correo=$_GET["correo"];
-        //$clave=$_GET["clave"];
-        //$claveCifrada=md5($clave);
-        $pais=$_GET["pais"];
-        $cp=$_GET["cp"];
-        $ciudad=$_GET["ciudad"];
-        $direccion=$_GET["direccion"];
-        $rol=$_GET["tipoRol"];
-        if (isset($_GET['activo'])) {
-          $activo = 1;
-        } else {
-          $activo = 0;
-        }
-
-        echo '<form method="POST">';
-        echo '<label for="nombre">Nombre:</label>';
-        echo '<input type="text" id="nombre" name="nombre" >' . $nombre. ' </input>';
-        echo '<label for="correo">Correo:</label>';
-        echo '<input type="text" id="correo" name="correo" >' . $correo. ' </input>';
-        echo '<label for="clave">Contraseña:</label>';
-        echo '<input type="password" id="clave" name="clave" >' . $clave. ' </input>';
-        echo '<label for="pais">Pais:</label>';
-        echo '<input type="text" id="pais" name="pais"  >' . $pais. ' </input>';
-        echo '<label for="cp">Codigo Postal:</label>';
-        echo '<input type="number" id="cp" name="cp" >' . $cp. ' </input>';
-        echo '<label for="ciudad">Ciudad:</label>';
-        echo '<input type="text" id="ciudad" name="ciudad" >' . $ciudad. ' </input>';
-        echo '<label for="direccion">Dirección:</label>';
-        echo '<input type="text" id="direccion" name="direccion" >' . $direccion. ' </input>';
-        $sql_Roles="SELECT codrol,descripcion FROM roles";
-        $result_Roles = $conexion->query($sql_Roles); 
-               if ($result_Roles->num_rows > 0) { 
-                  echo "<label for='rol'>Rol usuario:</label>"; 
-                  echo "<select id='rol' name='rol'>"; 
-                  while ($fila = $result_Roles -> fetch_assoc()) {
-                  $codrol = $fila["codrol"];
-                  $descripcion = $fila["descripcion"];
-                  if ($codrol == $_GET["rol"]) {
-                    echo "<option value='$codrol' selected>$descripcion</option>";
-                } else {
-                    echo "<option value='$codrol'>$descripcion</option>";
-                }
-                  } 
-                  echo "</select>"; 
-              } 
-        echo '<div class="checkbox-container">';
-        echo '<input type="checkbox" id="activo" name="activo" ';
-        if ($_GET["activo"] == 1) {
-              echo 'checked';
-        }
-        echo '/>';
-        echo '<label for="activo">Usuario activo</label>';
-        echo '</div>';
-        echo '<input type="submit" value="Dar de alta" />';
-        echo '</form>';
-
       }
     ?>
         
@@ -185,7 +200,7 @@
             }else {
               echo "<td>Desactivo</td>";
             }
-            echo "<td><a href='darAltaUsuarios.php?nombre=" . $fila['Nombre'] . "&correo=" . $fila['Correo'] . "&pais=" . $fila['Pais'] . "&direccion=" . $fila['Direccion'] . "&ciudad=" . $fila['Ciudad'] . "&cp=" . $fila['CP'] . "&=tipoRol" . $fila['tipoRol'] . "'><button>Modificar</button></a></td>";
+            echo "<td><a href='darAltaUsuarios.php?codUsu=" . $fila['CodUsu'] . "&nombre=" . $fila['Nombre'] . "&correo=" . $fila['Correo'] . "&pais=" . $fila['Pais'] . "&direccion=" . $fila['Direccion'] . "&ciudad=" . $fila['Ciudad'] . "&cp=" . $fila['CP'] . "&tipoRol=" . $fila['tipoRol'] . "&activo=" . $fila['Activo'] . "'><button>Modificar</button></a></td>";
             echo "</tr>";
           }
           echo "</table>";

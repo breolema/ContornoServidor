@@ -14,7 +14,7 @@ $conexion = mysqli_connect("localhost", "root", "", "supermercado");
 
 <head>
     <meta charset="UTF-8" />
-    <title>Alta clientes</title>
+    <title>Modificar Categorias</title>
 
     <link rel="stylesheet" href="css/comunTodos.css">
     <link rel="stylesheet" href="css/estilos_Categorias.css">
@@ -49,6 +49,17 @@ $conexion = mysqli_connect("localhost", "root", "", "supermercado");
                 echo '</div>';
             }
         ?>
+
+        <h2>Dar de alta categoria</h2>
+        <form action="upload.php" method="POST" enctype="multipart/form-data">
+            <label for="foto">Selecciona una foto:</label>
+            <input type="file" id="foto" name="foto"><br><br>
+            <label for="nombreCat">Nombre de la categoria: </label>
+            <input type="text" id="nombreCat" name="nombreCat" placeholder="Nombre" /><br><br>
+            <label for="activo">Categoria activa: </label>
+            <input type="checkbox" id="activo" name="activo" checked="checked"/><br><br>
+        <input type="submit" value="Subir Foto">
+    </form>
 </body>
 
 </html>

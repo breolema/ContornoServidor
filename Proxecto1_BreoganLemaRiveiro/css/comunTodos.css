@@ -32,3 +32,11 @@ body {
     padding: 10px;
     height: 50px;
   }
+
+#logout{
+    display: flex;
+    align-items: center;
+    float: right;
+    padding: 10px;
+    height: 50px;
+}

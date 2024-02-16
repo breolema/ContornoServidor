@@ -18,13 +18,17 @@
     <link rel="stylesheet" href="css/comunTodos.css">
 </head>
     <body>
-        <nav>
-            <img src="imagenes/icono.png" alt="logo">
-            <a href="inicio.php">Inicio</a>
-            <a href="paginaCategorias.php">Categorias</a>
-            <a href="">Ofertas</a>
-            <a href="">Información</a>
-        </nav>
+    <nav>
+        <img src="imagenes/icono.png" alt="logo">
+        <a href="inicio.php">Inicio</a>
+        <a href="paginaCategorias.php">Categorias</a>
+        <a href="">Ofertas</a>
+        <a href="">Información</a>
+        <div  id="logout">
+            <a href="logout.php"><img src="imagenes/logout.png"></a>
+            <a href="carrito.php"><img src="imagenes/carrito.png"></a>
+        </div>
+    </nav>
 
 <!--Enseñas as categorias activas-->
         <?php
