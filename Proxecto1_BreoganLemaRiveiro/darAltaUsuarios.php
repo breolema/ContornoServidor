@@ -183,7 +183,7 @@
           echo "<table border=1>";
           echo "<tr>";
           echo "<th>Codigo</th><th>Nombre</th><th>Correo</th><th>Pais</th><th>Direccion</th>
-          <th>Ciudad</th><th>Codigo Postal</th><th>Rol</th><th>Activo</th><th>Modificar</th>";
+          <th>Ciudad</th><th>Codigo Postal</th><th>Rol</th><th>Activo</th><th>Modificar</th><th>Borrar</th>";
           echo "</tr>";
           while ($fila = $result_Usuarios -> fetch_assoc()) {
             echo "<tr>";
@@ -201,6 +201,7 @@
               echo "<td>Desactivo</td>";
             }
             echo "<td><a href='darAltaUsuarios.php?codUsu=" . $fila['CodUsu'] . "&nombre=" . $fila['Nombre'] . "&correo=" . $fila['Correo'] . "&pais=" . $fila['Pais'] . "&direccion=" . $fila['Direccion'] . "&ciudad=" . $fila['Ciudad'] . "&cp=" . $fila['CP'] . "&tipoRol=" . $fila['tipoRol'] . "&activo=" . $fila['Activo'] . "'><button>Modificar</button></a></td>";
+            echo "<td><a href='borrarUsuarios.php?codUsu=" . $fila['CodUsu'] . "'><button>Borrar</button></a></td>";
             echo "</tr>";
           }
           echo "</table>";
