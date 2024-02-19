@@ -26,7 +26,9 @@
       <a href="darAltaUsuarios.php">Alta usuarios</a>
       <a href="categoriasAdmin.php">Modificar categorias</a>
       <a href="productosAdmin.php">Modificar productos</a>
-      <a href=""></a>
+      <div  id="logout">
+            <a href="logout.php"><img src="imagenes/logout.png"></a>
+      </div>
     </nav>
     <!--Formulario creacion usuarios-->
     <?php
@@ -54,7 +56,7 @@
       echo '<label for="nombre">Nombre:</label>';
       echo '<input type="text" id="nombre" name="nombre" value="' . $nombre . '" />';
       echo '<label for="correo">Correo:</label>';
-      echo '<input type="text" id="correo" name="correo" value="' . $correo . '" />';
+      echo '<input type="email" id="correo" name="correo" value="' . $correo . '" />';
       echo '<label for="clave">Contraseña:</label>';
       echo '<input type="password" id="clave" name="clave"/>';
       echo '<label for="pais">Pais:</label>';
@@ -110,7 +112,7 @@
         echo '<label for="nombre">Nombre:</label>';
         echo '<input type="text" id="nombre" name="nombre" placeholder="Nombre" />';
         echo '<label for="correo">Correo:</label>';
-        echo '<input type="text" id="correo" name="correo" placeholder="Correo" />';
+        echo '<input type="email" id="correo" name="correo" placeholder="Correo" />';
         echo '<label for="clave">Contraseña:</label>';
         echo '<input type="password" id="clave" name="clave" placeholder="Contraseña" />';
         echo '<label for="pais">Pais:</label>';
