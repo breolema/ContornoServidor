@@ -23,7 +23,9 @@
       <a href="darAltaUsuarios.php">Alta usuarios</a>
       <a href="categoriasAdmin.php">Modificar categorias</a>
       <a href="productosAdmin.php">Modificar productos</a>
-      <a href=""></a>
+      <div  id="logout">
+            <a href="logout.php"><img src="imagenes/logout.png"></a>
+      </div>
     </nav>
 
     </body>

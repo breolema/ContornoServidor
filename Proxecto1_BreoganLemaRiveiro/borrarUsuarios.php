@@ -1,42 +1,32 @@
 <?php
-session_start();
+    session_start();
 
-if (!isset($_SESSION["usuario"])) {
-    header("Location: inicioSesion.php");
-    exit;
-}
-
-$conexion = mysqli_connect("localhost", "root", "", "supermercado");
-
-$usuarioActual = $_SESSION["usuario"];
-$codUsuActual = "SELECT codusu FROM usuarios WHERE nombre=''$usuarioActual";
-$resultCodUsuActual = $conexion->query($codUsuActual);
-
-if ($resultCodUsuActual->num_rows > 0) {
-    $usuarioActual  = mysqli_fetch_assoc($resultCodUsuActual);
-    $codUsuActual = $usuarioActual["CodUsu"];
-
-    if(isset($_GET["codUsu"])) {
-        $codUsuBorrar = $_GET["codUsu"];
-
-        if($codUsuActual == $codUsuBorrar){
-            header("Location: darAltaUsuarios.php");
-            exit;
-        } else {
-            $deleteQuery = "DELETE FROM usuarios WHERE CodUsu = '$codUsuBorrar'";
-            $resultDelete = $conexion->query($deleteQuery);
-            header("Location: darAltaUsuarios.php");
-        }
-
-    }else {
-        header("Location: darAltaUsuarios.php");
+    if (!isset($_SESSION["usuario"])) {
+        header("Location: inicioSesion.php");
         exit;
     }
 
-} else {
+
+    $usuarioBorrar = $_GET["codUsu"];
+
+    $conexion = mysqli_connect("localhost", "root", "", "supermercado");
+    $usuarioActual = $_SESSION["usuario"];
+    $sqlUserActual = "SELECT CodUsu FROM usuarios WHERE Nombre='$usuarioActual'";
+    $resultUserActual = $conexion->query($sqlUserActual); 
+
+   
+    if ($resultUserActual->num_rows > 0) {
+        while ($fila = $resultUserActual -> fetch_assoc()) {
+            $codUserActual= $fila["CodUsu"];
+        }
+        print $codUserActual;
+        print $usuarioBorrar;
+        if($codUserActual!=$usuarioBorrar){
+            $deleteUser = "DELETE FROM usuarios WHERE CodUsu=$usuarioBorrar";
+            $resultDeleteUser = $conexion->query($deleteUser);
+        }
+    }
+
     header("Location: darAltaUsuarios.php");
-    exit;
-}
-
-
-?>
+    
+    ?>
