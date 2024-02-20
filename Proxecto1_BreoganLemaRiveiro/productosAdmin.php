@@ -7,6 +7,7 @@
     }
 
     $conexion = mysqli_connect("localhost", "root", "", "supermercado");
+    error_reporting(E_ALL ^ E_WARNING);
     ?>
 
 <!DOCTYPE html>
@@ -64,6 +65,7 @@
                         echo '<form method="POST" >';
                         while ($fila = $result->fetch_assoc()) {
                         echo '<label id="CodProd" name="CodProd">Código de producto:'. $fila["CodProd"] . '</label>';
+                        echo '<input type="hidden" name="CodProd" value="' . $fila["CodProd"] . '">';
                         echo '<label for="nombreProd">Nombre del producto:</label>';
                         echo '<input type="text" id="nombreProd" name="nombreProd" value="' . $fila["Nombre"] . '">';
                         echo '<label for="descripcProd">Descripcion del producto:</label>';
@@ -92,21 +94,13 @@
                     echo '</div>';
                 }
 
-                print $_POST["CodProd"];
-                print $_POST["nombreProd"];
-                print $_POST["descripcProd"];
-                print  $_POST["precioProd"];
-                print $_POST["stock"];
-                print $_POST["categoria"];
-                print $_POST["estado"];
-
                 if(isset($_POST["CodProd"])){
                     $codprod = $_POST["CodProd"];
                     $nombreProd = $_POST["nombreProd"];
                     $descripcion = $_POST["descripcProd"];
                     $precioProd = $_POST["precioProd"];
                     $stock = $_POST["stock"];
-                    $categoria = $_POST["CodCat"];
+                    $categoria = $_POST["categoria"];
                     $estado = isset($_POST["estado"]) ? 1 : 0;
 
                     $updateProducto = "UPDATE productos SET Nombre = '$nombreProd', 
@@ -116,11 +110,11 @@
                                                                                                     CodCat = $categoria, 
                                                                                                     CodEstado = $estado 
                                                                                                     WHERE CodProd = $codprod";
-                     print $updateProducto;
-                     //$resultUpdate = $conexion->query($updateProducto);
-                    
+                     
+                     $resultUpdate = $conexion->query($updateProducto);
+                     header("Location: productosAdmin.php");
                 }
-                    //header("Location: productosAdmin.php");
+                    
                 } else {
         ?>
 
@@ -173,19 +167,10 @@
         $insert = "INSERT INTO productos (Nombre, Descripcion, Precio, Stock, CodCat, CodEstado, RutaImagen)
                         VALUES ('$nombreProd', '$descripProd', $precioProd, $stock, $categoria, $estado, 'imagenes/productos/$rutaImagen')";
         $resultInsert = $conexion->query($insert);
-    
-        if ($resultInsert) {
-            $mensaje = "Producto añadido correctamente.";
-        } else {
-            $mensaje = "Error al añadir el producto. Por favor, inténtelo de nuevo.";
-        }
     }
     
 }
 ?>
-<script>
-    alert("<?php echo $mensaje; ?>");
-</script>
 </center>
 
     </body>

@@ -7,6 +7,7 @@ if (!isset($_SESSION["usuario"])) {
 }
 
 $conexion = mysqli_connect("localhost", "root", "", "supermercado");
+error_reporting(E_ALL ^ E_WARNING);
 
 ?>
 <!DOCTYPE html>
@@ -115,19 +116,10 @@ $conexion = mysqli_connect("localhost", "root", "", "supermercado");
                 $insert = "INSERT INTO categorias (Nombre, Activa, RutaImagen) 
                                 VALUES ('$nombreCat', $activo, 'imagenes/categorias/$rutaImagen')";
                 $resultInsert = $conexion->query($insert);
-            
-                if ($resultInsert) {
-                    $mensaje = "Categoría añadida correctamente.";
-                } else {
-                    $mensaje = "Error al añadir la categoría. Por favor, inténtelo de nuevo.";
-                }
             }
             
         }
         ?>
-        <script>
-            alert("<?php echo $mensaje; ?>");
-        </script>
 </body>
 
 </html>
