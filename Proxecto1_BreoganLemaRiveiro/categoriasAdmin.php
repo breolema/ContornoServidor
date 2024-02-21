@@ -20,6 +20,7 @@ error_reporting(E_ALL ^ E_WARNING);
     <link rel="stylesheet" href="css/comunTodos.css">
     <link rel="stylesheet" href="css/estilos_Categorias.css">
     <link rel="stylesheet" href="css/estilo_AltaCategoriasProd.css">
+    <link rel="icon" type="image/jpg" href="imagenes/icono.png"/>
 
 </head>
 
@@ -116,6 +117,7 @@ error_reporting(E_ALL ^ E_WARNING);
                 $insert = "INSERT INTO categorias (Nombre, Activa, RutaImagen) 
                                 VALUES ('$nombreCat', $activo, 'imagenes/categorias/$rutaImagen')";
                 $resultInsert = $conexion->query($insert);
+                header("Location: categoriasAdmin.php");
             }
             
         }

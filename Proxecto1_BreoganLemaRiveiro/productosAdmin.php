@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="css/estilos_Productos.css">
     <link rel="stylesheet" href="css/comunTodos.css">
     <link rel="stylesheet" href="css/estilo_AltaCategoriasProd.css">
+    <link rel="icon" type="image/jpg" href="imagenes/icono.png"/>
     
 </head>
     <body>

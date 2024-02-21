@@ -15,6 +15,7 @@
     <meta charset="UTF-8" />
     <title>Alta clientes</title>
     <link rel="stylesheet" href="css/comunTodos.css">
+    <link rel="icon" type="image/jpg" href="imagenes/icono.png"/>
   </head>
   <body>
   <nav>

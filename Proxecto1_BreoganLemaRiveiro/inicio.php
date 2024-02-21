@@ -15,6 +15,7 @@
     <title>Inicio</title>
     <link rel="stylesheet" href="css/estilos_PaxInicio.css">
     <link rel="stylesheet" href="css/comunTodos.css">
+    <link rel="icon" type="image/jpg" href="imagenes/icono.png"/>
 <body>
     
     <nav>

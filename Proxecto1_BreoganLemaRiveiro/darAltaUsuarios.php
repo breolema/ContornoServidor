@@ -17,6 +17,7 @@
     
     <link rel="stylesheet" href="css/estilos_AltaUsers.css">
     <link rel="stylesheet" href="css/comunTodos.css">
+    <link rel="icon" type="image/jpg" href="imagenes/icono.png"/>
 
   </head>
   <body>

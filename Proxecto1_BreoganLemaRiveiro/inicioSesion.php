@@ -10,6 +10,7 @@
     <title>Login</title>
     
     <link rel="stylesheet" href="css/estilos_Login.css">
+    <link rel="icon" type="image/jpg" href="imagenes/icono.png"/>
 </head>
 <body>
     <center>

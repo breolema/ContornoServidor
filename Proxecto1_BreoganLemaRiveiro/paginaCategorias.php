@@ -16,6 +16,8 @@
     <title>Categorias</title>
     <link rel="stylesheet" href="css/estilos_Categorias.css">
     <link rel="stylesheet" href="css/comunTodos.css">
+    <link rel="icon" type="image/jpg" href="imagenes/icono.png"/>
+    <link rel="icon" type="image/jpg" href="imagenes/icono.png"/>
 </head>
     <body>
     <nav>

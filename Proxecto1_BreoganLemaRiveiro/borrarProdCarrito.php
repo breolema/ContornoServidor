@@ -13,7 +13,15 @@ if (!isset($_POST["codprod"])) {
 
 $codprod = $_POST["codprod"];
 
+$codigo = buscarProductoEnCarrito($codprod);
 
+if ($codigo !== false) {
+    unset($_SESSION["arrayCarrito"][$codigo]);
+    $_SESSION["arrayCarrito"] = array_values($_SESSION["arrayCarrito"]);
+}
+
+header("Location: carrito.php");
+exit;
 
 function buscarProductoEnCarrito($codprod) {
     if (isset($_SESSION["arrayCarrito"])) {

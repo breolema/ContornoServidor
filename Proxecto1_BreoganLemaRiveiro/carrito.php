@@ -24,11 +24,13 @@
     <title>Carrito Compra</title>
     <link rel="stylesheet" href="css/comunTodos.css">
     <link rel="stylesheet" href="css/estilo_Carrito.css">
+    <link rel="icon" type="image/jpg" href="imagenes/icono.png"/>
 </head>
 <body>
 
-    <nav>
-       <a href="inicio.php"><img src="imagenes/icono.png" alt="logo"></a>
+<nav>
+        <img src="imagenes/icono.png" alt="logo">
+        <a href="paginaCategorias.php">Seguir Comprando</a>
     </nav>
     <?php
         $totalPrecio=0;
@@ -47,7 +49,7 @@
                 echo "<td>Precio unidad: " . $producto['precio'] . "€</td>";
                 echo "<td>Precio producto: " . $producto['precioFinal'] . "€</td>";
                 echo "<td>";
-                echo "<form action='borrarProductoCarrito.php' method='POST'>";
+                echo "<form action='borrarProdCarrito.php' method='POST'>";
                 echo "<input type='hidden' id ='codprod' name='codprod' value='" . $producto['codprod'] . "'>";
                 echo "<button type='submit' class='botonBorrar'>Borrar</button>";
                 echo "</td>";
