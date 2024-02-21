@@ -16,15 +16,29 @@ $cantidad = $_POST["cantidad"];
 $codprod = $_POST["codprod"];
 $precio = $_POST["precio"];
 $precioFinalProducto = $cantidad*$precio;
-    
-$producto = array(
-    "codprod" => $codprod,
-    "cantidad" => $cantidad,
-    "precio" => $precio,
-    "precioFinal" => $precioFinalProducto
-);
 
-$arrayCarrito[] = $producto;
+$productoEncontrado = false;
+
+foreach ($arrayCarrito as &$productoExistente) {
+    if ($productoExistente["codprod"] == $codprod) {
+        $productoExistente["cantidad"] += $cantidad;
+        $productoEncontrado = true;
+        break;
+    }
+}
+    
+if (!$productoEncontrado) {
+    $producto = array(
+        "codprod" => $codprod,
+        "cantidad" => $cantidad,
+        "precio" => $precio,
+        "precioFinal" => $precioFinalProducto
+    );
+
+    $arrayCarrito[] = $producto;
+}
 
 $_SESSION["arrayCarrito"] = $arrayCarrito;
+
+header("Location: productos.php?codCat=$codprod");
 ?>

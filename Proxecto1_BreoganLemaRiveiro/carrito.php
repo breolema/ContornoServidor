@@ -23,6 +23,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito Compra</title>
     <link rel="stylesheet" href="css/comunTodos.css">
+    <link rel="stylesheet" href="css/estilo_Carrito.css">
 </head>
 <body>
 
@@ -30,26 +31,38 @@
        <a href="inicio.php"><img src="imagenes/icono.png" alt="logo"></a>
     </nav>
     <?php
+        $totalPrecio=0;
+
         echo "<h2>Carrito de compras</h2>";
         if (!empty($arrayCarrito)) {
-            echo "<table border='1'>";
-            echo "<tr><th>Código de Producto</th><th>Cantidad</th><th>Precio Unitario</th><th>Precio Total</th></tr>";
+            echo "<table>";
             foreach ($arrayCarrito as $producto) {
                 echo "<tr>";
                 $sqlImagen = "SELECT RutaImagen FROM productos WHERE CodProd=" . $producto['codprod'] . "";
                 $resultImagen = $conexion->query($sqlImagen);
                 while ($fila = $resultImagen -> fetch_assoc()) {
-                    echo "<td><img src=" . $fila['RutaImagen'] . "></td>";
+                    echo "<td><img class='imgPedido' src=" . $fila['RutaImagen'] . "></td>";
                 }
-                echo "<td>" . $producto['cantidad'] . "</td>";
-                echo "<td>" . $producto['precio'] . "</td>";
-                echo "<td>" . $producto['precioFinal'] . "</td>";
-                echo "<td>Borrar</td>";
+                echo "<td>Cantidad: " . $producto['cantidad'] . "</td>";
+                echo "<td>Precio unidad: " . $producto['precio'] . "€</td>";
+                echo "<td>Precio producto: " . $producto['precioFinal'] . "€</td>";
+                echo "<td>";
+                echo "<form action='borrarProductoCarrito.php' method='POST'>";
+                echo "<input type='hidden' id ='codprod' name='codprod' value='" . $producto['codprod'] . "'>";
+                echo "<button type='submit' class='botonBorrar'>Borrar</button>";
+                echo "</td>";
+                echo "</form>";
                 echo "</tr>";
+
+                $totalPrecio += $producto['precioFinal'];
             }
             echo "</table>";
+            echo "<form action='crearPedido.php' method='POST'>";
+            echo "<p class='total'>Total del pedido: " . $totalPrecio . "€</p>";
+            echo "<button class='realizarPedido'>Realizar Pedido</button>";
+            echo "</form>";
         } else {
-            echo "<p>No hay productos en el carrito.</p>";
+            echo "<p class='carroVacio'>No hay productos en el carrito.</p>";
         }
 
     ?>
