@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS `supermercado` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE IF NOT EXISTS `supermercado`;
 USE `supermercado`;
 
 CREATE TABLE IF NOT EXISTS `categorias` (
@@ -70,7 +70,17 @@ INSERT INTO `productos` (`Nombre`,`Descripcion`,`Precio`,`Stock`,`CodCat`,`CodEs
 ('Chorizo', '200g de chorizo', 2.50, 50, 2,1,'imagenes/productos/chorizo.jpg'),
 ('Salmon', 'Lomo de salmon', 7.95, 50, 3,1,'imagenes/productos/salmon.jpg');
 
-SELECT * FROM productos WHERE codcat=1 && codestado=1;
+delete from productos;
+ALTER TABLE productos AUTO_INCREMENT = 3;
+
+SELECT RutaImagen FROM productos WHERE CodProd=1;
+
+UPDATE productos SET Nombre = 'Solomillo', 
+                  Precio = 3.50, 
+                  Stock = 60, 
+                  CodCat = 1, 
+                  CodEstado = 1 
+                  WHERE CodProd = 1;
 
 
 CREATE TABLE IF NOT EXISTS `usuarios` (
@@ -92,7 +102,7 @@ INSERT INTO `usuarios` (`Nombre`, `Correo`, `Clave`,`Pais`, `CP`, `Ciudad`, `Dir
 ('Breo', 'breo@gmail.com', 'e8dc8ccd5e5f9e3a54f07350ce8a2d3d', 'España', 15270, 'Cee', 'Cee', 1, TRUE),
 ('Cliente','cliente@gmail.com', 'e8dc8ccd5e5f9e3a54f07350ce8a2d3d', 'España', 15270, 'Cee', 'Cee', 2, TRUE);
 
-delete from usuarios;
+DELETE FROM usuarios WHERE CodUsu=;
 ALTER TABLE usuarios AUTO_INCREMENT = 1;
 
 
@@ -151,3 +161,11 @@ CREATE TABLE IF NOT EXISTS `historialPedidos` (
   PRIMARY KEY (`CodHistorial`),
   CONSTRAINT `historialPedidos_ibfk_1` FOREIGN KEY (`CodUsu`) REFERENCES `usuarios` (`CodUsu`)
 ) ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
+
+
+SELECT codrol,descripcion FROM roles;
+
+
+DELETE FROM usuarios WHERE CodUsu =6;
+
+SELECT codusu FROM usuarios WHERE nombre='Breo';
