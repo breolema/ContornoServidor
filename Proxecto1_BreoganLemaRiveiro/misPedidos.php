@@ -5,20 +5,22 @@
         header("Location: inicioSesion.php");
         exit;
     }
+
+    $conexion = mysqli_connect("localhost", "root", "", "supermercado");
 ?>
 
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Inicio</title>
-    <link rel="stylesheet" href="css/estilos_PaxInicio.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis pedidos</title>
     <link rel="stylesheet" href="css/comunTodos.css">
     <link rel="icon" type="image/jpg" href="imagenes/icono.png"/>
+</head>
 <body>
-    
-    <nav>
+<nav>
         <img src="imagenes/icono.png" alt="logo">
         <a href="inicio.php">Inicio</a>
         <a href="paginaCategorias.php">Categorias</a>
@@ -29,16 +31,9 @@
             <a href="carrito.php"><img src="imagenes/carrito.png"></a>
         </div>
     </nav>
-    <section class="tarjeta-registro">
-        <h2>¡Consigue tu tarjeta y tendrás más ventajas!</h2>
-        <ul>
-            <li>Promociones exclusivas</li>
-            <li>Vales ahorro personalizados</li>
-            <li>La app con todas las ventajas en tu bolsillo</li>
-            <li>Te escuchamos: Tu opinión cuenta</li>
-            <li>Y además, viajes y regalos ...</li>
-        </ul>
-    </section>
-</body>
 
+    <?php
+
+    ?>
+</body>
 </html>

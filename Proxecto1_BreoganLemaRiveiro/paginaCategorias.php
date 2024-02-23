@@ -24,7 +24,7 @@
         <img src="imagenes/icono.png" alt="logo">
         <a href="inicio.php">Inicio</a>
         <a href="paginaCategorias.php">Categorias</a>
-        <a href="">Ofertas</a>
+        <a href="misPedidos.php">Mis Pedidos</a>
         <a href="">Información</a>
         <div  id="logout">
             <a href="logout.php"><img src="imagenes/logout.png"></a>
