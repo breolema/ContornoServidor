@@ -11,6 +11,13 @@
     } else {
         $arrayCarrito = [];
     }
+
+    if (isset($_SESSION['error_pedido'])) {
+        $mensajeError = $_SESSION['error_pedido'];
+        unset($_SESSION['error_pedido']);
+    } else {
+        $mensajeError = "";
+    }
     
 
     $conexion = mysqli_connect("localhost", "root", "", "supermercado");
@@ -25,6 +32,15 @@
     <link rel="stylesheet" href="css/comunTodos.css">
     <link rel="stylesheet" href="css/estilo_Carrito.css">
     <link rel="icon" type="image/jpg" href="imagenes/icono.png"/>
+
+    <?php if (!empty($mensajeError)) { ?>
+        <script>
+            window.onload = function() {
+                alert("<?php echo $mensajeError; ?>");
+            };
+        </script>
+    <?php } ?>
+    
 </head>
 <body>
 
@@ -67,6 +83,7 @@
             echo "<p class='carroVacio'>No hay productos en el carrito.</p>";
         }
 
+       
     ?>
 </body>
 </html>

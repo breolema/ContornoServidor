@@ -1,0 +1,13 @@
+{
+    "name": "vendor/autoload",
+    "description": "envio de correo",
+    "type": "project",
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    },
+    "authors": [
+        {
+            "name": "breo"
+        }
+    ]
+}

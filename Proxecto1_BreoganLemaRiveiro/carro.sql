@@ -49,12 +49,25 @@ CREATE TABLE IF NOT EXISTS `pedidosproductos` (
   CONSTRAINT `pedidosproductos_ibfk_2` FOREIGN KEY (`CodProd`) REFERENCES `productos` (`CodProd`)
 ) ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
 
+
+CREATE TABLE IF NOT EXISTS `estadoPedido` (
+  `CodEstadoPedido` INT(3) NOT NULL,
+  `Descripcion` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`CodEstadoPedido`)
+) ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
+
+
+INSERT INTO estadopedido (`CodEstadoPedido`,`Descripcion`) VALUES 
+(1,'Activo'),
+(2,'Desactivo');
+
+
 CREATE TABLE IF NOT EXISTS `productos` (
   `CodProd` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(45) DEFAULT NULL,
   `Descripcion` varchar(90) NOT NULL,
   `Precio` float NOT NULL,
-  `Stock` int(11) NOT NULL,
+  `Stock` int(11) NOT NULL CHECK (Stock >= 0),
   `CodCat` int(11) NOT NULL,
   `CodEstado` INT(11) NOT NULL,
   `RutaImagen` VARCHAR(100) NOT NULL,
@@ -62,7 +75,6 @@ CREATE TABLE IF NOT EXISTS `productos` (
   CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`CodCat`) REFERENCES `categorias` (`CodCat`),
   CONSTRAINT `productos_ibfk_2` FOREIGN KEY (`CodEstado`) REFERENCES `estadoProducto` (`CodEstadoProducto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
-
 
 
 INSERT INTO `productos` (`Nombre`,`Descripcion`,`Precio`,`Stock`,`CodCat`,`CodEstado`,`RutaImagen`) VALUES
@@ -103,7 +115,7 @@ INSERT INTO `usuarios` (`Nombre`, `Correo`, `Clave`,`Pais`, `CP`, `Ciudad`, `Dir
 ('Cliente','cliente@gmail.com', 'e8dc8ccd5e5f9e3a54f07350ce8a2d3d', 'España', 15270, 'Cee', 'Cee', 2, TRUE);
 
 DELETE FROM usuarios WHERE CodUsu=;
-ALTER TABLE usuarios AUTO_INCREMENT = 1;
+ALTER TABLE pedidos AUTO_INCREMENT = 1;
 
 
 SELECT nombre,clave FROM usuarios WHERE Nombre='Breo'&& activo=TRUE;
@@ -141,31 +153,11 @@ INSERT INTO `estadoProducto` (`CodEstadoProducto`,`Descripcion`) VALUES
 
 
 
-CREATE TABLE IF NOT EXISTS `estadoPedido` (
-  `CodEstadoPedido` INT(3) NOT NULL,
-  `Descripcion` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`CodEstadoPedido`)
-) ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
-
-INSERT INTO estadopedido (`CodEstadoPedido`,`Descripcion`) VALUES 
-(1,'Activo'),
-(2,'Desactivo');
-
-
-
-CREATE TABLE IF NOT EXISTS `historialPedidos` (
-  `CodHistorial` int(11) NOT NULL,
-  `CodUsu` int(11) NOT NULL,
-  `Descripcion` VARCHAR(100) NOT NULL,
-  `Fecha` DATE NOT NULL,
-  PRIMARY KEY (`CodHistorial`),
-  CONSTRAINT `historialPedidos_ibfk_1` FOREIGN KEY (`CodUsu`) REFERENCES `usuarios` (`CodUsu`)
-) ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
-
-
 SELECT codrol,descripcion FROM roles;
 
 
 DELETE FROM usuarios WHERE CodUsu =6;
 
 SELECT codusu FROM usuarios WHERE nombre='Breo';
+
+delete FROM pedidos;

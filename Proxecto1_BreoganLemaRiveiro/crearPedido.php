@@ -15,6 +15,8 @@
     exit;
 }
 
+$stockSuficiente = true;
+
 foreach ($arrayCarrito as $producto) {
     $codProducto = $producto['codprod'];
     $unidadesPedido = $producto['cantidad'];
@@ -26,13 +28,16 @@ foreach ($arrayCarrito as $producto) {
         $filaStock = $resultComprStock -> fetch_assoc();
         $stockDisponible = $filaStock['stock'];
         if ($stockDisponible < $unidadesPedido) {
-            //mensaxe
-            exit;
+            $stockSuficiente = false;
+            break;
         }
-    } else {
-        //mensaxe si non se pode acceder o stock
-        exit;
     }
+}
+
+if (!$stockSuficiente) {
+    $_SESSION['error_pedido'] = "Lo sentimos, no hay suficiente stock para algunos productos en su carrito.";
+    header("Location: carrito.php");
+    exit;
 }
 
 $fecha = date('Y-m-d H:i:s');
@@ -66,13 +71,9 @@ foreach ($arrayCarrito as $producto) {
     $actualizarStock = "UPDATE productos SET stock = stock - $unidades WHERE CodProd = $codProducto";
     $resultActualizarStock = $conexion->query($actualizarStock);
 
-    //$descripcion = "Pedido del producto " . $codProducto . " - " . $producto['nombre'] . " con " . $unidades . " unidades";
-   //$sqlInsertarHistorial = "INSERT INTO historialPedidos (CodUsu, Descripcion, Fecha) VALUES ($codUsuario, '$descripcion', '$fechaActual')";
-    //$resultInsertHistorial = $conexion->query($sqlInsertarHistorial); 
 }
 
 unset($_SESSION["arrayCarrito"]);
 
-header("Location: inicio.php");
-exit;
+header("Location: enviarCorreo.php?codUsuario=$codUserActual&codPedido=$codPedido");
 ?>

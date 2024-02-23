@@ -32,3 +32,4 @@ if ($mail->Send()) {
            alert("NO ENVIADO, intentar de nuevo");
         </script>';
 }
+?>
