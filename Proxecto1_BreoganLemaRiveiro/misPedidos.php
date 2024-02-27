@@ -80,7 +80,7 @@ $resultUserActual = $conexion->query($sqlUserActual);
                     echo "<td>" . $filaProducto['NombreProducto'] . "</td>";
                     echo "<td>" . $filaProducto['DescripcionProducto'] . "</td>";
                     echo "<td>" . $filaProducto['Unidades'] . "</td>";
-                    echo "<td>$" . $filaProducto['PrecioProducto'] . "</td>";
+                    echo "<td>" . $filaProducto['PrecioProducto'] . "€</td>";
                     echo "<td><img src='" . $filaProducto['FotoProducto'] . "' alt='Foto del Producto'></td>";
                     echo "</tr>";
                 }

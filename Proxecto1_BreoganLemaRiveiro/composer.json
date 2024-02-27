@@ -1,9 +1,12 @@
 {
     "name": "vendor/autoload",
-    "description": "envio de correo",
+    "description": "phpmailer e dompdf",
     "type": "project",
     "require": {
         "phpmailer/phpmailer": "^6.9"
+    },
+    "require-dev": {
+        "dompdf/dompdf": "^2.0"
     },
     "authors": [
         {

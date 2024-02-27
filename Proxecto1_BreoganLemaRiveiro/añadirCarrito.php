@@ -6,12 +6,11 @@ if (!isset($_SESSION["usuario"])) {
     exit;
 }
 
-if (isset($_SESSION["arrayCarrito"])) {
-    $arrayCarrito = $_SESSION["arrayCarrito"];
-} else {
-    $arrayCarrito = [];
+if (!isset($_SESSION["arrayCarrito"])) {
+    $_SESSION["arrayCarrito"] = array();
 }
 
+$codcat = $_POST["codcat"];
 $cantidad = $_POST["cantidad"];
 $codprod = $_POST["codprod"];
 $precio = $_POST["precio"];
@@ -19,9 +18,10 @@ $precioFinalProducto = $cantidad * $precio;
 
 $productoEncontrado = false;
 
-foreach ($arrayCarrito as &$productoExistente) {
+foreach ($_SESSION["arrayCarrito"] as &$productoExistente) {
     if ($productoExistente["codprod"] == $codprod) {
         $productoExistente["cantidad"] += $cantidad;
+        $productoExistente["precioFinal"] += $precioFinalProducto;
         $productoEncontrado = true;
         break;
     }
@@ -35,10 +35,8 @@ if (!$productoEncontrado) {
         "precioFinal" => $precioFinalProducto
     );
 
-    $arrayCarrito[] = $producto;
+    $_SESSION["arrayCarrito"][] = $producto;
 }
 
-$_SESSION["arrayCarrito"] = $arrayCarrito;
-
-header("Location: productos.php?codCat=$codprod");
+header("Location: productos.php?codCat=$codcat");
 ?>
