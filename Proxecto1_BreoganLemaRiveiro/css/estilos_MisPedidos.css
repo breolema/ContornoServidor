@@ -1,0 +1,38 @@
+table {
+    width: 80%; 
+    margin: 0 auto; 
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #4CAF50;
+}
+
+img {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.boton{
+    margin-top: 10px;
+    font-size: 17px;
+    background-color: #333;
+    color: white; 
+    padding: 10px 20px; 
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.boton:hover {
+    background-color: #555454;
+}

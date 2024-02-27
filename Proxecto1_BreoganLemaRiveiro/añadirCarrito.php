@@ -2,11 +2,11 @@
 session_start();
 
 if (!isset($_SESSION["usuario"])) {
-   header("Location: inicioSesion.php");
-   exit;
+    header("Location: inicioSesion.php");
+    exit;
 }
 
-if(isset($_SESSION["arrayCarrito"])){
+if (isset($_SESSION["arrayCarrito"])) {
     $arrayCarrito = $_SESSION["arrayCarrito"];
 } else {
     $arrayCarrito = [];
@@ -15,7 +15,7 @@ if(isset($_SESSION["arrayCarrito"])){
 $cantidad = $_POST["cantidad"];
 $codprod = $_POST["codprod"];
 $precio = $_POST["precio"];
-$precioFinalProducto = $cantidad*$precio;
+$precioFinalProducto = $cantidad * $precio;
 
 $productoEncontrado = false;
 
@@ -26,7 +26,7 @@ foreach ($arrayCarrito as &$productoExistente) {
         break;
     }
 }
-    
+
 if (!$productoEncontrado) {
     $producto = array(
         "codprod" => $codprod,

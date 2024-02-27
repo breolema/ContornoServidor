@@ -23,7 +23,7 @@ if ($codigo !== false) {
 header("Location: carrito.php");
 exit;
 
-function buscarProductoEnCarrito($codprod) {
+function buscarProductoEnCarrito($codprod){
     if (isset($_SESSION["arrayCarrito"])) {
         foreach ($_SESSION["arrayCarrito"] as $index => $producto) {
             if ($producto["codprod"] == $codprod) {

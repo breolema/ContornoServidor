@@ -1,30 +1,32 @@
 <?php
-     session_start();
+session_start();
 
-     if (!isset($_SESSION["usuario"])) {
-        header("Location: inicioSesion.php");
-        exit;
-    }
+if (!isset($_SESSION["usuario"])) {
+    header("Location: inicioSesion.php");
+    exit;
+}
 ?>
 
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Inicio</title>
     <link rel="stylesheet" href="css/estilos_PaxInicio.css">
     <link rel="stylesheet" href="css/comunTodos.css">
-    <link rel="icon" type="image/jpg" href="imagenes/icono.png"/>
+    <link rel="icon" type="image/jpg" href="imagenes/icono.png" />
+
 <body>
-    
+
     <nav>
         <img src="imagenes/icono.png" alt="logo">
         <a href="inicio.php">Inicio</a>
         <a href="paginaCategorias.php">Categorias</a>
         <a href="misPedidos.php">Mis Pedidos</a>
         <a href="">Información</a>
-        <div  id="logout">
+        <div id="logout">
             <a href="logout.php"><img src="imagenes/logout.png"></a>
             <a href="carrito.php"><img src="imagenes/carrito.png"></a>
         </div>

@@ -1,14 +1,14 @@
 <?php
-    session_start();
+session_start();
 
-    if (!isset($_SESSION["usuario"])) {
-       header("Location: inicioSesion.php");
-       exit;
-   }
+if (!isset($_SESSION["usuario"])) {
+    header("Location: inicioSesion.php");
+    exit;
+}
 
-   $conexion = mysqli_connect("localhost", "root", "", "supermercado");
+$conexion = mysqli_connect("localhost", "root", "", "supermercado");
 
-   if (isset($_SESSION["arrayCarrito"]) && !empty($_SESSION["arrayCarrito"])) {
+if (isset($_SESSION["arrayCarrito"]) && !empty($_SESSION["arrayCarrito"])) {
     $arrayCarrito = $_SESSION["arrayCarrito"];
 } else {
     header("Location: carrito.php");
@@ -24,8 +24,8 @@ foreach ($arrayCarrito as $producto) {
     $comprobarStock = "SELECT stock FROM productos WHERE CodProd = $codProducto";
     $resultComprStock = $conexion->query($comprobarStock);
 
-    if($resultComprStock->num_rows > 0) {
-        $filaStock = $resultComprStock -> fetch_assoc();
+    if ($resultComprStock->num_rows > 0) {
+        $filaStock = $resultComprStock->fetch_assoc();
         $stockDisponible = $filaStock['stock'];
         if ($stockDisponible < $unidadesPedido) {
             $stockSuficiente = false;
@@ -43,19 +43,19 @@ if (!$stockSuficiente) {
 $fecha = date('Y-m-d H:i:s');
 $usuarioActual = $_SESSION["usuario"];
 $sqlUserActual = "SELECT CodUsu FROM usuarios WHERE Nombre='$usuarioActual'";
-$resultUserActual = $conexion->query($sqlUserActual); 
-$totalPrecio=0;
+$resultUserActual = $conexion->query($sqlUserActual);
+$totalPrecio = 0;
 
 foreach ($arrayCarrito as $producto) {
     $totalPrecio += $producto['precioFinal'];
 }
 
 if ($resultUserActual->num_rows > 0) {
-    while ($fila = $resultUserActual -> fetch_assoc()) {
-        $codUserActual= $fila["CodUsu"];
+    while ($fila = $resultUserActual->fetch_assoc()) {
+        $codUserActual = $fila["CodUsu"];
     }
     $insertarPedido = "INSERT INTO pedidos (Fecha, CodUsuario, PrecioTotal, CodEstado) VALUES ('$fecha', $codUserActual, $totalPrecio, 1)";
-    $resultInsert = $conexion->query($insertarPedido); 
+    $resultInsert = $conexion->query($insertarPedido);
 }
 
 
@@ -66,7 +66,7 @@ foreach ($arrayCarrito as $producto) {
     $precio = $producto['precioFinal'];
 
     $insertarPedidosProducto = "INSERT INTO pedidosproductos (CodPed, CodProd, Unidades, Precio) VALUES ($codPedido, $codProducto, $unidades, $precio)";
-    $resultInsertPedidosProducto = $conexion->query($insertarPedidosProducto); 
+    $resultInsertPedidosProducto = $conexion->query($insertarPedidosProducto);
 
     $actualizarStock = "UPDATE productos SET stock = stock - $unidades WHERE CodProd = $codProducto";
     $resultActualizarStock = $conexion->query($actualizarStock);
