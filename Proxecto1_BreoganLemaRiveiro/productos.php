@@ -51,6 +51,7 @@
             //Saca os productos cas suas imagenes
             $sql_Productos="SELECT codprod,nombre,descripcion,precio,stock,codcat,rutaimagen FROM productos WHERE codcat=$codcat && codestado=1";
             $result_Productos = $conexion->query($sql_Productos);
+
             
             echo "<div class='productos'>";
             if ($result_Productos->num_rows > 0) {

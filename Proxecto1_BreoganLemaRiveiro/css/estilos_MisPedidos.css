@@ -36,3 +36,7 @@ img {
 .boton:hover {
     background-color: #555454;
 }
+
+hr{
+    color: #333;
+}

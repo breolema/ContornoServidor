@@ -27,7 +27,7 @@ error_reporting(E_ALL ^ E_WARNING);
 <body>
     <nav>
         <img src="imagenes/icono.png" alt="logo" />
-        <a href="paginaGeneralAdmin.php">General</a>
+        <a href="todosPedidos.php">Pedidos</a>
         <a href="darAltaUsuarios.php">Alta usuarios</a>
         <a href="categoriasAdmin.php">Modificar categorias</a>
         <a href="productosAdmin.php">Modificar productos</a>

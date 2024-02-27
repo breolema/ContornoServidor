@@ -8,5 +8,5 @@
 
     $conexion = mysqli_connect("localhost", "root", "", "supermercado");
 
-    
+    $codPedido = $_POST["codigoPedido"];
 ?>

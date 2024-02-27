@@ -8,11 +8,6 @@ if (!isset($_SESSION["usuario"])) {
 
 $conexion = mysqli_connect("localhost", "root", "", "supermercado");
 
-$usuarioActual = $_SESSION["usuario"];
-$sqlUserActual = "SELECT CodUsu FROM usuarios WHERE Nombre='$usuarioActual'";
-$resultUserActual = $conexion->query($sqlUserActual);
-
-
 ?>
 
 
@@ -24,36 +19,30 @@ $resultUserActual = $conexion->query($sqlUserActual);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis pedidos</title>
     <link rel="stylesheet" href="css/comunTodos.css">
-    <link rel="icon" type="image/jpg" href="imagenes/icono.png" />
     <link rel="stylesheet" href="css/estilos_MisPedidos.css">
+    <link rel="icon" type="image/jpg" href="imagenes/icono.png" />
 </head>
 
 <body>
 
-    <nav>
-        <img src="imagenes/icono.png" alt="logo">
-        <a href="inicio.php">Inicio</a>
-        <a href="paginaCategorias.php">Categorias</a>
-        <a href="misPedidos.php">Mis Pedidos</a>
-        <a href="">Información</a>
+<nav>
+        <img src="imagenes/icono.png" alt="logo" />
+        <a href="todosPedidos.php">Pedidos</a>
+        <a href="darAltaUsuarios.php">Alta usuarios</a>
+        <a href="categoriasAdmin.php">Modificar categorias</a>
+        <a href="productosAdmin.php">Modificar productos</a>
         <div id="logout">
             <a href="logout.php"><img src="imagenes/logout.png"></a>
-            <a href="carrito.php"><img src="imagenes/carrito.png"></a>
         </div>
     </nav>
 
-    <?php
-    $codUserActual = 0;
-    if ($resultUserActual->num_rows > 0) {
-        while ($fila = $resultUserActual->fetch_assoc()) {
-            $codUserActual = $fila["CodUsu"];
-        }
-    }
+    <h1>Pagina de Pedidos</h1>
 
-    $sqlPedidos = "SELECT pedidos.CodPed AS CodigoPedido, pedidos.Fecha, estadoPedido.Descripcion AS EstadoPedido, pedidos.PrecioTotal
+    <?php
+
+    $sqlPedidos = "SELECT pedidos.CodUsuario AS CodigoUsuario, pedidos.CodPed AS CodigoPedido, pedidos.Fecha, estadoPedido.Descripcion AS EstadoPedido, pedidos.PrecioTotal
                                 FROM pedidos
                                 INNER JOIN estadoPedido ON pedidos.CodEstado = estadoPedido.CodEstadoPedido
-                                WHERE pedidos.CodUsuario = '$codUserActual'
                                 ORDER BY Fecha DESC";
     $resultPedidos = $conexion->query($sqlPedidos);
 
@@ -63,6 +52,7 @@ $resultUserActual = $conexion->query($sqlUserActual);
             echo "<p>Fecha: " . $fila['Fecha'] . "</p>";
             echo "<p>Estado: " . $fila['EstadoPedido'] . "</p>";
             echo "<p>Precio Total: " . $fila['PrecioTotal'] . "€</p>";
+            echo "<p>Pedido hecho por el usuario nº" . $fila['CodigoUsuario'] . "</p>";
 
             $codigoPedido = $fila['CodigoPedido'];
 
@@ -88,6 +78,10 @@ $resultUserActual = $conexion->query($sqlUserActual);
                 echo "<form action='descargarPedido.php' method='post'>";
                 echo "<input type='hidden' name='codigoPedido' value='" . $codigoPedido . "'>";
                 echo "<button type='submit' class='boton'>Descargar PDF</button>";
+                echo "</form>";
+                echo "<form action='borrarPedido.php' method='post'>";
+                echo "<input type='hidden' name='codigoPedido' value='" . $codigoPedido . "'>";
+                echo "<button type='submit' class='boton'>Borrar Pedido</button>";
                 echo "</form>";
 
             } else {
