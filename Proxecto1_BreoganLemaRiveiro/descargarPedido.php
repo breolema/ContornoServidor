@@ -6,30 +6,32 @@ if (!isset($_SESSION["usuario"])) {
   exit;
 }
 
+//referencia
+use Dompdf\Dompdf;
+
 $conexion = mysqli_connect("localhost", "root", "", "supermercado");
 
 $codPedido = $_POST["codigoPedido"];
 
-$sqlInfoPedido = "SELECT pedidos.CodPed AS CodigoPedido, pedidos.Fecha, pedidos.PrecioTotal, usuarios.Nombre AS NombreCliente, usuarios.Email AS EmailCliente
+$sqlInfoPedido = "SELECT pedidos.CodPed AS CodigoPedido, pedidos.Fecha AS Fecha, pedidos.PrecioTotal AS PrecioTotal, usuarios.Nombre AS NombreCliente, usuarios.Correo AS EmailCliente
                 FROM pedidos
                 INNER JOIN estadoPedido ON pedidos.CodEstado = estadoPedido.CodEstadoPedido
                 INNER JOIN usuarios ON pedidos.CodUsuario = usuarios.CodUsu
                 WHERE pedidos.CodPed = '$codPedido'";
 $resultInfoPedido = $conexion->query($sqlInfoPedido);
 
-$mihtml = '<h1>Detalle del Pedido</h1>';
+$mihtml = '<h1>Detalles del Pedido</h1>';
 
 if ($resultInfoPedido->num_rows > 0) {
   while ($fila = $resultInfoPedido->fetch_assoc()) {
     $mihtml .= '<p><strong>Código de Pedido:</strong> ' . $fila['CodigoPedido'] . '</p>';
-    $mihtml .= '<p><strong>Fecha:</strong> ' . $fila['pedidos.Fecha'] . '</p>';
+    $mihtml .= '<p><strong>Fecha:</strong> ' . $fila['Fecha'] . '</p>';
     $mihtml .= '<p><strong>Nombre del Cliente:</strong> ' . $fila['NombreCliente'] . '</p>';
     $mihtml .= '<p><strong>Email del Cliente:</strong> ' . $fila['EmailCliente'] . '</p>';
-    $mihtml .= '<p><strong>Precio Total:</strong> ' . $fila['pedidos.PrecioTotal'] . '</p>';
+    $mihtml .= '<p><strong>Precio Total:</strong> ' . $fila['PrecioTotal'] . '€</p>';
   }
 }
 
-$mihtml .= '<h2>Pedido nº' . $codPedido . '</h2>';
 $mihtml .= '<table border=1>';
 $mihtml .= '<thead>';
 $mihtml .= '<tr>';
@@ -59,10 +61,6 @@ if ($resultDetallesProductos->num_rows > 0) {
 $mihtml .= '</tbody>';
 $mihtml .= '</table>';
 
-//referencia
-use Dompdf\Dompdf;
-
-// incluye autoloader
 require_once("vendor/autoload.php");
 
 //Creando instancia para generar PDF
@@ -76,7 +74,7 @@ $dompdf->render();
 
 //Exibibir nombre de archivo
 $dompdf->stream(
-  "Pedido nº" . $codPedido . "",
+  "Pedido nº" . $codPedido ,
   array(
     "Attachment" => true //Para realizar la descarga
   )
