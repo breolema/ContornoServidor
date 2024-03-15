@@ -36,25 +36,45 @@ error_reporting(E_ALL ^ E_WARNING);
     </nav>
     <center>
         <?php
-        $sql_Productos = "SELECT codprod,nombre,descripcion,precio,stock,rutaimagen FROM productos";
-        $result_Productos = $conexion->query($sql_Productos);
-        //Listado de productos
-        echo "<div class='productos'>";
-        if ($result_Productos->num_rows > 0) {
-            while ($fila = $result_Productos->fetch_assoc()) {
-                echo '<div class="producto">';
-                echo '<img src="' . $fila["rutaimagen"] . '">';
-                echo '<div><u>' . $fila["nombre"] . '</u></div>';
-                echo '<div>' . $fila["descripcion"] . '</div>';
-                echo '<div>' . $fila["precio"] . '€</div>';
-                echo '<div>' . $fila["stock"] . '</div>';
-                echo "<form method='GET'>";
-                echo '<input id="codProd" name="codProd" type="hidden" value="' . $fila["codprod"] . '" />';
-                echo '<br><input type="submit" value="Editar" class="editar">';
-                echo '</form>';
-                echo '</div>';
+        $sql_Categorias = "SELECT codcat, nombre FROM categorias";
+        $result_Categorias = $conexion->query($sql_Categorias);
+
+        $categorias = array();
+
+        if ($result_Categorias->num_rows > 0) {
+            while ($filaCategoria = $result_Categorias->fetch_assoc()) {
+                $categorias[$filaCategoria['codcat']] = $filaCategoria['nombre'];
             }
-            echo '</div>';
+        }
+
+        // Listado de productos por categoría
+        foreach ($categorias as $codcat => $nombre_categoria) {
+            echo "<h2>$nombre_categoria</h2>";
+
+            $sql_Productos = "SELECT codprod, nombre, descripcion, precio, stock, codestado, rutaimagen FROM productos WHERE codcat = $codcat";
+            $result_Productos = $conexion->query($sql_Productos);
+
+            echo "<div class='productos'>";
+            if ($result_Productos->num_rows > 0) {
+                while ($fila = $result_Productos->fetch_assoc()) {
+                    // Imprimir detalles del producto
+                    echo '<div class="producto">';
+                    echo '<img src="' . $fila["rutaimagen"] . '">';
+                    echo '<div><u>' . $fila["nombre"] . '</u></div>';
+                    echo '<div>' . $fila["descripcion"] . '</div>';
+                    echo '<div>' . $fila["precio"] . '€</div>';
+                    echo '<div>Stock: ' . $fila["stock"] . '</div>';
+                    echo '<div>' . $fila["codestado"] . '</div>';
+                    echo "<form method='GET'>";
+                    echo '<input id="codProd" name="codProd" type="hidden" value="' . $fila["codprod"] . '" />';
+                    echo '<br><input type="submit" value="Editar" class="editar">';
+                    echo '</form>';
+                    echo '</div>';
+                }
+            } else {
+                echo "<p>No hay productos en esta categoría.</p>";
+            }
+            echo "</div>";
         }
 
         //si recibimos por get o codigo do producto pintamos a tabla de update

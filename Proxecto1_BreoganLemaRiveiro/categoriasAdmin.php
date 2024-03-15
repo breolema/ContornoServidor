@@ -84,7 +84,7 @@ error_reporting(E_ALL ^ E_WARNING);
         if (isset($_POST["codcat"])) {
             $codcat = $_POST["codcat"];
             $nombreCat = $_POST["nombreCat"];
-            $activo = isset($_POST["activo"]) ? 1 : 0;
+            $activo = isset($_POST["activo"]) ? 1 : 2;
 
             $updateCategoria = "UPDATE categorias SET Nombre = '$nombreCat',  Activa = $activo WHERE CodCat = $codcat";
             $resultUpdate = $conexion->query($updateCategoria);

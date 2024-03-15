@@ -29,10 +29,20 @@ img {
     padding: 10px 20px; 
     border: none;
     border-radius: 5px; 
-    cursor: pointer;
     text-decoration: none;
 }
 
 .boton:hover {
     background-color: #555454;
+}
+
+.botoncito{
+    margin-top: 10px;
+    font-size: 17px;
+    background-color: #333;
+    color: white; 
+    padding: 5px 10px; 
+    border: none;
+    border-radius: 5px; 
+    text-decoration: none;
 }

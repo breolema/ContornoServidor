@@ -40,9 +40,8 @@ $conexion = mysqli_connect("localhost", "root", "", "supermercado");
 
     <?php
 
-    $sqlPedidos = "SELECT pedidos.CodUsuario AS CodigoUsuario, pedidos.CodPed AS CodigoPedido, pedidos.Fecha, estadoPedido.Descripcion AS EstadoPedido, pedidos.PrecioTotal
+    $sqlPedidos = "SELECT pedidos.CodUsuario AS CodigoUsuario, pedidos.CodPed AS CodigoPedido, pedidos.Fecha, pedidos.PrecioTotal
                                 FROM pedidos
-                                INNER JOIN estadoPedido ON pedidos.CodEstado = estadoPedido.CodEstadoPedido
                                 ORDER BY Fecha DESC";
     $resultPedidos = $conexion->query($sqlPedidos);
 
@@ -50,7 +49,23 @@ $conexion = mysqli_connect("localhost", "root", "", "supermercado");
         while ($fila = $resultPedidos->fetch_assoc()) {
             echo "<h2>Pedido nº" . $fila['CodigoPedido'] . "</h2>";
             echo "<p>Fecha: " . $fila['Fecha'] . "</p>";
-            echo "<p>Estado: " . $fila['EstadoPedido'] . "</p>";
+            echo "<p>Estado: ";
+            echo "<form action='actualizarEstadoPedido.php' method='POST'>";
+            echo "<input type='hidden' name='codigoPedido' value='" . $fila['CodigoPedido'] . "'>";
+            echo "<select name='nuevoEstado'>";
+
+            $sqlEstadosPedido = "SELECT * FROM estadoPedido";
+            $resultEstadosPedido = $conexion->query($sqlEstadosPedido);
+            if ($resultEstadosPedido->num_rows > 0) {
+                while ($filaEstado = $resultEstadosPedido->fetch_assoc()) {
+                echo "<option value='" . $filaEstado['CodEstadoPedido'] . "'>" . $filaEstado['Descripcion'] . "</option>";
+                }
+            }
+        echo "</select>";
+        echo "<button type='submit' class='botoncito'>Actualizar Estado</button>";
+        echo "</form>";
+        echo "</p>";
+
             echo "<p>Precio Total: " . $fila['PrecioTotal'] . "€</p>";
             echo "<p>Pedido hecho por el usuario nº" . $fila['CodigoUsuario'] . "</p>";
 
