@@ -64,7 +64,12 @@ error_reporting(E_ALL ^ E_WARNING);
                     echo '<div>' . $fila["descripcion"] . '</div>';
                     echo '<div>' . $fila["precio"] . '€</div>';
                     echo '<div>Stock: ' . $fila["stock"] . '</div>';
-                    echo '<div>' . $fila["codestado"] . '</div>';
+                     if ($fila["codestado"]==1){
+                        echo '<div>Activo</div>';
+                    } else {
+                        echo '<div>Desactivo</div>'; 
+                    }
+                     
                     echo "<form method='GET'>";
                     echo '<input id="codProd" name="codProd" type="hidden" value="' . $fila["codprod"] . '" />';
                     echo '<br><input type="submit" value="Editar" class="editar">';
