@@ -8,6 +8,51 @@ if (!isset($_SESSION["usuario"])) {
 
 $conexion = mysqli_connect("localhost", "root", "", "supermercado");
 error_reporting(E_ALL ^ E_WARNING);
+
+//update
+if (isset($_POST["CodProd"])) {
+    $codprod = $_POST["CodProd"];
+    $nombreProd = $_POST["nombreProd"];
+    $descripcion = $_POST["descripcProd"];
+    $precioProd = $_POST["precioProd"];
+    $stock = $_POST["stock"];
+    $categoria = $_POST["categoria"];
+    $estado = isset($_POST["estado"]) ? 1 : 0;
+
+    $updateProducto = "UPDATE productos SET Nombre = '$nombreProd', 
+                                                                                        Descripcion = '$descripcion',
+                                                                                        Precio = $precioProd, 
+                                                                                        Stock = $stock, 
+                                                                                        CodCat = $categoria, 
+                                                                                        CodEstado = $estado 
+                                                                                        WHERE CodProd = $codprod";
+
+    $resultUpdate = $conexion->query($updateProducto);
+    header("Location: productosAdmin.php");
+    exit;
+}
+
+
+
+//insert
+if (isset($_GET["insertar"])) {
+    $nombreProd = $_GET["nombreProd"];
+    $descripProd = $_GET["descripProd"];
+    $precioProd = $_GET["precioProd"];
+    $stock = $_GET["stock"];
+    $categoria = $_GET["categoria"];
+    $estado = isset($_GET["estado"]) ? 1 : 0;
+    $rutaImagen = $_GET["rutaImagen"];
+
+    $insert = "INSERT INTO productos (Nombre, Descripcion, Precio, Stock, CodCat, CodEstado, RutaImagen)
+            VALUES ('$nombreProd', '$descripProd', $precioProd, $stock, $categoria, $estado, 'imagenes/productos/$rutaImagen')";
+    $resultInsert = $conexion->query($insert);
+    header("Location: productosAdmin.php");
+    exit;
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -74,6 +119,10 @@ error_reporting(E_ALL ^ E_WARNING);
                     echo '<input id="codProd" name="codProd" type="hidden" value="' . $fila["codprod"] . '" />';
                     echo '<br><input type="submit" value="Editar" class="editar">';
                     echo '</form>';
+                    echo "<form action='borrarCatProd.php' method='POST'>";
+                    echo '<input id="codcat" name="codcat" type="hidden" value="' . $fila["codprod"] . '" />';
+                    echo '<br><input type="submit" value="Borrar Producto" class="borrar">';
+                    echo '</form>';
                     echo '</div>';
                 }
             } else {
@@ -105,7 +154,9 @@ error_reporting(E_ALL ^ E_WARNING);
                     echo '<label for="categoria">Categoría del producto:</label>';
                     echo ' <select id="categoria" name="categoria">';
 
-                    $sqlCat = "SELECT CodCat, Nombre FROM categorias";
+                    $sqlCat = "SELECT categorias.CodCat, categorias.Nombre FROM categorias
+                                        INNER JOIN productos ON categorias.CodCat=productos.CodCat
+                                        WHERE productos.CodProd=". $fila['CodProd'] . "";
                     $resultCat = $conexion->query($sqlCat);
 
                     if ($resultCat->num_rows > 0) {
@@ -122,33 +173,14 @@ error_reporting(E_ALL ^ E_WARNING);
                 echo '</div>';
             }
 
-            if (isset($_POST["CodProd"])) {
-                $codprod = $_POST["CodProd"];
-                $nombreProd = $_POST["nombreProd"];
-                $descripcion = $_POST["descripcProd"];
-                $precioProd = $_POST["precioProd"];
-                $stock = $_POST["stock"];
-                $categoria = $_POST["categoria"];
-                $estado = isset($_POST["estado"]) ? 1 : 0;
-
-                $updateProducto = "UPDATE productos SET Nombre = '$nombreProd', 
-                                                                                                    Descripcion = '$descripcion',
-                                                                                                    Precio = $precioProd, 
-                                                                                                    Stock = $stock, 
-                                                                                                    CodCat = $categoria, 
-                                                                                                    CodEstado = $estado 
-                                                                                                    WHERE CodProd = $codprod";
-
-                $resultUpdate = $conexion->query($updateProducto);
-                header("Location: productosAdmin.php");
-            }
 
         } else {
             ?>
 
             <h2>Dar de alta producto</h2>
             <div class="container">
-                <form method="POST">
+                <form method="GET">
+                    <input type="hidden" value="true" name="insertar">
                     <label for="rutaImagen">Selecciona una foto:</label>
                     <input type="file" id="rutaImagen" name="rutaImagen"><br>
                     <label for="nombreProd">Nombre del producto: </label>
@@ -163,7 +195,7 @@ error_reporting(E_ALL ^ E_WARNING);
                     <select id="categoria" name="categoria">
                         <option value="">-Seleccione una opción-</option>
                         <?php
-                        $sqlCat = "SELECT CodCat, Nombre FROM categorias WHERE Activa = 1";
+                        $sqlCat = "SELECT CodCat, Nombre FROM categorias";
                         $resultCat = $conexion->query($sqlCat);
 
                         if ($resultCat->num_rows > 0) {
@@ -183,21 +215,9 @@ error_reporting(E_ALL ^ E_WARNING);
             </div>
 
             <?php
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $nombreProd = $_POST["nombreProd"];
-                $descripProd = $_POST["descripProd"];
-                $precioProd = $_POST["precioProd"];
-                $stock = $_POST["stock"];
-                $categoria = $_POST["categoria"];
-                $estado = isset($_POST["estado"]) ? 1 : 0;
-                $rutaImagen = $_POST["rutaImagen"];
-
-                $insert = "INSERT INTO productos (Nombre, Descripcion, Precio, Stock, CodCat, CodEstado, RutaImagen)
-                        VALUES ('$nombreProd', '$descripProd', $precioProd, $stock, $categoria, $estado, 'imagenes/productos/$rutaImagen')";
-                $resultInsert = $conexion->query($insert);
-            }
 
         }
+
         ?>
     </center>
 

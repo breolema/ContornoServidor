@@ -19,8 +19,6 @@ if ($resultUserActual->num_rows > 0) {
     while ($fila = $resultUserActual->fetch_assoc()) {
         $codUserActual = $fila["CodUsu"];
     }
-    print $codUserActual;
-    print $usuarioBorrar;
     if ($codUserActual != $usuarioBorrar) {
         $deleteUser = "DELETE FROM usuarios WHERE CodUsu=$usuarioBorrar";
         $resultDeleteUser = $conexion->query($deleteUser);

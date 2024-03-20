@@ -9,6 +9,30 @@ if (!isset($_SESSION["usuario"])) {
 $conexion = mysqli_connect("localhost", "root", "", "supermercado");
 error_reporting(E_ALL ^ E_WARNING);
 
+//update categoria
+if (isset($_POST["codcat"])) {
+    $codcat = $_POST["codcat"];
+    $nombreCat = $_POST["nombreCat"];
+    $activo = isset($_POST["activo"]) ? 1 : 2;
+
+    $updateCategoria = "UPDATE categorias SET Nombre = '$nombreCat',  Activa = $activo WHERE CodCat = $codcat";
+    $resultUpdate = $conexion->query($updateCategoria);
+    header("Location: categoriasAdmin.php");
+    exit;
+}
+
+//insertar categorias
+if (isset($_POST["insertar"])) {
+    $nombreCat = $_POST["nombreCat"];
+    $activo = isset($_POST["activo"]) ? 1 : 0;
+    $rutaImagen = $_POST["foto"];
+
+    $insert = "INSERT INTO categorias (Nombre, Activa, RutaImagen) 
+                        VALUES ('$nombreCat', $activo, 'imagenes/categorias/$rutaImagen')";
+    $resultInsert = $conexion->query($insert);
+    header("Location: categoriasAdmin.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -49,6 +73,10 @@ error_reporting(E_ALL ^ E_WARNING);
             echo '<input id="codcat" name="codcat" type="hidden" value="' . $fila["codcat"] . '" />';
             echo '<br><input type="submit" value="Editar" class="editar">';
             echo '</form>';
+            echo "<form action='borrarCategorias.php' method='POST'>";
+            echo '<input id="codcat" name="codcat" type="hidden" value="' . $fila["codcat"] . '" />';
+            echo '<br><input type="submit" value="Borrar Categoria" class="borrar">';
+            echo '</form>';
             echo '</div>';
         }
         echo '</div>';
@@ -81,15 +109,6 @@ error_reporting(E_ALL ^ E_WARNING);
             echo '</div>';
         }
 
-        if (isset($_POST["codcat"])) {
-            $codcat = $_POST["codcat"];
-            $nombreCat = $_POST["nombreCat"];
-            $activo = isset($_POST["activo"]) ? 1 : 2;
-
-            $updateCategoria = "UPDATE categorias SET Nombre = '$nombreCat',  Activa = $activo WHERE CodCat = $codcat";
-            $resultUpdate = $conexion->query($updateCategoria);
-            header("Location: categoriasAdmin.php");
-        }
 
 
         //si non lle mandamos por get esta pinta o de dar alta categorias
@@ -98,6 +117,7 @@ error_reporting(E_ALL ^ E_WARNING);
         <h2>Dar de alta categoria</h2>
         <div class="container">
             <form method="POST">
+                <input type="hidden" value="true" name="insertar">
                 <label for="foto">Selecciona una foto:</label>
                 <input type="file" id="foto" name="foto">
                 <label for="nombreCat">Nombre de la categoria: </label>
@@ -109,18 +129,9 @@ error_reporting(E_ALL ^ E_WARNING);
         </div>
 
         <?php
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $nombreCat = $_POST["nombreCat"];
-            $activo = isset($_POST["activo"]) ? 1 : 0;
-            $rutaImagen = $_POST["foto"];
-
-            $insert = "INSERT INTO categorias (Nombre, Activa, RutaImagen) 
-                                VALUES ('$nombreCat', $activo, 'imagenes/categorias/$rutaImagen')";
-            $resultInsert = $conexion->query($insert);
-            header("Location: categoriasAdmin.php");
-        }
 
     }
+    
     ?>
 </body>
 
