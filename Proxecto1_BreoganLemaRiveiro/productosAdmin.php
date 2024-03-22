@@ -51,7 +51,10 @@ if (isset($_GET["insertar"])) {
     exit;
 }
 
-
+if (isset($_SESSION["mensaje"])) {
+    echo "<script>alert('" . $_SESSION["mensaje"] . "');</script>";
+    unset($_SESSION["mensaje"]); 
+}
 
 ?>
 
@@ -107,7 +110,7 @@ if (isset($_GET["insertar"])) {
                     echo '<img src="' . $fila["rutaimagen"] . '">';
                     echo '<div><u>' . $fila["nombre"] . '</u></div>';
                     echo '<div>' . $fila["descripcion"] . '</div>';
-                    echo '<div>' . $fila["precio"] . '€</div>';
+                    echo '<div>Precio: ' . $fila["precio"] . '€</div>';
                     echo '<div>Stock: ' . $fila["stock"] . '</div>';
                      if ($fila["codestado"]==1){
                         echo '<div>Activo</div>';
@@ -120,7 +123,7 @@ if (isset($_GET["insertar"])) {
                     echo '<br><input type="submit" value="Editar" class="editar">';
                     echo '</form>';
                     echo "<form action='borrarCatProd.php' method='POST'>";
-                    echo '<input id="codcat" name="codcat" type="hidden" value="' . $fila["codprod"] . '" />';
+                    echo '<input id="codprod" name="codprod" type="hidden" value="' . $fila["codprod"] . '" />';
                     echo '<br><input type="submit" value="Borrar Producto" class="borrar">';
                     echo '</form>';
                     echo '</div>';

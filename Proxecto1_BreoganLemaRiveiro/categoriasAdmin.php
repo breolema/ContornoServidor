@@ -33,6 +33,11 @@ if (isset($_POST["insertar"])) {
     header("Location: categoriasAdmin.php");
     exit;
 }
+
+if (isset($_SESSION["mensaje"])) {
+    echo "<script>alert('" . $_SESSION["mensaje"] . "');</script>";
+    unset($_SESSION["mensaje"]); 
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -73,7 +78,7 @@ if (isset($_POST["insertar"])) {
             echo '<input id="codcat" name="codcat" type="hidden" value="' . $fila["codcat"] . '" />';
             echo '<br><input type="submit" value="Editar" class="editar">';
             echo '</form>';
-            echo "<form action='borrarCategorias.php' method='POST'>";
+            echo "<form action='borrarCatProd.php' method='POST'>";
             echo '<input id="codcat" name="codcat" type="hidden" value="' . $fila["codcat"] . '" />';
             echo '<br><input type="submit" value="Borrar Categoria" class="borrar">';
             echo '</form>';
@@ -131,7 +136,7 @@ if (isset($_POST["insertar"])) {
         <?php
 
     }
-    
+
     ?>
 </body>
 
