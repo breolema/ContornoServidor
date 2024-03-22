@@ -50,16 +50,12 @@ CREATE TABLE IF NOT EXISTS `pedidosproductos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
 
 
+
 CREATE TABLE IF NOT EXISTS `estadoPedido` (
   `CodEstadoPedido` INT(3) NOT NULL,
   `Descripcion` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`CodEstadoPedido`)
 ) ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
-
-
-INSERT INTO estadopedido (`CodEstadoPedido`,`Descripcion`) VALUES 
-(1,'Activo'),
-(2,'Desactivo');
 
 
 CREATE TABLE IF NOT EXISTS `productos` (
@@ -83,7 +79,7 @@ INSERT INTO `productos` (`Nombre`,`Descripcion`,`Precio`,`Stock`,`CodCat`,`CodEs
 ('Salmon', 'Lomo de salmon', 7.95, 50, 3,1,'imagenes/productos/salmon.jpg');
 
 delete from productos;
-ALTER TABLE productos AUTO_INCREMENT = 3;
+ALTER TABLE pedidos AUTO_INCREMENT = 1;
 
 SELECT RutaImagen FROM productos WHERE CodProd=1;
 
@@ -117,7 +113,6 @@ INSERT INTO `usuarios` (`Nombre`, `Correo`, `Clave`,`Pais`, `CP`, `Ciudad`, `Dir
 DELETE FROM usuarios WHERE CodUsu=;
 ALTER TABLE pedidos AUTO_INCREMENT = 1;
 
-
 SELECT nombre,clave FROM usuarios WHERE Nombre='Breo'&& activo=TRUE;
 SELECT * FROM usuarios;
 DELETE FROM usuarios WHERE Nombre='Breo';
@@ -149,8 +144,9 @@ CREATE TABLE IF NOT EXISTS `estadoProducto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=LATIN1;
 
 INSERT INTO `estadoProducto` (`CodEstadoProducto`,`Descripcion`) VALUES
-(1,'Activo'),(2,'Descactivado');
+(0,'Desactivo'),(1,'Activo');
 
+UPDATE TABLE estadoproducto SET  Descripcion='Creado' WHERE CodEstadoProducto=1;
 
 
 SELECT codrol,descripcion FROM roles;
@@ -161,3 +157,40 @@ DELETE FROM usuarios WHERE CodUsu =6;
 SELECT codusu FROM usuarios WHERE nombre='Breo';
 
 delete FROM pedidos;
+
+
+SELECT pedidos.CodPed, pedidos.Fecha, estadoPedido.Descripcion AS EstadoPedido, pedidos.PrecioTotal, productos.Nombre AS NombreProducto, productos.Descripcion AS DescripcionProducto,pedidosproductos.Unidades AS Unidades, productos.Precio AS PrecioProducto, productos.RutaImagen AS FotoProducto
+FROM pedidos
+INNER JOIN estadoPedido ON pedidos.CodEstado = estadoPedido.CodEstadoPedido
+INNER JOIN pedidosproductos ON pedidos.CodPed = pedidosproductos.CodPed
+INNER JOIN productos ON pedidosproductos.CodProd = productos.CodProd
+WHERE pedidos.CodUsuario = '2'
+GROUP BY pedidos.CodPed
+ORDER BY Fecha DESC;
+
+
+SELECT pedidos.CodUsuario AS CodigoUsuario, pedidos.CodPed AS CodigoPedido, pedidos.Fecha, estadoPedido.Descripcion AS EstadoPedido, pedidos.PrecioTotal
+                                FROM pedidos
+                                INNER JOIN estadoPedido ON pedidos.CodEstado = estadoPedido.CodEstadoPedido
+                                ORDER BY Fecha DESC;
+                                
+                                
+                                
+SELECT pedidos.CodPed AS CodigoPedido, pedidos.Fecha AS Fecha, pedidos.PrecioTotal AS PrecioTotal, usuarios.Nombre AS NombreCliente, usuarios.Correo AS EmailCliente
+                FROM pedidos
+                INNER JOIN estadoPedido ON pedidos.CodEstado = estadoPedido.CodEstadoPedido
+                INNER JOIN usuarios ON pedidos.CodUsuario = usuarios.CodUsu
+                WHERE pedidos.CodPed = '1';
+
+
+UPDATE pedidos SET CodEstado = '1' WHERE CodPed = 3;
+
+
+SELECT * FROM estadopedido 
+INNER JOIN pedidos ON pedidos.CodEstado = estadoPedido.CodEstadoPedido
+WHERE pedidos.CodPed=3;
+
+
+SELECT categorias.CodCat, categorias.Nombre FROM categorias
+INNER JOIN productos ON categorias.CodCat=productos.CodCat
+WHERE productos.CodProd=1;
