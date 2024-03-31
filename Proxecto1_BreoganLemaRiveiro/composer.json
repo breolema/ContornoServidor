@@ -1,0 +1,16 @@
+{
+    "name": "vendor/autoload",
+    "description": "phpmailer e dompdf",
+    "type": "project",
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    },
+    "require-dev": {
+        "dompdf/dompdf": "^2.0"
+    },
+    "authors": [
+        {
+            "name": "breo"
+        }
+    ]
+}
