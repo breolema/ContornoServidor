@@ -118,3 +118,18 @@ CREATE TABLE IF NOT EXISTS `estadoProducto` (
 
 INSERT INTO `estadoProducto` (`CodEstadoProducto`,`Descripcion`) VALUES
 (0,'Desactivo'),(1,'Activo');
+
+CREATE TABLE IF NOT EXISTS HistorialModificaciones (
+  CodModificacion INT AUTO_INCREMENT,
+  CodUsuario INT,
+  Descripcion VARCHAR(255),
+  Fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (CodModificacion),
+  FOREIGN KEY (CodUsuario) REFERENCES usuarios(CodUsu)
+  CONSTRAINT `FK_HistorialModificaciones_Usuarios` FOREIGN KEY (`CodEstado`) REFERENCES `usuarios` (`CodUsu`)
+);
+
+
+INSERT INTO HistorialModificaciones (CodUsuario,Descripcion) VALUES (1,"O usuario modificou o Cliente");
+
+
