@@ -63,8 +63,8 @@
 
     <footer style="position: absolute">
         <div>
-            <p>Dereitos de autor © 2024 - Todos os dereitos reservados.</p>
-            <p>Desenvolvido por Breogan Lema Industrias</p>
+            <p style="font-size: 16px;">Dereitos de autor © 2024 - Todos os dereitos reservados.</p>
+            <p style="font-size: 16px;">Desenvolvido por Breogan Lema Industrias</p>
         </div>
     </footer>
 </body>
