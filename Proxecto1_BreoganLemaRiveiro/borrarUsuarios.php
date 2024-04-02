@@ -22,6 +22,7 @@ if ($resultUserActual->num_rows > 0) {
     if ($codUserActual != $usuarioBorrar) {
         $deleteUser = "DELETE FROM usuarios WHERE CodUsu=$usuarioBorrar";
         $resultDeleteUser = $conexion->query($deleteUser);
+        $_SESSION["mensaje"] = "El usuario fue borrado correctamente.";
     } else {
         $_SESSION["mensaje"] = "No puede borrar el usuario actual.";
     }

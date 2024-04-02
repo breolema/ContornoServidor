@@ -44,17 +44,7 @@ if (isset ($_SESSION["mensaje"])) {
   //Si o formulario recibe datos por get facemos que os pinte
   if (isset ($_GET["codUsu"]) && isset ($_GET["nombre"]) && isset ($_GET["correo"]) && isset ($_GET["pais"]) && isset ($_GET["cp"]) && isset ($_GET["ciudad"]) && isset ($_GET["direccion"]) && isset ($_GET["tipoRol"]) && isset ($_GET["activo"])) {
     
-    $sqlUserActual = "SELECT CodUsu FROM usuarios WHERE Nombre='$usuarioActual'";
-    $resultUserActual = $conexion->query($sqlUserActual);
-
-    if ($resultUserActual->num_rows > 0) {
-      while ($fila = $resultUserActual->fetch_assoc()) {
-        $codUserActual = $fila["CodUsu"];
-      }
-      if ($codUserActual == $usuarioBorrar) {
-        $_SESSION["mensaje"] = "No puedes modificar datos del usuario actual.";
-        exit;
-      } else {
+   
         $codUsu = $_GET["codUsu"];
         $nombre = $_GET["nombre"];
         $correo = $_GET["correo"];
@@ -116,17 +106,6 @@ if (isset ($_SESSION["mensaje"])) {
         echo '<input type="hidden" name="codUsu" value="' . $codUsu . '" />';
         echo '<input type="submit" value="Actualizar" />';
         echo '</form>';
-
-        if (isset ($_GET['mensaje'])) {
-          echo '<script>';
-          echo 'var mensaje = "' . $_GET['mensaje'] . '";';
-          echo 'alert(mensaje);';
-          echo '</script>';
-        }
-      }
-    }
-
-
 
   } else { //No caso de que non reciba datos este vaise pintar
   
@@ -191,13 +170,9 @@ if (isset ($_SESSION["mensaje"])) {
       $mensaje = "Error al añadir el usuario, compruebe si esta cubriendo los campos correctamente.";
     }
 
-    echo '<script>';
-    echo 'var mensaje = "<?php echo $mensaje; ?>"';
-    echo 'alert(mensaje)';
-    echo '</script>';
+
 
   }
-
 
   //Tabla que enseña os usuarios
   
