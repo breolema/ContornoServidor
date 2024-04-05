@@ -9,11 +9,11 @@ if (!isset($_SESSION["usuario"])) {
 $conexion = mysqli_connect("localhost", "root", "", "supermercado");
 error_reporting(E_ALL ^ E_WARNING);
 
-// Borrar categoría
+//borrar categoría
 if (isset($_POST["codcat"])) {
     $codCategoria = $_POST["codcat"];
 
-    // Verificar si hay productos asociados a esta categoría
+    //verificar si hay productos asociados a esta categoría
     $sqlProductos = "SELECT COUNT(*) AS cantidadProductos FROM productos WHERE CodCat = '$codCategoria'";
     $resultProductos = $conexion->query($sqlProductos);
     $filaProductos = $resultProductos->fetch_assoc();
