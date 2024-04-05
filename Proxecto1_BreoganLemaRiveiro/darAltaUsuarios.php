@@ -111,7 +111,7 @@ if (isset ($_SESSION["mensaje"])) {
   
 
 
-    echo '<form method="POST">';
+    echo '<form action="insertarUsers.php" method="POST">';
     echo '<label for="nombre">Nombre:</label>';
     echo '<input type="text" id="nombre" name="nombre" placeholder="Nombre" />';
     echo '<label for="correo">Correo:</label>';
@@ -142,33 +142,6 @@ if (isset ($_SESSION["mensaje"])) {
     echo '</div>';
     echo '<input type="submit" value="Dar de alta" />';
     echo '</form>';
-
-    $nombre = $_POST["nombre"];
-    $correo = $_POST["correo"];
-    $clave = $_POST["clave"];
-    $claveCifrada = md5($clave);
-    $pais = $_POST["pais"];
-    $cp = $_POST["cp"];
-    $ciudad = $_POST["ciudad"];
-    $direccion = $_POST["direccion"];
-    $rol = $_POST["rol"];
-    if (isset ($_POST['activo'])) {
-      $activo = 1;
-    } else {
-      $activo = 0;
-    }
-
-    //Inserccion de usuarios
-    $insert = "INSERT INTO `usuarios` (`Nombre`, `Correo`, `Clave`,`Pais`, `CP`, `Ciudad`, `Direccion`, `Rol`, `Activo`) VALUES
-        ('$nombre', '$correo', '$claveCifrada', '$pais', $cp, '$ciudad', '$direccion', $rol, $activo)";
-
-    $result_Insert = $conexion->query($insert);
-
-    if ($result_Insert) {
-      $mensaje = "Se añadió el usuario correctamente.";
-    } else {
-      $mensaje = "Error al añadir el usuario, compruebe si esta cubriendo los campos correctamente.";
-    }
 
 
 
