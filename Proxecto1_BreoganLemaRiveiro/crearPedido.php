@@ -6,7 +6,7 @@ if (!isset($_SESSION["usuario"])) {
     exit;
 }
 
-$conexion = mysqli_connect("localhost", "root", "", "supermercado");
+include_once("conexionbd.php");
 
 if (isset($_SESSION["arrayCarrito"]) && !empty($_SESSION["arrayCarrito"])) {
     $arrayCarrito = $_SESSION["arrayCarrito"];
@@ -18,10 +18,11 @@ if (isset($_SESSION["arrayCarrito"]) && !empty($_SESSION["arrayCarrito"])) {
 $stockSuficiente = true;
 $productosActivos = true;
 
+//facemos as seguintes comprobacions sobre cada un dos productos
 foreach ($arrayCarrito as $producto) {
     $codProducto = $producto['codprod'];
     $unidadesPedido = $producto['cantidad'];
-
+    //comprobamos si estan activos
     $verificarActivo = "SELECT CodEstado FROM productos WHERE CodProd = $codProducto";
     $resultadoVerificarActivo = $conexion->query($verificarActivo);
     if ($resultadoVerificarActivo->num_rows > 0) {
@@ -33,6 +34,7 @@ foreach ($arrayCarrito as $producto) {
         }
     }
 
+    //comprobamos o stock de cada un dos productos
     $comprobarStock = "SELECT stock FROM productos WHERE CodProd = $codProducto";
     $resultComprStock = $conexion->query($comprobarStock);
     if ($resultComprStock->num_rows > 0) {
@@ -45,13 +47,16 @@ foreach ($arrayCarrito as $producto) {
     }
 }
 
+//si algun producto non ten stock ou non esta activo redirige a página do carro e enseña un mensaje de error
 if (!$stockSuficiente || !$productosActivos) {
     $_SESSION['error_pedido'] = "Lo sentimos, no se puede procesar el pedido. Algunos productos no están disponibles o no tienen suficiente stock.";
     header("Location: carrito.php");
     exit;
 }
 
+//obtenemos fecha actual
 $fecha = date('Y-m-d H:i:s');
+//codigo usuario
 $usuarioActual = $_SESSION["usuario"];
 $sqlUserActual = "SELECT CodUsu FROM usuarios WHERE Nombre='$usuarioActual'";
 $resultUserActual = $conexion->query($sqlUserActual);
@@ -61,6 +66,7 @@ foreach ($arrayCarrito as $producto) {
     $totalPrecio += $producto['precioFinal'];
 }
 
+//insertamos pedido
 if ($resultUserActual->num_rows > 0) {
     while ($fila = $resultUserActual->fetch_assoc()) {
         $codUserActual = $fila["CodUsu"];
@@ -69,7 +75,7 @@ if ($resultUserActual->num_rows > 0) {
     $resultInsert = $conexion->query($insertarPedido);
 }
 
-
+//insertamos cada producto na tabla de pedidosproductos e actualizamos stock dos productos
 $codPedido = mysqli_insert_id($conexion);
 foreach ($arrayCarrito as $producto) {
     $codProducto = $producto['codprod'];
@@ -86,5 +92,6 @@ foreach ($arrayCarrito as $producto) {
 
 unset($_SESSION["arrayCarrito"]);
 
+//redirigimos a pagina de enviar o correo enviandolle por url os datos que queremos.
 header("Location: enviarCorreo.php?codUsuario=$codUserActual&codPedido=$codPedido");
 ?>

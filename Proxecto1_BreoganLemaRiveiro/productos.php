@@ -6,7 +6,7 @@
         exit;
     }
 
-    $conexion = mysqli_connect("localhost", "root", "", "supermercado");
+    include_once("conexionbd.php");
     ?>
 
 <!DOCTYPE html>
@@ -25,7 +25,7 @@
         <a href="inicio.php">Inicio</a>
         <a href="paginaCategorias.php">Categorias</a>
         <a href="misPedidos.php">Mis Pedidos</a>
-        <a href="">Información</a>
+        <a href="informacion.php">Información</a>
         <div  id="logout">
             <a href="logout.php"><img src="imagenes/logout.png"></a>
             <a href="carrito.php"><img src="imagenes/carrito.png"></a>
@@ -35,7 +35,7 @@
         <?php
             $codcat=$_GET["codCat"];
 
-            //Saca o nombre da categoria donde estamos
+            //saca o nombre da categoria donde estamos
             $sql_Categorias = "SELECT nombre FROM categorias WHERE codcat = $codcat && activa=TRUE";
             $result_Categorias = $conexion->query($sql_Categorias);
 
@@ -48,7 +48,7 @@
                 }
             }
 
-            //Saca os productos cas suas imagenes
+            //saca os productos cas suas imagenes
             $sql_Productos="SELECT codprod,nombre,descripcion,precio,stock,codcat,rutaimagen FROM productos WHERE codcat=$codcat && codestado=1";
             $result_Productos = $conexion->query($sql_Productos);
 

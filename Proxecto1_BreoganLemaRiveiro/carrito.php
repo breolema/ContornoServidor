@@ -20,7 +20,7 @@ if (isset($_SESSION['error_pedido'])) {
 }
 
 
-$conexion = mysqli_connect("localhost", "root", "", "supermercado");
+include_once("conexionbd.php");
 ?>
 
 <!DOCTYPE html>
@@ -34,6 +34,7 @@ $conexion = mysqli_connect("localhost", "root", "", "supermercado");
     <link rel="stylesheet" href="css/estilo_Carrito.css">
     <link rel="icon" type="image/jpg" href="imagenes/icono.png" />
 
+    <!--Desta forma sacamos o mensaxe de erro si non se fai o pedido-->
     <?php if (!empty($mensajeError)) { ?>
         <script>
             window.onload = function () {
@@ -52,7 +53,8 @@ $conexion = mysqli_connect("localhost", "root", "", "supermercado");
     </nav>
     <?php
     $totalPrecio = 0;
-
+    
+    //enseñamos os datos do array de productos
     echo "<h2>Carrito de compras</h2>";
     if (!empty($arrayCarrito)) {
         echo "<table>";
@@ -74,6 +76,7 @@ $conexion = mysqli_connect("localhost", "root", "", "supermercado");
             echo "</form>";
             echo "</tr>";
 
+            //sumamos osprecios dos productos que vamos añadindo
             $totalPrecio += $producto['precioFinal'];
         }
         echo "</table>";

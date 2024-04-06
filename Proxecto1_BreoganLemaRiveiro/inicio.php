@@ -25,7 +25,7 @@ if (!isset($_SESSION["usuario"])) {
         <a href="inicio.php">Inicio</a>
         <a href="paginaCategorias.php">Categorias</a>
         <a href="misPedidos.php">Mis Pedidos</a>
-        <a href="">Información</a>
+        <a href="informacion.php">Información</a>
         <div id="logout">
             <a href="logout.php"><img src="imagenes/logout.png"></a>
             <a href="carrito.php"><img src="imagenes/carrito.png"></a>
@@ -41,6 +41,8 @@ if (!isset($_SESSION["usuario"])) {
             <li>Y además, viajes y regalos ...</li>
         </ul>
     </section>
+    <br><br>
+    <img src="imagenes/super.jpeg" alt="supermercado" height="70%">
 </body>
 
 </html>

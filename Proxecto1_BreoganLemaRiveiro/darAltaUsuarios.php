@@ -6,7 +6,7 @@ if (!isset ($_SESSION["usuario"])) {
   exit;
 }
 
-$conexion = mysqli_connect("localhost", "root", "", "supermercado");
+include_once("conexionbd.php");
 error_reporting(E_ALL ^ E_WARNING);
 
 if (isset ($_SESSION["mensaje"])) {
@@ -41,7 +41,7 @@ if (isset ($_SESSION["mensaje"])) {
   </nav>
   <!--Formulario creacion usuarios-->
   <?php
-  //Si o formulario recibe datos por get facemos que os pinte
+  //si o formulario recibe datos por get facemos que os pinte
   if (isset ($_GET["codUsu"]) && isset ($_GET["nombre"]) && isset ($_GET["correo"]) && isset ($_GET["pais"]) && isset ($_GET["cp"]) && isset ($_GET["ciudad"]) && isset ($_GET["direccion"]) && isset ($_GET["tipoRol"]) && isset ($_GET["activo"])) {
     
    
@@ -62,7 +62,7 @@ if (isset ($_SESSION["mensaje"])) {
 
         $activo = $_GET["activo"];
 
-        //Aqui se pintaran os datos dos usuarios que queiramos modificar
+        //aqui se pintaran os datos dos usuarios que queiramos modificar
         echo '<form method="POST" action="modificarUsuarios.php">';
         echo '<label for="nombre">Nombre:</label>';
         echo '<input type="text" id="nombre" name="nombre" value="' . $nombre . '" />';
@@ -107,7 +107,7 @@ if (isset ($_SESSION["mensaje"])) {
         echo '<input type="submit" value="Actualizar" />';
         echo '</form>';
 
-  } else { //No caso de que non reciba datos este vaise pintar
+  } else { //no caso de que non reciba datos este vaise pintar
   
 
 
@@ -147,7 +147,7 @@ if (isset ($_SESSION["mensaje"])) {
 
   }
 
-  //Tabla que enseña os usuarios
+  //tabla que enseña os usuarios
   
   $sql_Usuarios = "SELECT usuarios.*, roles.Descripcion AS tipoRol FROM usuarios INNER JOIN roles ON roles.CodRol = usuarios.Rol";
   $result_Usuarios = $conexion->query($sql_Usuarios);

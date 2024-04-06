@@ -6,7 +6,7 @@ if (!isset($_SESSION["usuario"])) {
     exit;
 }
 
-$conexion = mysqli_connect("localhost", "root", "", "supermercado");
+include_once("conexionbd.php");
 ?>
 
 <!DOCTYPE html>
@@ -27,14 +27,14 @@ $conexion = mysqli_connect("localhost", "root", "", "supermercado");
         <a href="inicio.php">Inicio</a>
         <a href="paginaCategorias.php">Categorias</a>
         <a href="misPedidos.php">Mis Pedidos</a>
-        <a href="">Información</a>
+        <a href="informacion.php">Información</a>
         <div id="logout">
             <a href="logout.php"><img src="imagenes/logout.png"></a>
             <a href="carrito.php"><img src="imagenes/carrito.png"></a>
         </div>
     </nav>
 
-    <!--Enseñas as categorias activas-->
+    <!--Enseña as categorias activas-->
     <?php
     echo "<div class='categorias'>";
     $sql = "SELECT codcat,nombre,rutaimagen FROM categorias WHERE Activa=TRUE";

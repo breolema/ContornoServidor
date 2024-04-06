@@ -6,7 +6,7 @@ if (!isset($_SESSION["usuario"])) {
     exit;
 }
 
-$conexion = mysqli_connect("localhost", "root", "", "supermercado");
+include_once("conexionbd.php");
 
 ?>
 
@@ -39,13 +39,13 @@ $conexion = mysqli_connect("localhost", "root", "", "supermercado");
     <h1>Pagina de Pedidos</h1>
 
     <?php
-
+//seleccionamos todos os pedidos
 $sqlPedidos = "SELECT pedidos.CodUsuario, usuarios.Nombre AS NombreUsuario, pedidos.CodPed AS CodigoPedido, pedidos.Fecha, pedidos.PrecioTotal
                 FROM pedidos
                 INNER JOIN usuarios ON pedidos.CodUsuario = usuarios.CodUsu
                 ORDER BY Fecha DESC";
     $resultPedidos = $conexion->query($sqlPedidos);
-
+    //enseñamos os pedidos ca sua informacion
     if ($resultPedidos->num_rows > 0) {
         while ($fila = $resultPedidos->fetch_assoc()) {
             echo "<h2>Pedido nº" . $fila['CodigoPedido'] . "</h2>";
@@ -53,7 +53,7 @@ $sqlPedidos = "SELECT pedidos.CodUsuario, usuarios.Nombre AS NombreUsuario, pedi
             echo "<p>Estado: ";
             echo "<form action='actualizarEstadoPedido.php' method='POST'>";
             echo "<input type='hidden' name='codigoPedido' value='" . $fila['CodigoPedido'] . "'>";
-
+            //sacamos o estado actual do pedido
             $estadoActualPedido="SELECT estadopedido.CodEstadoPedido, estadopedido.Descripcion, pedidos.CodEstado FROM estadopedido
 			                    INNER JOIN pedidos ON estadopedido.CodEstadoPedido=pedidos.CodEstado
 			                    WHERE pedidos.CodPed=" . $fila['CodigoPedido'] . "";
@@ -61,9 +61,8 @@ $sqlPedidos = "SELECT pedidos.CodUsuario, usuarios.Nombre AS NombreUsuario, pedi
             while ($filaEstadoActual = $resultEstadoActual->fetch_assoc()) {
                 echo "<p>Estado actual del pedido: " . $filaEstadoActual['Descripcion']. "</p>";
             }
-
+            //cambiamos estado do producto
             echo "<select name='nuevoEstado'>";
-
             $sqlEstadosPedido = "SELECT * FROM estadoPedido";
             $resultEstadosPedido = $conexion->query($sqlEstadosPedido);
             if ($resultEstadosPedido->num_rows > 0) {
@@ -81,7 +80,7 @@ $sqlPedidos = "SELECT pedidos.CodUsuario, usuarios.Nombre AS NombreUsuario, pedi
             echo "<p>Pedido hecho por el usuario: " . $fila['NombreUsuario'] . "</p>";
 
             $codigoPedido = $fila['CodigoPedido'];
-
+            //obtemos os productos do pedido
             $sqlProductosPedido = "SELECT productos.Nombre AS NombreProducto, productos.Descripcion AS DescripcionProducto, pedidosproductos.Unidades AS Unidades, productos.Precio AS PrecioProducto, productos.RutaImagen AS FotoProducto
                                     FROM pedidosproductos
                                     INNER JOIN productos ON pedidosproductos.CodProd = productos.CodProd
@@ -101,10 +100,12 @@ $sqlPedidos = "SELECT pedidos.CodUsuario, usuarios.Nombre AS NombreUsuario, pedi
                     echo "</tr>";
                 }
                 echo "</table>";
+                //formulario de descarga do pdf
                 echo "<form action='descargarPedido.php' method='post'>";
                 echo "<input type='hidden' name='codigoPedido' value='" . $codigoPedido . "'>";
                 echo "<button type='submit' class='boton'>Descargar PDF</button>";
                 echo "</form>";
+                //formulario para borrar o pedido
                 echo "<form action='borrarPedido.php' method='post'>";
                 echo "<input type='hidden' name='codigoPedido' value='" . $codigoPedido . "'>";
                 echo "<button type='submit' class='boton'>Borrar Pedido</button>";

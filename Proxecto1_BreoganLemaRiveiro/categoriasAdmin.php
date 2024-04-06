@@ -6,8 +6,18 @@ if (!isset($_SESSION["usuario"])) {
     exit;
 }
 
-$conexion = mysqli_connect("localhost", "root", "", "supermercado");
+include_once("conexionbd.php");
 error_reporting(E_ALL ^ E_WARNING);
+
+//sacamos o usuario actual
+$usuarioActual = $_SESSION["usuario"];
+$sqlUserActual = "SELECT CodUsu FROM usuarios WHERE Nombre='$usuarioActual'";
+$resultUserActual = $conexion->query($sqlUserActual);
+if ($resultUserActual->num_rows > 0) {
+    while ($fila = $resultUserActual->fetch_assoc()) {
+        $codUserActual = $fila["CodUsu"];
+    }
+}
 
 //update categoria
 if (isset($_POST["codcat"])) {
@@ -17,6 +27,8 @@ if (isset($_POST["codcat"])) {
 
     $updateCategoria = "UPDATE categorias SET Nombre = '$nombreCat',  Activa = $activo WHERE CodCat = $codcat";
     $resultUpdate = $conexion->query($updateCategoria);
+    $rexistroUpdate="INSERT INTO historialmodificaciones (CodUsuario,Descripcion) VALUES ('$codUserActual','O usuario $codUserActual modificou a categoria $nombreCat')";
+    $resultRexistroUpdate = $conexion->query($rexistroUpdate);
     header("Location: categoriasAdmin.php");
     exit;
 }
@@ -30,6 +42,8 @@ if (isset($_POST["insertar"])) {
     $insert = "INSERT INTO categorias (Nombre, Activa, RutaImagen) 
                         VALUES ('$nombreCat', $activo, 'imagenes/categorias/$rutaImagen')";
     $resultInsert = $conexion->query($insert);
+    $rexistroInsert="INSERT INTO historialmodificaciones (CodUsuario,Descripcion) VALUES ('$codUserActual','O usuario $codUserActual insertou a categoria $nombreCat')";
+    $resultRexistroInsert = $conexion->query($rexistroInsert);
     header("Location: categoriasAdmin.php");
     exit;
 }

@@ -6,8 +6,19 @@ if (!isset($_SESSION["usuario"])) {
     exit;
 }
 
-$conexion = mysqli_connect("localhost", "root", "", "supermercado");
+include_once("conexionbd.php");
 error_reporting(E_ALL ^ E_WARNING);
+
+$usuarioActual = $_SESSION["usuario"];
+$sqlUserActual = "SELECT CodUsu FROM usuarios WHERE Nombre='$usuarioActual'";
+$resultUserActual = $conexion->query($sqlUserActual);
+if ($resultUserActual->num_rows > 0) {
+    while ($fila = $resultUserActual->fetch_assoc()) {
+        $codUserActual = $fila["CodUsu"];
+    }
+}
+
+
 
 //borrar categoría
 if (isset($_POST["codcat"])) {
@@ -26,6 +37,16 @@ if (isset($_POST["codcat"])) {
         $resultBorrarCategoria = $conexion->query($sqlBorrarCategoria);
 
         if ($resultBorrarCategoria) {
+            //facemos o rexistro na bd
+            $sqlnombreCat = "SELECT Nombre FROM categorias WHERE CodCat=$codCategoria";
+            $resultNomCat = $conexion->query($sqlnombreCat);
+            if ($resultNomCat->num_rows > 0) {
+                while ($fila = $resultNomCat->fetch_assoc()) {
+                    $nomCat = $fila["Nombre"];
+                }
+            }
+            $rexistroDeleteCat = "INSERT INTO historialmodificaciones (CodUsuario,Descripcion) VALUES ('$codUserActual','O usuario $codUserActual borrou a categoria $nomCat')";
+            $resultRexistroDeleteCat = $conexion->query($rexistroDeleteCat);
             $_SESSION["mensaje"] = "Categoría borrada exitosamente.";
         } else {
             $_SESSION["mensaje"] = "Error al borrar la categoría.";
@@ -50,6 +71,16 @@ if (isset($_POST["codcat"])) {
         $resultBorrarProducto = $conexion->query($sqlBorrarProducto);
 
         if ($resultBorrarProducto) {
+            //facemos o rexistro na bd
+            $sqlnombreProd = "SELECT Nombre FROM productos WHERE CodProd=$codProducto";
+            $resultNomProd = $conexion->query($sqlnombreProd);
+            if ($resultNomProd->num_rows > 0) {
+                while ($fila = $resultNomProd->fetch_assoc()) {
+                    $nomProd = $fila["Nombre"];
+                }
+            }
+            $rexistroDeleteCat = "INSERT INTO historialmodificaciones (CodUsuario,Descripcion) VALUES ('$codUserActual','O usuario $codUserActual borrou o producto $nomProd')";
+            $resultRexistroDeleteCat = $conexion->query($rexistroDeleteCat);
             $_SESSION["mensaje"] = "Producto borrado exitosamente.";
         } else {
             $_SESSION["mensaje"] = "Error al borrar el producto.";

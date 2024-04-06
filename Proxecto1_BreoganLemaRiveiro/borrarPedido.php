@@ -6,7 +6,7 @@ if (!isset($_SESSION["usuario"])) {
   exit;
 }
 
-$conexion = mysqli_connect("localhost", "root", "", "supermercado");
+include_once("conexionbd.php");
 
 if (!isset($_POST["codigoPedido"])) {
   header("Location: pedidos.php");

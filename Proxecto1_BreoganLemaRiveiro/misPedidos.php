@@ -6,7 +6,7 @@ if (!isset($_SESSION["usuario"])) {
     exit;
 }
 
-$conexion = mysqli_connect("localhost", "root", "", "supermercado");
+include_once("conexionbd.php");
 
 $usuarioActual = $_SESSION["usuario"];
 $sqlUserActual = "SELECT CodUsu FROM usuarios WHERE Nombre='$usuarioActual'";
@@ -35,7 +35,7 @@ $resultUserActual = $conexion->query($sqlUserActual);
         <a href="inicio.php">Inicio</a>
         <a href="paginaCategorias.php">Categorias</a>
         <a href="misPedidos.php">Mis Pedidos</a>
-        <a href="">Información</a>
+        <a href="informacion.php">Información</a>
         <div id="logout">
             <a href="logout.php"><img src="imagenes/logout.png"></a>
             <a href="carrito.php"><img src="imagenes/carrito.png"></a>
@@ -44,12 +44,15 @@ $resultUserActual = $conexion->query($sqlUserActual);
 
     <?php
     $codUserActual = 0;
+
+    //sacamos el codigo del usuario actual
     if ($resultUserActual->num_rows > 0) {
         while ($fila = $resultUserActual->fetch_assoc()) {
             $codUserActual = $fila["CodUsu"];
         }
     }
 
+    //obtenemos los pedidos del usuario actual
     $sqlPedidos = "SELECT pedidos.CodPed AS CodigoPedido, pedidos.Fecha, estadoPedido.Descripcion AS EstadoPedido, pedidos.PrecioTotal
                                 FROM pedidos
                                 INNER JOIN estadoPedido ON pedidos.CodEstado = estadoPedido.CodEstadoPedido
@@ -72,6 +75,7 @@ $resultUserActual = $conexion->query($sqlUserActual);
                                     WHERE pedidosproductos.CodPed = '$codigoPedido'";
             $resultProductosPedido = $conexion->query($sqlProductosPedido);
 
+            //sacamos los productos del pedido
             if ($resultProductosPedido->num_rows > 0) {
                 echo "<table>";
                 echo "<tr><th>Producto</th><th>Descripción</th><th>Unidades</th><th>Precio Producto</th><th>Foto</th></tr>";
@@ -85,6 +89,7 @@ $resultUserActual = $conexion->query($sqlUserActual);
                     echo "</tr>";
                 }
                 echo "</table>";
+                //formulario para descargar el pdf
                 echo "<form action='descargarPedido.php' method='post'>";
                 echo "<input type='hidden' name='codigoPedido' value='" . $codigoPedido . "'>";
                 echo "<button type='submit' class='boton'>Descargar PDF</button>";

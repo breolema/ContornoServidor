@@ -1,11 +1,12 @@
 <?php
-//Funcionalidade do inicioSesion.php
+//funcionalidad do inicioSesion
 session_start();
-$conexion = mysqli_connect("localhost", "root", "", "supermercado");
+include_once("conexionbd.php");
 
 if (isset($_POST["usuario"]) && isset($_POST["clave"])) {
     $usuario = $_POST["usuario"];
     $clave = $_POST["clave"];
+    //encriptamos a clave para comparar ca da bd
     $claveEncriptada = md5($clave);
     $sql = "SELECT nombre, clave, rol FROM usuarios WHERE nombre='$usuario' && clave='$claveEncriptada' && activo=true";
     $res = $conexion->query($sql);
@@ -18,6 +19,7 @@ if (isset($_POST["usuario"]) && isset($_POST["clave"])) {
             $_SESSION["usuario"] = $fila["nombre"];
             $_SESSION["rol"] = $rol;
             $res->close();
+            //comprobamos o rol dos usuarios
             if ($rol == 1) {
                 header("Location: todosPedidos.php");
             } else {

@@ -9,10 +9,10 @@ if (!isset($_SESSION["usuario"])) {
 //referencia
 use Dompdf\Dompdf;
 
-$conexion = mysqli_connect("localhost", "root", "", "supermercado");
+include_once("conexionbd.php");
 
 $codPedido = $_POST["codigoPedido"];
-
+//seleccionamos os datos que queremos enseñar
 $sqlInfoPedido = "SELECT pedidos.CodPed AS CodigoPedido, pedidos.Fecha AS Fecha, pedidos.PrecioTotal AS PrecioTotal, usuarios.Nombre AS NombreCliente, usuarios.Correo AS EmailCliente
                 FROM pedidos
                 INNER JOIN estadoPedido ON pedidos.CodEstado = estadoPedido.CodEstadoPedido
@@ -20,6 +20,7 @@ $sqlInfoPedido = "SELECT pedidos.CodPed AS CodigoPedido, pedidos.Fecha AS Fecha,
                 WHERE pedidos.CodPed = '$codPedido'";
 $resultInfoPedido = $conexion->query($sqlInfoPedido);
 
+//creamos o html do pdf para enseñar no pdf
 $mihtml = '<h1>Detalles del Pedido</h1>';
 
 if ($resultInfoPedido->num_rows > 0) {

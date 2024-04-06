@@ -6,8 +6,8 @@ if (!isset($_SESSION["usuario"])) {
     exit;
 }
 
-$conexion = mysqli_connect("localhost", "root", "", "supermercado");
-
+include_once("conexionbd.php");
+//comprobamos si recibimos os datos
 if (isset($_POST["codUsu"]) && isset($_POST["nombre"]) && isset($_POST["correo"]) && isset($_POST["pais"]) && isset($_POST["cp"]) && isset($_POST["ciudad"]) && isset($_POST["direccion"]) && isset($_POST["rol"])) {
     $usuarioActual = $_SESSION["usuario"];
     $sqlUserActual = "SELECT CodUsu FROM usuarios WHERE Nombre='$usuarioActual'";
@@ -27,7 +27,9 @@ if (isset($_POST["codUsu"]) && isset($_POST["nombre"]) && isset($_POST["correo"]
         while ($fila = $resultUserActual->fetch_assoc()) {
             $codUserActual = $fila["CodUsu"];
         }
+        //comprobamos si o usuario que vamos facer o update é diferente o actual
         if($codUsu!=$codUserActual){
+            //comprobamos si recibimos datos de clave, o que significa que queremos cambiala
             if (isset($_POST["clave"])) {
                 $clave = $_POST["clave"];
                 $claveCifrada = md5($clave);
@@ -43,7 +45,7 @@ if (isset($_POST["codUsu"]) && isset($_POST["nombre"]) && isset($_POST["correo"]
                                     Rol = $rol,
                                     Activo = $activo
                                     WHERE CodUsu = $codUsu";
-            } else {
+            } else { //si non recibimos a clave facemos este update
                 $update = "UPDATE usuarios SET 
                                     Nombre = '$nombre',
                                     Correo = '$correo',
@@ -57,6 +59,8 @@ if (isset($_POST["codUsu"]) && isset($_POST["nombre"]) && isset($_POST["correo"]
             }
         
             $resultUpdate = $conexion->query($update);
+            $rexistroUpdate="INSERT INTO historialmodificaciones (CodUsuario,Descripcion) VALUES ('$codUserActual','O usuario $codUserActual modificou o usuario $nombre')";
+            $resultRexistroUpdate = $conexion->query($rexistroUpdate);
             $_SESSION["mensaje"] = "Usuario modificado correctamente.";
         } else {
             $_SESSION["mensaje"] = "No puede modificar el usuario actual.";

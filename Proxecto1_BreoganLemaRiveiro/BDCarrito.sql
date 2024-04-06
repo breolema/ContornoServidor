@@ -107,8 +107,6 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
 -- Volcando datos para la tabla supermercado.pedidos: ~1 rows (aproximadamente)
 DELETE FROM `pedidos`;
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
-INSERT INTO `pedidos` (`CodPed`, `Fecha`, `CodUsuario`, `PrecioTotal`, `CodEstado`) VALUES
-	(1, '2024-04-05 11:21:37', 2, 40, 1);
 /*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla supermercado.pedidosproductos
@@ -128,8 +126,6 @@ CREATE TABLE IF NOT EXISTS `pedidosproductos` (
 -- Volcando datos para la tabla supermercado.pedidosproductos: ~1 rows (aproximadamente)
 DELETE FROM `pedidosproductos`;
 /*!40000 ALTER TABLE `pedidosproductos` DISABLE KEYS */;
-INSERT INTO `pedidosproductos` (`CodPedProd`, `CodPed`, `CodProd`, `Unidades`, `Precio`) VALUES
-	(1, 1, 1, 10, 40);
 /*!40000 ALTER TABLE `pedidosproductos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla supermercado.productos
@@ -194,8 +190,7 @@ DELETE FROM `usuarios`;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`CodUsu`, `Nombre`, `Correo`, `Clave`, `Pais`, `CP`, `Ciudad`, `Direccion`, `Rol`, `Activo`) VALUES
 	(1, 'Admin', 'admin@gmail.com', 'e8dc8ccd5e5f9e3a54f07350ce8a2d3d', 'España', 15270, 'Cee', 'Cee', 1, 1),
-	(2, 'Cliente', 'breolema13@gmail.com', 'e8dc8ccd5e5f9e3a54f07350ce8a2d3d', 'España', 15270, 'Cee', 'Rua da Escola', 2, 1),
-	(3, 'Angel', 'angel@gmail.com', 'd41d8cd98f00b204e9800998ecf8427e', 'España', 15893, 'Santa Comba', 'Rua dos Pubs', 2, 1);
+	(2, 'Cliente', 'breolema13@gmail.com', 'e8dc8ccd5e5f9e3a54f07350ce8a2d3d', 'España', 15270, 'Cee', 'Rua da Escola', 2, 1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

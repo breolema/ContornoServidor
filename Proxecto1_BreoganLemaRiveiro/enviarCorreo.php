@@ -1,5 +1,5 @@
 <?php
-$conexion = mysqli_connect("localhost", "root", "", "supermercado");
+include_once("conexionbd.php");
 
 
 require 'vendor/autoload.php';
