@@ -7,8 +7,6 @@ if (!isset($_SESSION["usuario"])) {
     exit;
 }
 
-
-
 //comprobamos si se enviou algo
 if (isset($_POST["codigoPedido"]) && isset($_POST["nuevoEstado"])) {
     //añadimolos a variables

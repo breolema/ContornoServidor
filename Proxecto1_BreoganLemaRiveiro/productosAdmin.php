@@ -6,7 +6,7 @@ if (!isset($_SESSION["usuario"])) {
     exit;
 }
 
-include_once("conexionbd.php");
+require_once("conexionbd.php");
 error_reporting(E_ALL ^ E_WARNING);
 
 $usuarioActual = $_SESSION["usuario"];
