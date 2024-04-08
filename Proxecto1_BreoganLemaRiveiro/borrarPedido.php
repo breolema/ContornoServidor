@@ -7,6 +7,15 @@ if (!isset($_SESSION["usuario"])) {
 }
 
 include_once("conexionbd.php");
+//recollemos o codigo do usuario actual
+$usuarioActual = $_SESSION["usuario"];
+$sqlUserActual = "SELECT CodUsu FROM usuarios WHERE Nombre='$usuarioActual'";
+$resultUserActual = $conexion->query($sqlUserActual);
+if ($resultUserActual->num_rows > 0) {
+    while ($fila = $resultUserActual->fetch_assoc()) {
+        $codUserActual = $fila["CodUsu"];
+    }
+}
 
 if (!isset($_POST["codigoPedido"])) {
   header("Location: pedidos.php");
@@ -44,6 +53,11 @@ $resultEliminarProductos=$conexion->query($eliminarProductosPedido);
 //eliminamos pedido
 $eliminarPedido="DELETE FROM pedidos WHERE CodPed = $codPedido";
 $resultEliminarPedido=$conexion->query($eliminarPedido);
+
+if($resultEliminarPedido){
+  $rexistroDelete="INSERT INTO historialmodificaciones (CodUsuario,Descripcion) VALUES ('$codUserActual','O usuario $codUserActual borrou o pedido $codPedido')";
+  $resultRexistroDelete = $conexion->query($rexistroDelete);
+}
 
 header("Location:todosPedidos.php");
 ?>

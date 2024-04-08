@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `categorias` (
   UNIQUE KEY `UN_NOM_CAT` (`Nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla supermercado.categorias: ~7 rows (aproximadamente)
+-- Volcando datos para la tabla supermercado.categorias: ~8 rows (aproximadamente)
 DELETE FROM `categorias`;
 /*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
 INSERT INTO `categorias` (`CodCat`, `Nombre`, `Activa`, `RutaImagen`) VALUES
@@ -83,18 +83,11 @@ CREATE TABLE IF NOT EXISTS `historialmodificaciones` (
   KEY `FK_HistorialModificaciones_Usuarios` (`CodUsuario`),
   CONSTRAINT `FK_HistorialModificaciones_Usuarios` FOREIGN KEY (`CodUsuario`) REFERENCES `usuarios` (`CodUsu`),
   CONSTRAINT `historialmodificaciones_ibfk_1` FOREIGN KEY (`CodUsuario`) REFERENCES `usuarios` (`CodUsu`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla supermercado.historialmodificaciones: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla supermercado.historialmodificaciones: ~0 rows (aproximadamente)
 DELETE FROM `historialmodificaciones`;
 /*!40000 ALTER TABLE `historialmodificaciones` DISABLE KEYS */;
-INSERT INTO `historialmodificaciones` (`CodModificacion`, `CodUsuario`, `Descripcion`, `Fecha`) VALUES
-	(2, 1, 'O usuario 1 modificou o usuario Angelo', '2024-04-06 02:40:44'),
-	(3, 1, 'O usuario 1 insertou a categoria Cuidado Personal', '2024-04-08 13:46:20'),
-	(4, 1, 'O usuario 1 modificou o usuario Angel', '2024-04-08 13:47:25'),
-	(5, 1, 'O usuario 1 borrou a categoria ', '2024-04-08 14:10:28'),
-	(6, 1, 'O usuario 1 insertou o producto weoif', '2024-04-08 15:34:34'),
-	(7, 1, 'O usuario 1 borrou o producto ', '2024-04-08 15:34:36');
 /*!40000 ALTER TABLE `historialmodificaciones` ENABLE KEYS */;
 
 -- Volcando estructura para tabla supermercado.pedidos
@@ -109,13 +102,11 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   KEY `pedidos_ibfk_2` (`CodEstado`),
   CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`CodUsuario`) REFERENCES `usuarios` (`CodUsu`),
   CONSTRAINT `pedidos_ibfk_2` FOREIGN KEY (`CodEstado`) REFERENCES `estadopedido` (`CodEstadoPedido`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla supermercado.pedidos: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla supermercado.pedidos: ~0 rows (aproximadamente)
 DELETE FROM `pedidos`;
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
-INSERT INTO `pedidos` (`CodPed`, `Fecha`, `CodUsuario`, `PrecioTotal`, `CodEstado`) VALUES
-	(1, '2024-04-05 11:21:37', 2, 40, 2);
 /*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla supermercado.pedidosproductos
@@ -130,19 +121,17 @@ CREATE TABLE IF NOT EXISTS `pedidosproductos` (
   KEY `CodProd` (`CodProd`),
   CONSTRAINT `pedidosproductos_ibfk_1` FOREIGN KEY (`CodPed`) REFERENCES `pedidos` (`CodPed`),
   CONSTRAINT `pedidosproductos_ibfk_2` FOREIGN KEY (`CodProd`) REFERENCES `productos` (`CodProd`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla supermercado.pedidosproductos: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla supermercado.pedidosproductos: ~0 rows (aproximadamente)
 DELETE FROM `pedidosproductos`;
 /*!40000 ALTER TABLE `pedidosproductos` DISABLE KEYS */;
-INSERT INTO `pedidosproductos` (`CodPedProd`, `CodPed`, `CodProd`, `Unidades`, `Precio`) VALUES
-	(1, 1, 1, 10, 40);
 /*!40000 ALTER TABLE `pedidosproductos` ENABLE KEYS */;
 
 -- Volcando estructura para tabla supermercado.productos
 CREATE TABLE IF NOT EXISTS `productos` (
   `CodProd` int(11) NOT NULL AUTO_INCREMENT,
-  `Nombre` varchar(45) DEFAULT NULL,
+  `Nombre` varchar(45) NOT NULL,
   `Descripcion` varchar(90) NOT NULL,
   `Precio` float NOT NULL,
   `Stock` int(11) NOT NULL CHECK (`Stock` >= 0),
@@ -154,19 +143,18 @@ CREATE TABLE IF NOT EXISTS `productos` (
   KEY `productos_ibfk_2` (`CodEstado`),
   CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`CodCat`) REFERENCES `categorias` (`CodCat`),
   CONSTRAINT `productos_ibfk_2` FOREIGN KEY (`CodEstado`) REFERENCES `estadoproducto` (`CodEstadoProducto`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 -- Volcando datos para la tabla supermercado.productos: ~10 rows (aproximadamente)
 DELETE FROM `productos`;
 /*!40000 ALTER TABLE `productos` DISABLE KEYS */;
 INSERT INTO `productos` (`CodProd`, `Nombre`, `Descripcion`, `Precio`, `Stock`, `CodCat`, `CodEstado`, `RutaImagen`) VALUES
-	(1, 'Solomillo', 'Solomillo de cerdo 1kg', 4, 40, 1, 1, 'imagenes/productos/solomillo.jpg'),
+	(1, 'Solomillo', 'Solomillo de cerdo 1kg', 4, 50, 1, 1, 'imagenes/productos/solomillo.jpg'),
 	(2, 'Chorizo', '200g de chorizo', 2.5, 50, 2, 1, 'imagenes/productos/chorizo.jpg'),
 	(3, 'Salmon', 'Lomo de salmon', 7.95, 50, 3, 1, 'imagenes/productos/salmon.jpg'),
 	(4, 'Costilla', '1kg de costilla', 5, 100, 1, 1, 'imagenes/productos/costilla.jpg'),
 	(5, 'Pollo', '1,5kg de pollo', 7, 100, 1, 1, 'imagenes/productos/pollo.jpg'),
 	(6, 'Pechuga polo', '200g de pechuga', 2, 100, 1, 1, 'imagenes/productos/pechuga.jpg'),
-	(7, 'Leche', 'Brick 1 litro leche entera', 0.5, 100, 8, 1, 'imagenes/productos/leche.jpg'),
 	(8, 'Merluza', '1kg de merluza', 8, 100, 3, 1, 'imagenes/productos/merluza.jpg'),
 	(9, 'Bogabante', '1kg de bogabante', 20, 100, 3, 1, 'imagenes/productos/bogabante.jpg'),
 	(10, 'Centola', '1kg de centola', 15, 100, 3, 1, 'imagenes/productos/centolas.jpg');
@@ -179,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   PRIMARY KEY (`CodRol`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla supermercado.roles: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla supermercado.roles: ~0 rows (aproximadamente)
 DELETE FROM `roles`;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 INSERT INTO `roles` (`CodRol`, `Descripcion`) VALUES
@@ -203,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   UNIQUE KEY `UN_RES_COR` (`Correo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla supermercado.usuarios: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla supermercado.usuarios: ~0 rows (aproximadamente)
 DELETE FROM `usuarios`;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`CodUsu`, `Nombre`, `Correo`, `Clave`, `Pais`, `CP`, `Ciudad`, `Direccion`, `Rol`, `Activo`) VALUES
