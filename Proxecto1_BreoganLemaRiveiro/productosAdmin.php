@@ -49,22 +49,36 @@ if (isset($_POST["CodProd"])) {
 
 //insert do novo producto
 if (isset($_GET["insertar"])) {
-    $nombreProd = $_GET["nombreProd"];
-    $descripProd = $_GET["descripProd"];
-    $precioProd = $_GET["precioProd"];
-    $stock = $_GET["stock"];
-    $categoria = $_GET["categoria"];
-    $estado = isset($_GET["estado"]) ? 1 : 0;
-    $rutaImagen = $_GET["rutaImagen"];
+    //comprobamos que se añaden todos os campos
+    if (isset($_GET["nombreProd"], $_GET["descripProd"], $_GET["precioProd"], $_GET["stock"], $_GET["categoria"], $_GET["rutaImagen"])) {
+        $nombreProd = $_GET["nombreProd"];
+        $descripProd = $_GET["descripProd"];
+        $precioProd = $_GET["precioProd"];
+        $stock = $_GET["stock"];
+        $categoria = $_GET["categoria"];
+        $estado = isset($_GET["estado"]) ? 1 : 0;
+        $rutaImagen = $_GET["rutaImagen"];
 
-    $insert = "INSERT INTO productos (Nombre, Descripcion, Precio, Stock, CodCat, CodEstado, RutaImagen)
-            VALUES ('$nombreProd', '$descripProd', $precioProd, $stock, $categoria, $estado, 'imagenes/productos/$rutaImagen')";
-    $resultInsert = $conexion->query($insert);
-    $rexistroInsert="INSERT INTO historialmodificaciones (CodUsuario,Descripcion) VALUES ('$codUserActual','O usuario $codUserActual insertou o producto $nombreProd')";
-    $resultRexistroUpdate = $conexion->query($rexistroInsert);
-    header("Location: productosAdmin.php");
-    exit;
+        //inserccion na bd
+        if($nombreProd!="" || $precioProd!="" ||$stock!="" ||$categoria!="" ){
+        $insert = "INSERT INTO productos (Nombre, Descripcion, Precio, Stock, CodCat, CodEstado, RutaImagen)
+                   VALUES ('$nombreProd', '$descripProd', $precioProd, $stock, $categoria, $estado, 'imagenes/productos/$rutaImagen')";
+        $resultInsert = $conexion->query($insert);
+        $rexistroInsert = "INSERT INTO historialmodificaciones (CodUsuario, Descripcion) VALUES ('$codUserActual','O usuario $codUserActual insertou o producto $nombreProd')";
+        $resultRexistroUpdate = $conexion->query($rexistroInsert);
+        header("Location: productosAdmin.php");
+        exit;
+        } else {
+            $_SESSION["mensaje"]="Error: Falta uno o más campos requeridos.";
+            header("Location: productosAdmin.php");
+            exit;
+        }
+    } else {
+        //non se proporcionan todos os campos
+        echo "Error: Falta uno o más campos requeridos.";
+    }
 }
+
 
 if (isset($_SESSION["mensaje"])) {
     echo "<script>alert('" . $_SESSION["mensaje"] . "');</script>";

@@ -33,18 +33,20 @@ if (isset($_POST["codcat"])) {
     if ($cantidadProductos > 0) {
         $_SESSION["mensaje"] = "No se puede borrar la categoría porque tiene productos asociados.";
     } else {
-        $sqlBorrarCategoria = "DELETE FROM categorias WHERE CodCat = '$codCategoria'";
-        $resultBorrarCategoria = $conexion->query($sqlBorrarCategoria);
-
-        if ($resultBorrarCategoria) {
-            //facemos o rexistro na bd
-            $sqlnombreCat = "SELECT Nombre FROM categorias WHERE CodCat=$codCategoria";
+        //obtemos o nombre da categoria que imos eliminar
+        $sqlnombreCat = "SELECT Nombre FROM categorias WHERE CodCat=$codCategoria";
             $resultNomCat = $conexion->query($sqlnombreCat);
             if ($resultNomCat->num_rows > 0) {
                 while ($fila = $resultNomCat->fetch_assoc()) {
                     $nomCat = $fila["Nombre"];
                 }
             }
+
+        $sqlBorrarCategoria = "DELETE FROM categorias WHERE CodCat = '$codCategoria'";
+        $resultBorrarCategoria = $conexion->query($sqlBorrarCategoria);
+
+        if ($resultBorrarCategoria) {
+            //facemos o rexistro na bd
             $rexistroDeleteCat = "INSERT INTO historialmodificaciones (CodUsuario,Descripcion) VALUES ('$codUserActual','O usuario $codUserActual borrou a categoria $nomCat')";
             $resultRexistroDeleteCat = $conexion->query($rexistroDeleteCat);
             $_SESSION["mensaje"] = "Categoría borrada exitosamente.";
@@ -67,18 +69,20 @@ if (isset($_POST["codcat"])) {
     if ($cantidadPedidos > 0) {
         $_SESSION["mensaje"] = "No se puede borrar el producto porque está presente en pedidos.";
     } else {
+        //obtemos o nombre do producto que imos eliminar
+        $sqlnombreProd = "SELECT Nombre FROM productos WHERE CodProd=$codProducto";
+        $resultNomProd = $conexion->query($sqlnombreProd);
+        if ($resultNomProd->num_rows > 0) {
+            while ($fila = $resultNomProd->fetch_assoc()) {
+                $nomProd = $fila["Nombre"];
+            }
+        }
+
         $sqlBorrarProducto = "DELETE FROM productos WHERE CodProd = '$codProducto'";
         $resultBorrarProducto = $conexion->query($sqlBorrarProducto);
 
         if ($resultBorrarProducto) {
             //facemos o rexistro na bd
-            $sqlnombreProd = "SELECT Nombre FROM productos WHERE CodProd=$codProducto";
-            $resultNomProd = $conexion->query($sqlnombreProd);
-            if ($resultNomProd->num_rows > 0) {
-                while ($fila = $resultNomProd->fetch_assoc()) {
-                    $nomProd = $fila["Nombre"];
-                }
-            }
             $rexistroDeleteCat = "INSERT INTO historialmodificaciones (CodUsuario,Descripcion) VALUES ('$codUserActual','O usuario $codUserActual borrou o producto $nomProd')";
             $resultRexistroDeleteCat = $conexion->query($rexistroDeleteCat);
             $_SESSION["mensaje"] = "Producto borrado exitosamente.";
