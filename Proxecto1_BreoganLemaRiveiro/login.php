@@ -21,6 +21,7 @@ if (isset($_POST["usuario"]) && isset($_POST["clave"])) {
             $res->close();
             //comprobamos o rol dos usuarios
             if ($rol == 1) {
+                $_SESSION["usuarioadmin"]= $_SESSION["usuario"];
                 header("Location: todosPedidos.php");
             } else {
                 header("Location: inicio.php");
