@@ -30,7 +30,7 @@ if (isset($_POST["codUsu"]) && isset($_POST["nombre"]) && isset($_POST["correo"]
         //comprobamos si o usuario que vamos facer o update é diferente o actual
         if($codUsu!=$codUserActual){
             //comprobamos si recibimos datos de clave, o que significa que queremos cambiala
-            if (isset($_POST["clave"])) {
+            if (isset($_POST["clave"]) && $_POST["clave"] !="") {
                 $clave = $_POST["clave"];
                 $claveCifrada = md5($clave);
                 

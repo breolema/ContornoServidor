@@ -27,7 +27,7 @@ if (isset($_POST["codcat"])) {
 
     $updateCategoria = "UPDATE categorias SET Nombre = '$nombreCat',  Activa = $activo WHERE CodCat = $codcat";
     $resultUpdate = $conexion->query($updateCategoria);
-    $rexistroUpdate="INSERT INTO historialmodificaciones (CodUsuario,Descripcion) VALUES ('$codUserActual','O usuario $codUserActual modificou a categoria $nombreCat')";
+    $rexistroUpdate = "INSERT INTO historialmodificaciones (CodUsuario,Descripcion) VALUES ('$codUserActual','O usuario $codUserActual modificou a categoria $nombreCat')";
     $resultRexistroUpdate = $conexion->query($rexistroUpdate);
     header("Location: categoriasAdmin.php");
     exit;
@@ -42,7 +42,7 @@ if (isset($_POST["insertar"])) {
     $insert = "INSERT INTO categorias (Nombre, Activa, RutaImagen) 
                         VALUES ('$nombreCat', $activo, 'imagenes/categorias/$rutaImagen')";
     $resultInsert = $conexion->query($insert);
-    $rexistroInsert="INSERT INTO historialmodificaciones (CodUsuario,Descripcion) VALUES ('$codUserActual','O usuario $codUserActual insertou a categoria $nombreCat')";
+    $rexistroInsert = "INSERT INTO historialmodificaciones (CodUsuario,Descripcion) VALUES ('$codUserActual','O usuario $codUserActual insertou a categoria $nombreCat')";
     $resultRexistroInsert = $conexion->query($rexistroInsert);
     header("Location: categoriasAdmin.php");
     exit;
@@ -50,7 +50,7 @@ if (isset($_POST["insertar"])) {
 
 if (isset($_SESSION["mensaje"])) {
     echo "<script>alert('" . $_SESSION["mensaje"] . "');</script>";
-    unset($_SESSION["mensaje"]); 
+    unset($_SESSION["mensaje"]);
 }
 ?>
 <!DOCTYPE html>
@@ -74,6 +74,7 @@ if (isset($_SESSION["mensaje"])) {
         <a href="darAltaUsuarios.php">Alta usuarios</a>
         <a href="categoriasAdmin.php">Modificar categorias</a>
         <a href="productosAdmin.php">Modificar productos</a>
+        <a href="historialMod.php">Historial Modificaciones</a>
         <div id="logout">
             <a href="logout.php"><img src="imagenes/logout.png"></a>
         </div>
@@ -117,7 +118,7 @@ if (isset($_SESSION["mensaje"])) {
                     echo '<form method="POST" >';
                     echo '<label id="codcat">Código de la categoría: ' . $row["CodCat"] . '</label>';
                     echo '<label for="nombreCat">Nombre de la categoría:</label>';
-                    echo '<input type="text" id="nombreCat" name="nombreCat" value="' . $row["Nombre"] . '">';
+                    echo '<input type="text" id="nombreCat" name="nombreCat" value="' . $row["Nombre"] . '"required />';
                     echo '<label for="activo">Categoría activa:</label>';
                     echo '<input type="checkbox" id="activo" name="activo" ' . ($row["Activa"] == 1 ? 'checked' : '') . '>';
                     echo '<input type="hidden" name="codcat" value="' . $row["CodCat"] . '">';
@@ -140,7 +141,7 @@ if (isset($_SESSION["mensaje"])) {
                 <label for="foto">Selecciona una foto:</label>
                 <input type="file" id="foto" name="foto">
                 <label for="nombreCat">Nombre de la categoria: </label>
-                <input type="text" id="nombreCat" name="nombreCat" placeholder="Nombre" />
+                <input type="text" id="nombreCat" name="nombreCat" placeholder="Nombre" required />
                 <label for="activo">Categoria activa: </label>
                 <input type="checkbox" id="activo" name="activo" checked="checked" />
                 <input type="submit" value="Añadir categoria" class="editar">

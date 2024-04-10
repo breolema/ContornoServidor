@@ -63,7 +63,7 @@
                     echo '<div>' . $fila["precio"] . '€</div>';
                     echo '<div>Stock: ' . $fila["stock"] . '</div>';
                     echo "<form action='añadirCarrito.php' method='POST'>";
-                    echo '<input type="number" id="cantidad" name="cantidad" min="1" max="' . $fila["stock"] . '">';
+                    echo '<input type="number" id="cantidad" name="cantidad" min="1" max="' . $fila["stock"] . '" required/>';
                     echo '<input id="codprod" name="codprod" type="hidden" value="' . $fila["codprod"] . '" />';
                     echo '<input id="codcat" name="codcat" type="hidden" value="' . $fila["codcat"] . '" />';
                     echo '<input id="precio" name="precio" type="hidden" value="' . $fila["precio"] . '" />';

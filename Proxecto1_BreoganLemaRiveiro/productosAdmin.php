@@ -38,7 +38,7 @@ if (isset($_POST["CodProd"])) {
                     WHERE CodProd = $codprod";
 
         $resultUpdate = $conexion->query($updateProducto);
-        $rexistroUpdate="INSERT INTO historialmodificaciones (CodUsuario,Descripcion) VALUES ('$codUserActual','O usuario $codUserActual modificou o producto $nombreProd')";
+        $rexistroUpdate = "INSERT INTO historialmodificaciones (CodUsuario,Descripcion) VALUES ('$codUserActual','O usuario $codUserActual modificou o producto $nombreProd')";
         $resultRexistroUpdate = $conexion->query($rexistroUpdate);
     }
     header("Location: productosAdmin.php");
@@ -60,16 +60,16 @@ if (isset($_GET["insertar"])) {
         $rutaImagen = $_GET["rutaImagen"];
 
         //inserccion na bd
-        if($nombreProd!="" || $precioProd!="" ||$stock!="" ||$categoria!="" ){
-        $insert = "INSERT INTO productos (Nombre, Descripcion, Precio, Stock, CodCat, CodEstado, RutaImagen)
+        if ($nombreProd != "" || $precioProd != "" || $stock != "" || $categoria != "") {
+            $insert = "INSERT INTO productos (Nombre, Descripcion, Precio, Stock, CodCat, CodEstado, RutaImagen)
                    VALUES ('$nombreProd', '$descripProd', $precioProd, $stock, $categoria, $estado, 'imagenes/productos/$rutaImagen')";
-        $resultInsert = $conexion->query($insert);
-        $rexistroInsert = "INSERT INTO historialmodificaciones (CodUsuario, Descripcion) VALUES ('$codUserActual','O usuario $codUserActual insertou o producto $nombreProd')";
-        $resultRexistroUpdate = $conexion->query($rexistroInsert);
-        header("Location: productosAdmin.php");
-        exit;
+            $resultInsert = $conexion->query($insert);
+            $rexistroInsert = "INSERT INTO historialmodificaciones (CodUsuario, Descripcion) VALUES ('$codUserActual','O usuario $codUserActual insertou o producto $nombreProd')";
+            $resultRexistroUpdate = $conexion->query($rexistroInsert);
+            header("Location: productosAdmin.php");
+            exit;
         } else {
-            $_SESSION["mensaje"]="Error: Falta uno o más campos requeridos.";
+            $_SESSION["mensaje"] = "Error: Falta uno o más campos requeridos.";
             header("Location: productosAdmin.php");
             exit;
         }
@@ -107,6 +107,7 @@ if (isset($_SESSION["mensaje"])) {
         <a href="darAltaUsuarios.php">Alta usuarios</a>
         <a href="categoriasAdmin.php">Modificar categorias</a>
         <a href="productosAdmin.php">Modificar productos</a>
+        <a href="historialMod.php">Historial Modificaciones</a>
         <div id="logout">
             <a href="logout.php"><img src="imagenes/logout.png"></a>
         </div>
@@ -216,13 +217,13 @@ if (isset($_SESSION["mensaje"])) {
                     <label for="rutaImagen">Selecciona una foto:</label>
                     <input type="file" id="rutaImagen" name="rutaImagen"><br>
                     <label for="nombreProd">Nombre del producto: </label>
-                    <input type="text" id="nombreProd" name="nombreProd" placeholder="Nombre" /><br>
+                    <input type="text" id="nombreProd" name="nombreProd" placeholder="Nombre" required /><br>
                     <label for="descripProd">Descripcion del producto: </label>
-                    <input type="text" id="descripProd" name="descripProd" placeholder="Descripcion" /><br>
+                    <input type="text" id="descripProd" name="descripProd" placeholder="Descripcion" required /><br>
                     <label for="precioProd">Precio del producto: </label>
-                    <input type="number" id="precioProd" name="precioProd" step="0.01" /><br>
+                    <input type="number" id="precioProd" name="precioProd" step="0.01" required /><br>
                     <label for="stock">Stock del producto: </label>
-                    <input type="number" id="stock" name="stock" min="1" /><br>
+                    <input type="number" id="stock" name="stock" min="1" required /><br>
                     <label for="categoria">Selecciona la categoría:</label>
                     <select id="categoria" name="categoria">
                         <option value="">-Seleccione una opción-</option>

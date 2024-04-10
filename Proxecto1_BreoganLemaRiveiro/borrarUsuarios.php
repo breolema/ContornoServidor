@@ -30,8 +30,10 @@ if ($resultUserActual->num_rows > 0) {
     }
     //comparamos se o codigo do usuario actual é diferente o do usuario a borrar
     if ($codUserActual != $usuarioBorrar) {
+        
         $deleteUser = "DELETE FROM usuarios WHERE CodUsu=$usuarioBorrar";
         $resultDeleteUser = $conexion->query($deleteUser);
+
         if ($resultDeleteUser) {
             $resxistroDelete="INSERT INTO historialmodificaciones (CodUsuario,Descripcion) VALUES ('$codUserActual','O usuario $codUserActual eliminou o usuario $usuarioBorrar')";
             $resultResxistroDelete = $conexion->query($resxistroDelete);

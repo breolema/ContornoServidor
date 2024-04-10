@@ -25,12 +25,13 @@ include_once("conexionbd.php");
 
 <body>
 
-<nav>
+    <nav>
         <img src="imagenes/icono.png" alt="logo" />
         <a href="todosPedidos.php">Pedidos</a>
         <a href="darAltaUsuarios.php">Alta usuarios</a>
         <a href="categoriasAdmin.php">Modificar categorias</a>
         <a href="productosAdmin.php">Modificar productos</a>
+        <a href="historialMod.php">Historial Modificaciones</a>
         <div id="logout">
             <a href="logout.php"><img src="imagenes/logout.png"></a>
         </div>
@@ -39,8 +40,8 @@ include_once("conexionbd.php");
     <h1>Pagina de Pedidos</h1>
 
     <?php
-//seleccionamos todos os pedidos
-$sqlPedidos = "SELECT pedidos.CodUsuario, usuarios.Nombre AS NombreUsuario, pedidos.CodPed AS CodigoPedido, pedidos.Fecha, pedidos.PrecioTotal
+    //seleccionamos todos os pedidos
+    $sqlPedidos = "SELECT pedidos.CodUsuario, usuarios.Nombre AS NombreUsuario, pedidos.CodPed AS CodigoPedido, pedidos.Fecha, pedidos.PrecioTotal
                 FROM pedidos
                 INNER JOIN usuarios ON pedidos.CodUsuario = usuarios.CodUsu
                 ORDER BY Fecha DESC";
@@ -54,12 +55,12 @@ $sqlPedidos = "SELECT pedidos.CodUsuario, usuarios.Nombre AS NombreUsuario, pedi
             echo "<form action='actualizarEstadoPedido.php' method='POST'>";
             echo "<input type='hidden' name='codigoPedido' value='" . $fila['CodigoPedido'] . "'>";
             //sacamos o estado actual do pedido
-            $estadoActualPedido="SELECT estadopedido.CodEstadoPedido, estadopedido.Descripcion, pedidos.CodEstado FROM estadopedido
+            $estadoActualPedido = "SELECT estadopedido.CodEstadoPedido, estadopedido.Descripcion, pedidos.CodEstado FROM estadopedido
 			                    INNER JOIN pedidos ON estadopedido.CodEstadoPedido=pedidos.CodEstado
 			                    WHERE pedidos.CodPed=" . $fila['CodigoPedido'] . "";
             $resultEstadoActual = $conexion->query($estadoActualPedido);
             while ($filaEstadoActual = $resultEstadoActual->fetch_assoc()) {
-                echo "<p>Estado actual del pedido: " . $filaEstadoActual['Descripcion']. "</p>";
+                echo "<p>Estado actual del pedido: " . $filaEstadoActual['Descripcion'] . "</p>";
             }
             //cambiamos estado do producto
             echo "<select name='nuevoEstado'>";
@@ -67,16 +68,16 @@ $sqlPedidos = "SELECT pedidos.CodUsuario, usuarios.Nombre AS NombreUsuario, pedi
             $resultEstadosPedido = $conexion->query($sqlEstadosPedido);
             if ($resultEstadosPedido->num_rows > 0) {
                 while ($filaEstado = $resultEstadosPedido->fetch_assoc()) {
-                echo "<option value='" . $filaEstado['CodEstadoPedido'] . "'>" . $filaEstado['Descripcion'] . "</option>";
+                    echo "<option value='" . $filaEstado['CodEstadoPedido'] . "'>" . $filaEstado['Descripcion'] . "</option>";
                 }
             }
-        echo "</select>";
-        echo "<button type='submit' class='botoncito'>Actualizar Estado</button>";
-        echo "</form>";
-        echo "</p>";
+            echo "</select>";
+            echo "<button type='submit' class='botoncito'>Actualizar Estado</button>";
+            echo "</form>";
+            echo "</p>";
 
             echo "<p>Precio Total: " . $fila['PrecioTotal'] . "€</p>";
-            
+
             echo "<p>Pedido hecho por el usuario: " . $fila['NombreUsuario'] . "</p>";
 
             $codigoPedido = $fila['CodigoPedido'];

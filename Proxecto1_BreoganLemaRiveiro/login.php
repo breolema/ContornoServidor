@@ -8,7 +8,7 @@ if (isset($_POST["usuario"]) && isset($_POST["clave"])) {
     $clave = $_POST["clave"];
     //encriptamos a clave para comparar ca da bd
     $claveEncriptada = md5($clave);
-    $sql = "SELECT nombre, clave, rol FROM usuarios WHERE nombre='$usuario' && clave='$claveEncriptada' && activo=true";
+    $sql = "SELECT usuario, clave, rol FROM usuarios WHERE usuario='$usuario' && clave='$claveEncriptada' && activo=1";
     $res = $conexion->query($sql);
     if ($res->num_rows == 0) {
         header("Location:inicioSesion.php");
@@ -16,7 +16,7 @@ if (isset($_POST["usuario"]) && isset($_POST["clave"])) {
         $fila = $res->fetch_assoc();
         if ($fila) {
             $rol = $fila["rol"];
-            $_SESSION["usuario"] = $fila["nombre"];
+            $_SESSION["usuario"] = $fila["usuario"];
             $_SESSION["rol"] = $rol;
             $res->close();
             //comprobamos o rol dos usuarios
