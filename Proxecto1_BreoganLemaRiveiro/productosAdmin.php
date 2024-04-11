@@ -25,7 +25,6 @@ if (isset($_POST["CodProd"])) {
     $descripcion = $_POST["descripcProd"];
     $precioProd = $_POST["precioProd"];
     $stock = $_POST["stock"];
-    $categoria = $_POST["categoria"];
     $estado = isset($_POST["estado"]) ? 1 : 0;
 
     if ($stock > 0) {
@@ -33,7 +32,6 @@ if (isset($_POST["CodProd"])) {
                     Descripcion = '$descripcion',
                     Precio = $precioProd, 
                     Stock = $stock, 
-                    CodCat = $categoria, 
                     CodEstado = $estado 
                     WHERE CodProd = $codprod";
 
@@ -185,19 +183,6 @@ if (isset($_SESSION["mensaje"])) {
                     echo '<label for="stock">Stock del producto:</label>';
                     echo '<input type="number" id="stock" name="stock" min="1" value="' . $fila["Stock"] . '">';
                     echo '<label for="categoria">Categoría del producto:</label>';
-                    echo ' <select id="categoria" name="categoria">';
-
-                    $sqlCat = "SELECT categorias.CodCat, categorias.Nombre FROM categorias
-                                        INNER JOIN productos ON categorias.CodCat=productos.CodCat
-                                        WHERE productos.CodProd=" . $fila['CodProd'] . "";
-                    $resultCat = $conexion->query($sqlCat);
-
-                    if ($resultCat->num_rows > 0) {
-                        while ($filaCat = $resultCat->fetch_assoc()) {
-                            echo "<option value='" . $filaCat['CodCat'] . "'>" . $filaCat['Nombre'] . "</option>";
-                        }
-                    }
-                    echo ' </select>';
                     echo '<label for="estado">Producto activo:</label>';
                     echo '<input type="checkbox" id="estado" name="estado" ' . ($fila["CodEstado"] == 1 ? 'checked' : '') . '>';
                     echo '<input type="submit" value="Guardar cambios" class="editar">';
