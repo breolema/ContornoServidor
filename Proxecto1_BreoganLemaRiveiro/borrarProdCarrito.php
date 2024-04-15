@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["usuarioadmin"])) {
+if (!isset($_SESSION["usuario"])) {
     header("Location: inicioSesion.php");
     exit;
 }

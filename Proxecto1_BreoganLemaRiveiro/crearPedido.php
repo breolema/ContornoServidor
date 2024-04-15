@@ -7,26 +7,10 @@ if (!isset($_SESSION["usuario"])) {
 }
 
 include_once("conexionbd.php");
-/*
-//recollemos o usuario actual para comprobar si esta activo na bd e si este existe
-$usuarioActual = $_SESSION["usuario"];
-$sqlUserActual = "SELECT CodUsu, Activo FROM usuarios WHERE Nombre='$usuarioActual'";
-$resultUserActual = $conexion->query($sqlUserActual);
 
-if ($resultUserActual->num_rows > 0) {
-    $fila = $resultUserActual->fetch_assoc();
-    $codUserActual = $fila["CodUsu"];
-    $estadoUsuario = $fila["Activo"];
-
-    // Verificar si el usuario está activo
-    if ($estadoUsuario != 1) {
-        $_SESSION['error_pedido'] = "Lo sentimos, no puedes crear un pedido porque tu cuenta está inactiva o eliminada.";
-        header("Location: carrito.php");
-    }
-} else {
-    $_SESSION['error_pedido'] = "Error: No se pudo encontrar el usuario en la base de datos.";
-    header("Location: carrito.php");
-}*/
+if (isset($_SESSION["arrayCarrito"])) {
+    $arrayCarrito=$_SESSION["arrayCarrito"];
+}
 
 $stockSuficiente = true;
 $productosActivos = true;

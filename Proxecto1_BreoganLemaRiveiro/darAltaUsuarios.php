@@ -73,7 +73,7 @@ if (isset($_SESSION["mensaje"])) {
     echo '<label for="pais">Pais:</label>';
     echo '<input type="text" id="pais" name="pais" value="' . $pais . '" required/>';
     echo '<label for="cp">Codigo Postal:</label>';
-    echo '<input type="number" id="cp" name="cp" value="' . $cp . '" required/>';
+    echo '<input type="text" id="cp" name="cp" value="' . $cp . '" pattern="^[0-9]{5}$" required/>';
     echo '<label for="ciudad">Ciudad:</label>';
     echo '<input type="text" id="ciudad" name="ciudad" value="' . $ciudad . '" required/>';
     echo '<label for="direccion">Dirección:</label>';
@@ -123,7 +123,7 @@ if (isset($_SESSION["mensaje"])) {
     echo '<label for="pais">Pais:</label>';
     echo '<input type="text" id="pais" name="pais" placeholder="Pais" required/>';
     echo '<label for="cp">Codigo Postal:</label>';
-    echo '<input type="number" id="cp" name="cp" placeholder="Codigo Postal" required/>';
+    echo '<input type="text" id="cp" name="cp" placeholder="Codigo Postal" pattern="^[0-9]{5}$" required/>';
     echo '<label for="ciudad">Ciudad:</label>';
     echo '<input type="text" id="ciudad" name="ciudad" placeholder="Ciudad" required/>';
     echo '<label for="direccion">Dirección:</label>';
